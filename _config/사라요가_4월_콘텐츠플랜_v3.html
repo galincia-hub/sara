@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사라요가 4월 콘텐츠 플랜</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f8f7f4;--surface:#fff;--surface2:#f2f1ed;--text:#1a1a18;--text2:#6b6a65;--text3:#9e9d98;--accent:#2d6b4f;--accent2:#1d9e75;--danger:#c44;--warn:#b87a17;--info:#2563a8;--purple:#534ab7;--coral:#d85a30;--pink:#d4537e;--border:#e5e4e0;--radius:12px;--shadow:0 1px 3px rgba(0,0,0,0.06)}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.header{background:linear-gradient(135deg,#2d6b4f,#1a5e3f);color:#fff;padding:2rem 2.5rem 1.5rem}
+.header h1{font-size:1.5rem;font-weight:700}.header p{font-size:0.85rem;opacity:0.8;margin-top:4px}
+.container{max-width:1200px;margin:0 auto;padding:1.5rem}
+.section{background:var(--surface);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;box-shadow:var(--shadow);border:1px solid var(--border)}
+.section-title{font-size:1rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.badge{font-size:0.6rem;padding:2px 8px;border-radius:20px;font-weight:500}
+.badge-green{background:#e8f5e9;color:#2d6b4f}.badge-purple{background:#eeedfe;color:#534ab7}.badge-coral{background:#faece7;color:#d85a30}.badge-info{background:#e6f1fb;color:#2563a8}
+.section-sub{font-size:0.8rem;color:var(--text2);margin-bottom:1rem}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.metric{background:var(--surface);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow);border:1px solid var(--border);position:relative;overflow:hidden}
+.metric .label{font-size:0.7rem;color:var(--text2);margin-bottom:2px}.metric .value{font-size:1.5rem;font-weight:700;letter-spacing:-1px}.metric .sub{font-size:0.65rem;margin-top:2px}
+.metric .sub.danger{color:var(--danger)}.metric .sub.success{color:var(--accent2)}.metric .sub.warn{color:var(--warn)}
+.metric .bar{position:absolute;bottom:0;left:0;height:3px;border-radius:0 2px 0 0}
+.progress-wrap{margin-top:0}.progress-label{display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text2);margin-bottom:6px}
+.progress-bar{background:var(--surface2);border-radius:20px;height:12px;overflow:hidden}
+.progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width 0.5s}
+.setup-box{background:#fffde7;border:1px solid #fff9c4;border-radius:var(--radius);padding:1.25rem;margin-bottom:1.5rem}
+.setup-box h3{font-size:0.9rem;font-weight:700;margin-bottom:8px;color:var(--warn)}
+.setup-box p{font-size:0.8rem;color:var(--text2);margin-bottom:8px}
+.setup-box input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:0.85rem;font-family:inherit}
+.setup-box input:focus{outline:none;border-color:var(--accent2)}
+.setup-box .btn-save{margin-top:8px;padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:0.8rem;font-family:inherit;cursor:pointer}
+.setup-box .btn-save:hover{background:var(--accent2)}
+.setup-box .saved{font-size:0.75rem;color:var(--accent2);margin-left:8px;display:none}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:0.5rem}
+.cal-head{font-size:0.65rem;color:var(--text3);text-align:center;padding:4px;font-weight:500}
+.cal-day{border-radius:8px;padding:6px 4px;font-size:0.7rem;border:1px solid var(--border);min-height:90px;position:relative;transition:all 0.15s}
+.cal-day:hover{border-color:var(--accent2);box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.cal-day .d{font-weight:700;font-size:0.8rem;margin-bottom:2px}.cal-day .t{font-size:0.58rem;line-height:1.3;color:var(--text2);margin-bottom:3px}
+.cal-day .tag{font-size:0.5rem;padding:1px 5px;border-radius:10px;display:inline-block;font-weight:500}
+.tag-info{background:#e8f5e9;color:#2d6b4f}.tag-local{background:#faece7;color:#d85a30}.tag-review{background:#eeedfe;color:#534ab7}.tag-price{background:#e6f1fb;color:#2563a8}.tag-season{background:#fbeaf0;color:#d4537e}
+.cal-day.pub{border-left:3px solid var(--accent2)}.cal-day.rest{opacity:0.35}.cal-day.done{background:#e8f5e9;border-color:#81c784}.cal-day.empty{border:none;background:transparent;min-height:auto}
+.cal-day .actions{display:flex;gap:2px;margin-top:4px}
+.cal-day .btn-write{font-size:0.55rem;padding:2px 6px;background:var(--accent);color:#fff;border:none;border-radius:4px;cursor:pointer;font-family:inherit}.cal-day .btn-write:hover{background:var(--accent2)}
+.cal-day .btn-check{font-size:0.55rem;padding:2px 6px;background:var(--surface2);color:var(--text2);border:1px solid var(--border);border-radius:4px;cursor:pointer;font-family:inherit}.cal-day .btn-check:hover{background:#e8f5e9}
+.cal-day.done .btn-check{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.week-section{margin-top:1.5rem}.week-header{font-size:0.85rem;font-weight:700;padding:8px 0;border-bottom:2px solid var(--accent2);margin-bottom:8px;display:flex;justify-content:space-between}
+.week-header .wk-badge{font-size:0.65rem;background:var(--surface2);padding:2px 10px;border-radius:20px;color:var(--text2)}
+.day-row{display:grid;grid-template-columns:55px 1fr 75px 85px 50px 70px;gap:6px;padding:8px 0;border-bottom:1px solid var(--border);align-items:center;font-size:0.8rem}.day-row:last-child{border-bottom:none}
+.day-row .date{font-weight:700;color:var(--accent)}.day-row .title{font-weight:500}.day-row .frame{font-size:0.65rem;color:var(--text3)}
+.day-row .kw{font-size:0.65rem;font-weight:500}.day-row .kw.t1{color:var(--purple)}.day-row .kw.t2{color:var(--info)}.day-row .kw.t3{color:var(--warn)}
+.day-row .btn-go{font-size:0.7rem;padding:4px 10px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit;white-space:nowrap}.day-row .btn-go:hover{background:var(--accent2)}
+.day-row.done-row{opacity:0.45;text-decoration:line-through}
+.tier-bar{display:flex;gap:0;border-radius:8px;overflow:hidden;height:24px;margin-top:0.5rem}
+.tier-bar div{display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:500;color:#fff}
+.insight-card{background:var(--surface2);border-radius:8px;padding:1rem;margin-bottom:8px;border-left:3px solid var(--purple)}.insight-card.coral{border-left-color:var(--coral)}.insight-card.green{border-left-color:var(--accent2)}
+.insight-card h5{font-size:0.85rem;font-weight:700;margin-bottom:4px}.insight-card p{font-size:0.8rem;color:var(--text2);line-height:1.6}
+.chart-wrap{position:relative;height:220px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 24px;border-radius:8px;font-size:0.85rem;z-index:999;display:none;animation:fadeUp 0.3s}
+@keyframes fadeUp{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.footer{text-align:center;padding:2rem;font-size:0.75rem;color:var(--text3)}
+@media(max-width:768px){.metrics{grid-template-columns:repeat(2,1fr)}.grid2,.grid3{grid-template-columns:1fr}.cal-day{min-height:70px;padding:3px}.cal-day .t{font-size:0.5rem}.day-row{grid-template-columns:45px 1fr 60px;font-size:0.7rem}.day-row .frame,.day-row .kw{display:none}}
+</style>
+</head>
+<body>
+<div class="header"><h1>사라요가 4월 콘텐츠 플랜</h1><p>주 3회 (화·목·토) · 13개 고품질 글 · 2,000자+ · 블루오션 키워드 집중</p></div>
+<div class="container">
+<div class="setup-box" id="setup"><h3>처음 한번만 설정하세요</h3><p>Claude 프로젝트 URL을 입력하면 "글쓰기" 버튼이 프로젝트로 연결됩니다.</p><input type="text" id="project-url" placeholder="예: https://claude.ai/project/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"><button class="btn-save" onclick="saveUrl()">저장</button><span class="saved" id="saved-msg">저장 완료</span></div>
+<div class="metrics">
+<div class="metric"><div class="label">4월 목표</div><div class="value">13개</div><div class="sub success">화·목·토 발행</div><div class="bar" style="width:100%;background:var(--accent2)"></div></div>
+<div class="metric"><div class="label">발행 완료</div><div class="value" id="done-count">0개</div><div class="sub danger" id="done-sub">0%</div><div class="bar" id="done-bar" style="width:0%;background:var(--accent2)"></div></div>
+<div class="metric"><div class="label">Tier 1 블루오션</div><div class="value" style="color:var(--purple)">4개</div><div class="sub" style="color:var(--purple)">도구테라피·인사이드플로우·블랙롤</div><div class="bar" style="width:31%;background:var(--purple)"></div></div>
+<div class="metric"><div class="label">Tier 2 선점</div><div class="value" style="color:var(--info)">5개</div><div class="sub" style="color:var(--info)">서대전 + 로컬 콘텐츠</div><div class="bar" style="width:38%;background:var(--info)"></div></div>
+</div>
+<div class="section"><div class="section-title">발행 진행률 <span class="badge badge-green">주 3회</span></div><div class="progress-wrap"><div class="progress-label"><span id="prog-text">0 / 13 발행 완료</span><span id="main-pct">0%</span></div><div class="progress-bar"><div class="progress-fill" id="main-fill" style="width:0%"></div></div></div>
+<div style="margin-top:0.75rem"><div class="section-sub" style="margin-bottom:4px">유형별 배분</div><div class="tier-bar"><div style="width:31%;background:#534ab7">정보 4</div><div style="width:23%;background:#d85a30">로컬 3</div><div style="width:23%;background:#1d9e75">후기 3</div><div style="width:8%;background:#378add">가격 1</div><div style="width:8%;background:#d4537e">시즌 1</div><div style="width:7%;background:#b4b2a9">에세이 1</div></div></div></div>
+<div class="section"><div class="section-title">4월 캘린더 <span class="badge badge-info">화·목·토 발행</span></div><div class="section-sub">발행일에만 글쓰기 버튼. 나머지 날은 사진 촬영·소재 수집·리서치에 활용.</div><div class="cal" id="calendar"></div></div>
+<div class="section"><div class="section-title">13개 상세 플랜 <span class="badge badge-purple">클릭 → 바로 글쓰기</span></div><div id="detail-plan"></div></div>
+<div class="section"><div class="section-title">Tier별 분포 <span class="badge badge-green">13개</span></div><div class="grid2"><div class="chart-wrap"><canvas id="tierChart"></canvas></div><div style="margin-top:0.5rem">
+<div class="insight-card green"><h5>Tier 1 블루오션 — 4개 (31%)</h5><p>도구테라피 가이드+후기, 인사이드플로우 입문, 블랙롤 근막이완. 경쟁 없는 곳에 집중 폭격.</p></div>
+<div class="insight-card"><h5>Tier 2 선점 — 5개 (38%)</h5><p>서대전 소그룹 비교, 점심 맛집, 카페, 네일아트. "서대전 = 사라요가" 공식 만들기.</p></div>
+<div class="insight-card coral"><h5>Tier 3 + 기타 — 4개 (31%)</h5><p>플라잉요가 가이드+후기, 가격 안내, 5월 이벤트. 니치화 접근.</p></div>
+</div></div></div>
+<div class="section"><div class="section-title">4월 달성 시 기대 효과</div><div class="grid3">
+<div class="insight-card green"><h5>검색유입 30%+</h5><p>정보형 4개가 스마트블록에 잡히면 구조적 상승 시작</p></div>
+<div class="insight-card"><h5>"서대전" 키워드 부활</h5><p>13개 전부에 "서대전" 포함 → 네이버가 인식</p></div>
+<div class="insight-card coral"><h5>AI 인용 기반 구축</h5><p>FAQ + 엔티티로 ChatGPT/Perplexity 답변 준비</p></div>
+</div></div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="footer">사라요가 4월 콘텐츠 플랜 · 주 3회 · 13개 고품질 글 · 2,000자+</div>
+<script>
+var TOTAL=13;
+var PLAN=[
+{day:1,dow:"화",date:"4/1",title:"플라잉요가 초보 완전 가이드",type:"정보형",tag:"tag-info",frame:"문제→해결",tier:"Tier3",tierClass:"t3",prompt:"주제: 대전 서대전 플라잉요가 초보 가이드\n핵심 전달사항: 플라잉요가 처음인 사람이 궁금해하는 것 — 무섭지 않은지, 팔 힘 없어도 되는지. 로우 vs 하이 차이. 6명 소그룹, 원장 직강\n사진 설명: 해먹 전경, 로우플라잉, 하이플라잉, 원장 교정, 수업 후 단체\n추가 메모: 정보형, 비교/선택 프레임"},
+{day:3,dow:"목",date:"4/3",title:"도구테라피 완전 가이드",type:"정보형",tag:"tag-info",frame:"문제→해결",tier:"Tier1",tierClass:"t1",prompt:"주제: 대전 서대전 도구테라피 — 뭉친 어깨·허리를 풀어주는 요가\n핵심 전달사항: 도구테라피란, 사용 도구(근막이완 볼, 폼롤러, 블랙롤), 효과, 직장인 추천\n사진 설명: 도구 클로즈업, 사용 장면, 이완 장면\n추가 메모: 정보형, 문제→해결. ★ Tier1 최우선"},
+{day:5,dow:"토",date:"4/5",title:"서대전 점심 맛집 5곳",type:"로컬",tag:"tag-local",frame:"리스트",tier:"Tier2",tierClass:"t2",prompt:"주제: 서대전네거리역 점심 맛집 5곳 — 요가 후 가볍게\n핵심 전달사항: 수업 후 자주 가는 식당. 건강식, 한식. 위치, 메뉴, 가격대\n사진 설명: 식당 외관, 대표 메뉴, 내부 (직접 방문)\n추가 메모: 로컬형, 리스트. '사라요가에서 도보 N분' 포함"},
+{day:8,dow:"화",date:"4/8",title:"서대전 소그룹 요가 추천",type:"정보형",tag:"tag-info",frame:"비교/선택",tier:"Tier2",tierClass:"t2",prompt:"주제: 서대전 소그룹 요가 vs 대형 요가원 — 뭐가 다를까?\n핵심 전달사항: 정원 차이(6명 vs 20~30명), 1:1 교정, 가격 대비 가치\n사진 설명: 소그룹 수업, 원장 교정, 스튜디오\n추가 메모: 정보형, 비교/선택. Tier2 선점"},
+{day:10,dow:"목",date:"4/10",title:"빈야사 수업 후기",type:"후기",tag:"tag-review",frame:"하루스케치",tier:"Tier3",tierClass:"t3",prompt:"주제: 대전 서대전 사라요가 빈야사 수업 후기\n핵심 전달사항: 수업 분위기, 봄바람 스튜디오, 시퀀스, 회원 반응\n사진 설명: 수업 전 스튜디오, 동작들, 수업 후\n추가 메모: 후기형, 하루 스케치. 봄 계절감"},
+{day:12,dow:"토",date:"4/12",title:"오류동 숨은 카페 추천",type:"로컬",tag:"tag-local",frame:"하루스케치",tier:"Tier2",tierClass:"t2",prompt:"주제: 서대전 오류동 숨은 카페 — 수업 전 커피 한 잔\n핵심 전달사항: 사라요가 근처 카페. 분위기, 메뉴, 가격, 위치\n사진 설명: 카페 외관, 내부, 커피/디저트\n추가 메모: 로컬형, 하루 스케치"},
+{day:15,dow:"화",date:"4/15",title:"인사이드플로우 입문 가이드",type:"정보형",tag:"tag-info",frame:"문제→해결",tier:"Tier1",tierClass:"t1",prompt:"주제: 대전 서대전 인사이드플로우 — 음악과 호흡이 만나는 요가\n핵심 전달사항: 인사이드플로우란, 빈야사와 차이, 원장 전문 교육 배경\n사진 설명: 인사이드플로우 수업, 플로우 동작\n추가 메모: 정보형, 문제→해결. ★ Tier1"},
+{day:17,dow:"목",date:"4/17",title:"도구테라피 수업 후기",type:"후기",tag:"tag-review",frame:"인터뷰",tier:"Tier1",tierClass:"t1",prompt:"주제: 사라요가 도구테라피 수업 후기 — 폼롤러와 볼의 마법\n핵심 전달사항: 실제 체험. 도구, 체감, 수업 후 변화. 회원 인터뷰\n사진 설명: 도구 사용, 이완 자세, 수업 후 표정\n추가 메모: 후기형, 인터뷰. Tier1 킬러 콘텐츠"},
+{day:19,dow:"토",date:"4/19",title:"서대전역 네일아트 추천",type:"로컬",tag:"tag-local",frame:"큐레이션",tier:"Tier2",tierClass:"t2",prompt:"주제: 서대전네거리역 네일아트 — 요가하는 손끝도 예쁘게\n핵심 전달사항: 네일숍 추천. 요가 날 루틴. 가격, 분위기\n사진 설명: 네일숍, 시술, 완성 네일\n추가 메모: 로컬형, 큐레이션. Tier2"},
+{day:22,dow:"화",date:"4/22",title:"블랙롤 근막이완 가이드",type:"정보형",tag:"tag-info",frame:"리스트",tier:"Tier1",tierClass:"t1",prompt:"주제: 대전 서대전 블랙롤 근막이완 — 집에서도 할 수 있는 셀프 케어\n핵심 전달사항: 블랙롤이란, 근막이완 원리, 부위별 셀프 마사지\n사진 설명: 블랙롤 클로즈업, 부위별 사용, 수업 활용\n추가 메모: 정보형, 리스트. ★ Tier1"},
+{day:24,dow:"목",date:"4/24",title:"사라요가 가격 총정리",type:"가격",tag:"tag-price",frame:"리스트",tier:"가격",tierClass:"t3",prompt:"주제: 대전 서대전 사라요가 프로그램별 가격 총정리\n핵심 전달사항: 체험, 등록 가격, 프로그램별 매칭. 체험 신청 방법\n사진 설명: 프로그램 장면, 시간표, 스튜디오\n추가 메모: 가격형, 리스트. 표로 깔끔하게"},
+{day:26,dow:"토",date:"4/26",title:"플라잉요가 3개월 후기",type:"후기",tag:"tag-review",frame:"인터뷰",tier:"Tier3",tierClass:"t3",prompt:"주제: 서대전 사라요가 — 겁 많은 직장인의 플라잉요가 3개월 후기\n핵심 전달사항: 처음 무서웠지만 괜찮았던 것, 라운드숄더 개선, 체력 변화\n사진 설명: 첫 수업, 3개월 후 비교, 웃는 모습\n추가 메모: 후기형, 인터뷰. 공감/공유 최적화"},
+{day:29,dow:"화",date:"4/29",title:"5월 이벤트 & 가정의달",type:"시즌",tag:"tag-season",frame:"감성에세이",tier:"시즌",tierClass:"t3",prompt:"주제: 대전 서대전 사라요가 5월 가정의 달 특별 수업 & 이벤트\n핵심 전달사항: 5월 이벤트, 가정의 달 특별 수업, 등록 혜택\n사진 설명: 이벤트 배너, 가족 수업\n추가 메모: 시즌형, 감성 에세이"}
+];
+var WEEKS=[
+{name:"1주차 (4/1~5)",sub:"플라잉 가이드 + Tier1 도구테라피 + 로컬 맛집",days:[0,1,2]},
+{name:"2주차 (4/8~12)",sub:"서대전 선점 + 빈야사 후기 + 오류동 카페",days:[3,4,5]},
+{name:"3주차 (4/15~19)",sub:"Tier1 인사이드플로우 + 도구테라피 후기 + 네일",days:[6,7,8]},
+{name:"4주차 (4/22~26)",sub:"Tier1 블랙롤 + 가격 안내 + 플라잉 후기",days:[9,10,11]},
+{name:"5주차 (4/29)",sub:"5월 예고",days:[12]}
+];
+var pubDays={};PLAN.forEach(function(p,i){pubDays[p.day]=i;});
+var dayStates=JSON.parse(localStorage.getItem('sara-done-v3')||'{}');
+var projectUrl=localStorage.getItem('sara-project-url')||'';
+function init(){if(projectUrl){document.getElementById('project-url').value=projectUrl;document.getElementById('setup').style.background='#e8f5e9';document.getElementById('setup').querySelector('h3').textContent='프로젝트 URL 설정 완료';document.getElementById('setup').querySelector('h3').style.color='#2d6b4f';}renderCalendar();renderDetail();updateProgress();}
+function saveUrl(){projectUrl=document.getElementById('project-url').value.trim();if(!projectUrl)return;localStorage.setItem('sara-project-url',projectUrl);document.getElementById('saved-msg').style.display='inline';document.getElementById('setup').style.background='#e8f5e9';document.getElementById('setup').querySelector('h3').textContent='프로젝트 URL 설정 완료';document.getElementById('setup').querySelector('h3').style.color='#2d6b4f';setTimeout(function(){document.getElementById('saved-msg').style.display='none';},2000);}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+function copyToClipboard(text){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
+function writePost(idx){if(!projectUrl){showToast('상단에서 프로젝트 URL을 먼저 설정해주세요!');document.getElementById('project-url').focus();return;}copyToClipboard(PLAN[idx].prompt);showToast('복사 완료! 새 탭에서 Ctrl+V 붙여넣기 하세요');window.open(projectUrl,'_blank');}
+function toggleDone(idx){dayStates[idx]=!dayStates[idx];localStorage.setItem('sara-done-v3',JSON.stringify(dayStates));renderCalendar();renderDetail();updateProgress();}
+function updateProgress(){var done=Object.values(dayStates).filter(function(v){return v;}).length;var pct=Math.round((done/TOTAL)*100);document.getElementById('done-count').textContent=done+'개';document.getElementById('done-sub').textContent=pct+'%';document.getElementById('done-sub').className='sub '+(pct>=80?'success':pct>=40?'warn':'danger');document.getElementById('done-bar').style.width=pct+'%';document.getElementById('main-pct').textContent=pct+'%';document.getElementById('main-fill').style.width=pct+'%';document.getElementById('prog-text').textContent=done+' / '+TOTAL+' 발행 완료';}
+function renderCalendar(){var cal=document.getElementById('calendar');var html='<div class="cal-head">월</div><div class="cal-head">화</div><div class="cal-head">수</div><div class="cal-head">목</div><div class="cal-head">금</div><div class="cal-head">토</div><div class="cal-head">일</div><div class="cal-day empty"></div><div class="cal-day empty"></div>';for(var d=1;d<=30;d++){var pidx=pubDays[d];if(pidx!==undefined){var p=PLAN[pidx];var done=dayStates[pidx]?' done':'';html+='<div class="cal-day pub'+done+'"><div class="d">'+d+'</div><div class="t">'+p.title+'</div><div class="tag '+p.tag+'">'+p.type+'</div><div class="actions"><button class="btn-write" onclick="writePost('+pidx+')">글쓰기</button><button class="btn-check" onclick="toggleDone('+pidx+')">'+(dayStates[pidx]?'완료':'체크')+'</button></div></div>';}else{html+='<div class="cal-day rest"><div class="d" style="color:var(--text3)">'+d+'</div></div>';}}cal.innerHTML=html;}
+function renderDetail(){var el=document.getElementById('detail-plan');var html='';WEEKS.forEach(function(w){html+='<div class="week-section"><div class="week-header">'+w.name+' — '+w.sub+' <span class="wk-badge">'+w.days.length+'개</span></div>';w.days.forEach(function(idx){var p=PLAN[idx];var done=dayStates[idx];html+='<div class="day-row'+(done?' done-row':'')+'"><div class="date">'+p.date+' '+p.dow+'</div><div class="title">'+p.title+'</div><div><span class="tag '+p.tag+'" style="font-size:0.65rem">'+p.type+'</span></div><div class="frame">'+p.frame+'</div><div class="kw '+p.tierClass+'">'+p.tier+'</div><div><button class="btn-go" onclick="writePost('+idx+')">글쓰기</button></div></div>';});html+='</div>';});el.innerHTML=html;}
+init();
+new Chart(document.getElementById('tierChart'),{type:'doughnut',data:{labels:['Tier1 블루오션 31%','Tier2 선점 38%','Tier3+기타 31%'],datasets:[{data:[4,5,4],backgroundColor:['#534ab7','#378add','#b4b2a9'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:11,family:'Noto Sans KR'},color:'#6b6a65',padding:10,usePointStyle:true,pointStyle:'rectRounded'}}}}});
+</script>
+</body>
+</html>

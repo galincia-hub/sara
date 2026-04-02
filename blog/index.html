@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>블로그 — 사라요가 | 대전 서대전 소그룹 요가 스튜디오</title>
+<meta name="description" content="사라요가 블로그. 대전 서대전 요가 정보, 프로그램 가이드, 수업 후기, 동네 이야기.">
+<link rel="canonical" href="https://sarayoga.kr/blog">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"사라요가 블로그","description":"대전 서대전 소그룹 요가 스튜디오 사라요가의 블로그.","url":"https://sarayoga.kr/blog","isPartOf":{"@type":"WebSite","name":"사라요가","url":"https://sarayoga.kr"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"사라요가","item":"https://sarayoga.kr"},{"@type":"ListItem","position":2,"name":"블로그"}]}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#FAF6F1;--surface:#fff;--brown:#3D3228;--gold:#8B7355;--beige:#EDE6DC;--gray:#6B5D4F;--lgray:#B09C80;--cgray:#C8BBAA;--border:rgba(212,197,176,.15);--radius:18px}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brown);line-height:1.6;-webkit-font-smoothing:antialiased}
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,246,241,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:14px 24px}
+.nav-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.nav a{text-decoration:none;color:var(--gold);font-size:13px;letter-spacing:1px;transition:color .3s}
+.nav a:hover{color:var(--brown)}
+.nav .logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:2px}
+.nav .links{display:flex;gap:24px;align-items:center}
+.header{max-width:900px;margin:0 auto;padding:56px 24px 0;text-align:center}
+.header .label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:7px;color:var(--lgray);margin-bottom:14px}
+.header h1{font-size:32px;font-weight:700;color:var(--brown);margin-bottom:12px}
+.header p{font-size:14px;font-weight:300;color:var(--gray);line-height:1.8;max-width:480px;margin:0 auto}
+.filter{max-width:900px;margin:0 auto;padding:32px 24px 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.filter button{background:none;border:1px solid var(--border);border-radius:24px;padding:8px 20px;font-size:13px;color:var(--lgray);cursor:pointer;font-family:inherit;transition:all .3s}
+.filter button:hover{border-color:var(--gold);color:var(--gold)}
+.filter button.active{background:var(--brown);color:var(--bg);border-color:var(--brown)}
+.grid{max-width:900px;margin:0 auto;padding:36px 24px 80px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.card{background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);text-decoration:none;display:block;transition:all .4s cubic-bezier(.25,.46,.45,.94);opacity:0;transform:translateY(20px);animation:fadeUp .5s ease forwards}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(61,50,40,.08)}
+.card-img{height:180px;background:var(--beige);overflow:hidden;position:relative}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.card:hover .card-img img{transform:scale(1.06)}
+.card-img .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.card-img .fallback .ph{font-size:28px;opacity:.35}
+.card-img .fallback .pl{font-size:11px;color:var(--gold);opacity:.5}
+.card-body{padding:20px 22px 24px}
+.card-meta{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.card-cat{font-size:10px;color:var(--gold);background:rgba(139,115,85,.08);padding:4px 12px;border-radius:16px;font-weight:500}
+.card-date{font-size:11px;color:var(--cgray)}
+.card-title{font-size:15px;font-weight:500;color:var(--brown);line-height:1.55;margin-bottom:10px;word-break:keep-all}
+.card-summary{font-size:13px;font-weight:300;color:var(--gray);line-height:1.75;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.card-tags span{font-size:10px;color:var(--lgray);background:rgba(176,156,128,.08);padding:3px 10px;border-radius:12px}
+.empty{text-align:center;padding:60px 24px;color:var(--lgray);font-size:14px}
+.cta-section{max-width:900px;margin:0 auto;padding:0 24px 80px;text-align:center}
+.cta-section p{font-size:14px;color:var(--gray);font-weight:300;margin-bottom:16px}
+.cta-btn{display:inline-block;background:var(--gold);color:var(--bg);text-decoration:none;padding:15px 40px;border-radius:32px;font-size:14px;letter-spacing:1.5px;transition:all .3s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(139,115,85,.3)}
+.footer{background:var(--brown);padding:36px 24px 48px;text-align:center}
+.footer .fname{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(139,115,85,.6);letter-spacing:4px;margin-bottom:8px}
+.footer .fsub{font-size:11px;color:rgba(176,156,128,.35);line-height:1.8}
+.footer .flinks{margin-top:16px;display:flex;justify-content:center;gap:24px}
+.footer .flinks a{color:rgba(176,156,128,.45);text-decoration:none;font-size:12px}
+.footer .copy{margin-top:16px;font-size:10px;color:rgba(176,156,128,.2)}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.header h1{font-size:26px}.grid{grid-template-columns:1fr;gap:14px}.card-img{height:160px}.nav .links .desk{display:none}}
+@media(min-width:768px){.nav{padding:16px 48px}.header{padding:72px 48px 0}.header h1{font-size:36px}.grid{grid-template-columns:repeat(3,1fr);padding:40px 48px 100px}.card-img{height:200px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">Sara Yoga</a>
+    <div class="links">
+      <a href="/" class="desk">홈</a>
+      <a href="/blog/">블로그</a>
+      <a href="/#contact">문의</a>
+    </div>
+  </div>
+</nav>
+
+<header class="header">
+  <div class="label">BLOG</div>
+  <h1>사라요가 이야기</h1>
+  <p>요가 정보, 프로그램 가이드, 수업 후기, 서대전 동네 이야기까지.<br>사라요가의 모든 콘텐츠를 만나보세요.</p>
+</header>
+
+<div class="filter" id="filter"></div>
+
+<!-- posts.json에서 자동 렌더링 -->
+<div class="grid" id="blog-grid"></div>
+<div class="empty" id="empty-msg" style="display:none">해당 카테고리의 글이 아직 없어요.</div>
+
+<div class="cta-section">
+  <p>글을 읽고 궁금한 점이 있으신가요?</p>
+  <a href="/#contact" class="cta-btn">체험수업 무료 신청</a>
+</div>
+
+<footer class="footer">
+  <div class="fname">Sara Yoga Studio</div>
+  <div class="fsub">원장 직강 · 소수정예 6명 · 1:1 교정<br>서대전네거리역 4번출구 도보 2분</div>
+  <div class="flinks"><a href="/">홈</a><a href="/blog/">블로그</a><a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a></div>
+  <div class="copy">© 2023–2026 Sara Yoga Studio</div>
+</footer>
+
+<script>
+(function() {
+  var posts = [];
+  var activeFilter = 'all';
+
+  // posts.json 로드
+  fetch('posts.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      posts = data;
+      renderFilters();
+      renderPosts();
+    })
+    .catch(function() {
+      // fetch 실패 시 (로컬 파일 등) 하드코딩 데이터 사용
+      posts = [
+        {slug:"서대전-사라요가-가격-총정리",title:"서대전 사라요가 프로그램별 가격 총정리 — 2026년 최신",category:"가격/안내",date:"2026.04.12",summary:"체험수업 무료, 4회 88,000원부터. 6명 소그룹, 원장 직강 100%.",tags:["사라요가가격","대전요가가격","서대전요가","사라요가"],thumbnail:"/images/blog/pool/studio-전경.jpg"},
+        {slug:"대전중구-소그룹요가-비교",title:"대전 중구 소그룹 요가 vs 대형 요가원 — 뭐가 다를까?",category:"정보/가이드",date:"2026.04.10",summary:"정원 수, 1:1 교정, 가격 대비 가치까지 솔직 비교.",tags:["대전중구요가","소그룹요가","서대전요가","사라요가"],thumbnail:"/images/blog/pool/group-소그룹수업.jpg"},
+        {slug:"서대전-플라잉요가-초보가이드",title:"서대전 플라잉요가 초보 가이드 — 겁 많아도 괜찮아요",category:"정보/가이드",date:"2026.04.08",summary:"해먹이 체중의 80%를 지지해주니까 팔 힘 없어도 OK.",tags:["대전플라잉요가","서대전요가","플라잉요가초보","사라요가"],thumbnail:"/images/blog/pool/flying-해먹전경.jpg"},
+        {slug:"대전중구-블랙롤-근막이완-가이드",title:"대전 중구 블랙롤 근막이완 가이드 — 집에서도 할 수 있는 셀프케어",category:"정보/가이드",date:"2026.04.05",summary:"블랙롤 부위별 사용법과 효과.",tags:["블랙롤","근막이완","대전중구요가","사라요가"],thumbnail:"/images/blog/pool/therapy-블랙롤.jpg"},
+        {slug:"서대전-인사이드플로우-입문가이드",title:"서대전 인사이드플로우 입문 가이드 — 음악과 호흡이 만나는 요가",category:"정보/가이드",date:"2026.04.03",summary:"음악에 맞춰 움직이는 빈야사 기반 플로우 요가.",tags:["대전인사이드플로우","서대전요가","인사이드플로우입문","사라요가"],thumbnail:"/images/blog/pool/insideflow-플로우.jpg"},
+        {slug:"대전중구-도구테라피-완전가이드",title:"대전 중구 도구테라피 완전 가이드 — 뭉친 어깨, 이렇게 풀어요",category:"정보/가이드",date:"2026.04.01",summary:"폼롤러, 블랙롤, 근막이완 볼 활용 셀프 테라피.",tags:["대전도구테라피","대전중구요가","블랙롤테라피","사라요가"],thumbnail:"/images/blog/pool/therapy-폼롤러.jpg"}
+      ];
+      renderFilters();
+      renderPosts();
+    });
+
+  function renderFilters() {
+    var cats = ['all'];
+    posts.forEach(function(p) { if (cats.indexOf(p.category) === -1) cats.push(p.category); });
+    var labels = { 'all': '전체' };
+    var html = cats.map(function(c) {
+      return '<button data-cat="' + c + '" class="' + (c === activeFilter ? 'active' : '') + '">' + (labels[c] || c) + '</button>';
+    }).join('');
+    document.getElementById('filter').innerHTML = html;
+
+    document.getElementById('filter').addEventListener('click', function(e) {
+      if (e.target.tagName !== 'BUTTON') return;
+      activeFilter = e.target.dataset.cat;
+      document.querySelectorAll('.filter button').forEach(function(b) { b.classList.remove('active'); });
+      e.target.classList.add('active');
+      renderPosts();
+    });
+  }
+
+  function renderPosts() {
+    var filtered = activeFilter === 'all' ? posts : posts.filter(function(p) { return p.category === activeFilter; });
+    var grid = document.getElementById('blog-grid');
+    var empty = document.getElementById('empty-msg');
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    grid.innerHTML = filtered.map(function(post, i) {
+      var imgHtml = post.thumbnail
+        ? '<img src="' + post.thumbnail + '" alt="' + post.title + '" onerror="this.parentElement.innerHTML=\'<div class=fallback><span class=ph>📷</span><span class=pl>' + post.category + '</span></div>\'">'
+        : '<div class="fallback"><span class="ph">📷</span><span class="pl">' + post.category + '</span></div>';
+
+      var tagsHtml = (post.tags || []).slice(0, 3).map(function(t) { return '<span>#' + t + '</span>'; }).join('');
+
+      return '<a href="/blog/' + post.slug + '.html" class="card" style="animation-delay:' + (i * 0.06) + 's" data-cat="' + post.category + '">'
+        + '<div class="card-img">' + imgHtml + '</div>'
+        + '<div class="card-body">'
+        + '<div class="card-meta"><span class="card-cat">' + post.category + '</span><span class="card-date">' + post.date + '</span></div>'
+        + '<div class="card-title">' + post.title + '</div>'
+        + '<div class="card-summary">' + post.summary + '</div>'
+        + '<div class="card-tags">' + tagsHtml + '</div>'
+        + '</div></a>';
+    }).join('');
+  }
+})();
+</script>
+
+</body>
+</html>
