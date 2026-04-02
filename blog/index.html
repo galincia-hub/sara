@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -66,10 +66,10 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brow
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="/" class="logo">Sara Yoga</a>
+    <a href="../" class="logo">Sara Yoga</a>
     <div class="links">
-      <a href="/" class="desk">홈</a>
-      <a href="/blog/">블로그</a>
+      <a href="../" class="desk">홈</a>
+      <a href="../blog/">블로그</a>
       <a href="/#contact">문의</a>
     </div>
   </div>
@@ -95,7 +95,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brow
 <footer class="footer">
   <div class="fname">Sara Yoga Studio</div>
   <div class="fsub">원장 직강 · 소수정예 6명 · 1:1 교정<br>서대전네거리역 4번출구 도보 2분</div>
-  <div class="flinks"><a href="/">홈</a><a href="/blog/">블로그</a><a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a></div>
+  <div class="flinks"><a href="../">홈</a><a href="../blog/">블로그</a><a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a></div>
   <div class="copy">© 2023–2026 Sara Yoga Studio</div>
 </footer>
 
@@ -163,7 +163,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brow
 
       var tagsHtml = (post.tags || []).slice(0, 3).map(function(t) { return '<span>#' + t + '</span>'; }).join('');
 
-      return '<a href="/blog/' + post.slug + '.html" class="card" style="animation-delay:' + (i * 0.06) + 's" data-cat="' + post.category + '">'
+      return '<a href="../blog/' + post.slug + '.html" class="card" style="animation-delay:' + (i * 0.06) + 's" data-cat="' + post.category + '">'
         + '<div class="card-img">' + imgHtml + '</div>'
         + '<div class="card-body">'
         + '<div class="card-meta"><span class="card-cat">' + post.category + '</span><span class="card-date">' + post.date + '</span></div>'
