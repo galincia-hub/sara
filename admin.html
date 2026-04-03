@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사라요가 Admin</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F5F0EB;--surface:#fff;--brown:#3D3228;--gold:#8B7355;--beige:#EDE6DC;--gray:#6B5D4F;--lgray:#B09C80;--border:rgba(212,197,176,.25);--radius:14px;--danger:#C0392B;--success:#27AE60}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--brown);line-height:1.6;min-height:100vh}
+header{background:var(--brown);color:#FAF6F1;padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:18px;font-weight:600;letter-spacing:1px}
+header .sub{font-size:12px;color:rgba(250,246,241,.45);margin-top:2px}
+.badge{background:var(--gold);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.container{max-width:960px;margin:32px auto;padding:0 24px}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--surface);border-radius:var(--radius);padding:20px 22px;border:1px solid var(--border)}
+.stat-card .num{font-size:32px;font-weight:700;color:var(--brown)}
+.stat-card .label{font-size:12px;color:var(--lgray);margin-top:4px}
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.card-header{padding:14px 20px;background:var(--beige);display:flex;align-items:center;justify-content:space-between}
+.card-header h2{font-size:15px;font-weight:600;color:var(--brown)}
+table{width:100%;border-collapse:collapse}
+th{padding:12px 16px;text-align:left;font-size:11px;color:var(--lgray);font-weight:600;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:13px 16px;font-size:13.5px;color:var(--gray);border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(139,115,85,.03)}
+.cat{display:inline-block;font-size:10px;padding:2px 10px;border-radius:12px;background:rgba(139,115,85,.1);color:var(--gold);font-weight:600;white-space:nowrap}
+.title-link{color:var(--brown);text-decoration:none;font-weight:400}
+.title-link:hover{color:var(--gold)}
+.slug{font-size:11px;color:var(--lgray);margin-top:3px;font-family:monospace}
+.action-btn{display:inline-block;padding:4px 12px;border-radius:8px;font-size:11px;text-decoration:none;border:1px solid var(--border);color:var(--gray);transition:all .2s}
+.action-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(139,115,85,.06);color:var(--lgray);margin:1px}
+.err{padding:20px;color:var(--danger);font-size:14px;text-align:center}
+.loading{padding:40px;text-align:center;color:var(--lgray);font-size:14px}
+.index-note{font-size:12px;color:var(--lgray);padding:10px 20px 14px;background:rgba(139,115,85,.03);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Sara Yoga · Admin</h1>
+    <div class="sub">블로그 관리 패널 — 정적 뷰어 (수정은 VS Code에서)</div>
+  </div>
+  <span class="badge" id="total-badge">로딩 중…</span>
+</header>
+
+<div class="container">
+
+  <!-- 통계 -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="num" id="stat-total">—</div>
+      <div class="label">총 블로그 글</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-latest">—</div>
+      <div class="label">최근 발행일</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-cats">—</div>
+      <div class="label">카테고리 수</div>
+    </div>
+  </div>
+
+  <!-- 글 목록 -->
+  <div class="card">
+    <div class="card-header">
+      <h2>블로그 글 목록 <span style="font-weight:300;color:var(--lgray)">— posts.json 기반</span></h2>
+      <a href="blog/index.html" target="_blank" class="action-btn">블로그 목록 보기 →</a>
+    </div>
+    <div id="list-wrap">
+      <div class="loading">posts.json 로딩 중…</div>
+    </div>
+    <div class="index-note">
+      📁 posts.json 경로: <code>blog/posts.json</code> &nbsp;|&nbsp;
+      글 추가 후 posts.json + sitemap.xml 함께 업데이트하세요.
+    </div>
+  </div>
+
+</div>
+
+<script>
+fetch('blog/posts.json')
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(posts => {
+    // 날짜 내림차순 정렬
+    posts.sort((a,b) => b.date.localeCompare(a.date));
+
+    // 통계
+    const cats = new Set(posts.map(p => p.category));
+    document.getElementById('stat-total').textContent = posts.length;
+    document.getElementById('stat-latest').textContent = posts[0]?.date ?? '—';
+    document.getElementById('stat-cats').textContent = cats.size;
+    document.getElementById('total-badge').textContent = `글 ${posts.length}개`;
+
+    // 테이블
+    const rows = posts.map((p, i) => {
+      const tags = (p.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');
+      const viewUrl = `blog/${p.slug}.html`;
+      return `<tr>
+        <td style="color:var(--lgray);font-size:12px;width:28px">${i + 1}</td>
+        <td>
+          <a href="${viewUrl}" target="_blank" class="title-link">${p.title}</a>
+          <div class="slug">${p.slug}</div>
+        </td>
+        <td><span class="cat">${p.category}</span></td>
+        <td style="white-space:nowrap">${p.date}</td>
+        <td>${tags}</td>
+        <td>
+          <a href="${viewUrl}" target="_blank" class="action-btn">보기</a>
+        </td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('list-wrap').innerHTML = `
+      <table>
+        <thead><tr>
+          <th>#</th><th>제목 / 슬러그</th><th>카테고리</th><th>발행일</th><th>태그</th><th>링크</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  })
+  .catch(err => {
+    document.getElementById('list-wrap').innerHTML =
+      `<div class="err">posts.json 로드 실패 — 로컬 서버(live-server 등)에서 열어주세요.<br><small>${err}</small></div>`;
+    document.getElementById('total-badge').textContent = '오류';
+  });
+</script>
+</body>
+</html>
