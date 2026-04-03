@@ -87,15 +87,7 @@ a{text-decoration:none;color:var(--ac2)}
 <div class="toast" id="toast"></div>
 
 <script>
-var POSTS=[
-{slug:"대전중구-도구테라피-완전가이드",title:"대전 중구 도구테라피 완전 가이드 — 뭉친 어깨, 이렇게 풀어요",cat:"정보/가이드",date:"2026.04.01",sum:"폼롤러, 블랙롤, 근막이완 볼 활용 셀프 테라피.",tags:["대전도구테라피","대전중구요가","블랙롤테라피"],fr:"문제→해결→체험",tier:"Tier1",rg:"대전 중구"},
-{slug:"서대전-인사이드플로우-입문가이드",title:"서대전 인사이드플로우 입문 가이드 — 음악과 호흡이 만나는 요가",cat:"정보/가이드",date:"2026.04.03",sum:"음악에 맞춰 움직이는 빈야사 기반 플로우.",tags:["대전인사이드플로우","서대전요가"],fr:"비교/선택 가이드",tier:"Tier1",rg:"서대전"},
-{slug:"대전중구-블랙롤-근막이완-가이드",title:"대전 중구 블랙롤 근막이완 가이드 — 집에서도 셀프케어",cat:"정보/가이드",date:"2026.04.05",sum:"블랙롤 부위별 사용법과 효과.",tags:["블랙롤","근막이완","대전중구요가"],fr:"리스트/큐레이션",tier:"Tier1",rg:"대전 중구"},
-{slug:"서대전-플라잉요가-초보가이드",title:"서대전 플라잉요가 초보 가이드 — 겁 많아도 괜찮아요",cat:"정보/가이드",date:"2026.04.08",sum:"해먹이 체중 80% 지지. 로우 vs 하이 차이.",tags:["대전플라잉요가","서대전요가"],fr:"비교/선택 가이드",tier:"Tier2",rg:"서대전"},
-{slug:"대전중구-소그룹요가-비교",title:"대전 중구 소그룹 요가 vs 대형 — 뭐가 다를까?",cat:"정보/가이드",date:"2026.04.10",sum:"정원, 1:1 교정, 가격 대비 가치 비교.",tags:["대전중구요가","소그룹요가"],fr:"비교/선택 가이드",tier:"Tier2",rg:"대전 중구"},
-{slug:"서대전-사라요가-가격-총정리",title:"서대전 사라요가 가격 총정리 — 2026년 최신",cat:"가격/안내",date:"2026.04.12",sum:"체험 무료, 4회 88,000원부터.",tags:["사라요가가격","서대전요가"],fr:"리스트/큐레이션",tier:"Tier3",rg:"서대전"},
-{slug:"대전중구-빈야사-초보가이드",title:"대전 중구 빈야사 초보 가이드 — 호흡부터 시작해요",cat:"정보/가이드",date:"2026.04.14",sum:"빈야사 기본 흐름과 초보자 가이드.",tags:["대전빈야사","대전중구요가"],fr:"문제→해결→체험",tier:"Tier3",rg:"대전 중구"}
-];
+var POSTS=[];
 
 var T1=[{k:"대전 도구테라피",d:"도구별 가이드"},{k:"블랙롤테라피 대전",d:"블랙롤 효과"},{k:"대전 인사이드플로우",d:"입문 가이드"},{k:"대전 근막이완 요가",d:"원리/효과"},{k:"대전 얼라인먼트 요가",d:"얼라인먼트란?"},{k:"요가 도구 테라피",d:"전국 가이드"}];
 var T2=[{k:"대전중구요가",d:"소그룹 추천"},{k:"대전 플라잉요가",d:"초보+후기"},{k:"서대전 요가",d:"서대전 추천"},{k:"서대전네거리역 요가",d:"도보권"},{k:"서대전 맛집",d:"요가 후 한 끼"},{k:"오류동 카페",d:"수업 전 커피"},{k:"대전 소그룹 요가",d:"소수정예"}];
@@ -225,8 +217,30 @@ function render(){
   }).join("");
 }
 
-// Init
-render();
+// Init — posts.json fetch
+fetch('blog/posts.json')
+  .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+  .then(function(data){
+    POSTS=data.map(function(p){
+      var s=p.slug||"";
+      var rg=s.indexOf("서대전-")===0?"서대전":s.indexOf("대전중구-")===0?"대전 중구":"";
+      return {
+        slug:s,
+        title:p.title||"",
+        cat:p.category||"",
+        date:p.date||"",
+        sum:p.summary||"",
+        tags:p.tags||[],
+        fr:p.fr||"",
+        tier:p.tier||"",
+        rg:p.rg||rg
+      };
+    });
+    render();
+  })
+  .catch(function(e){
+    document.getElementById("metrics").innerHTML='<div style="color:#c0392b;padding:16px">posts.json 로드 실패 — 로컬 서버에서 열어주세요.<br><small>'+e+'</small></div>';
+  });
 </script>
 </body>
 </html>
