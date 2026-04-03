@@ -63,6 +63,7 @@ a{text-decoration:none}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
 .nav-logo{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:2px;color:#fff;transition:color .5s;text-shadow:0 1px 12px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px}
 .nav.scrolled .nav-logo{color:var(--gold);text-shadow:none}
+.nav-logo-dark{display:none}.nav.scrolled .nav-logo-white{display:none!important}.nav.scrolled .nav-logo-dark{display:block!important}
 .nav-links{display:none;gap:32px;align-items:center}
 .nav-link{position:relative;padding:4px 0;font-size:13px;letter-spacing:1.5px;font-weight:400;color:rgba(255,255,255,.8);text-shadow:0 1px 8px rgba(0,0,0,.1);transition:color .3s}
 .nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
@@ -336,7 +337,7 @@ a{text-decoration:none}
 <!-- ═══ NAV ═══ -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <div class="nav-logo serif" onclick="window.scrollTo({top:0,behavior:'smooth'})"><img src="images/blog/pool/brand-logo.png" alt="사라요가 로고" style="height:36px;display:block">Sara Yoga</div>
+    <div class="nav-logo serif" onclick="window.scrollTo({top:0,behavior:'smooth'})"><img src="images/logo/사라요가-로고-가로형-흰색.png" alt="사라요가 로고" class="nav-logo-white" style="height:36px;display:block"><img src="images/logo/사라요가-로고-가로형-다크그레이.png" alt="사라요가 로고" class="nav-logo-dark" style="height:36px"></div>
     <div class="nav-links">
       <a class="nav-link" href="#about">소개</a>
       <a class="nav-link" href="#programs">프로그램</a>
@@ -527,7 +528,7 @@ a{text-decoration:none}
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div><img src="images/blog/pool/brand-logo.png" alt="사라요가 로고" style="height:30px;display:block;margin-bottom:10px"><div class="serif fname">Sara Yoga Studio</div><div class="fsub">원장 직강 · 소수정예 · 1:1 교정</div></div>
+    <div><img src="images/logo/사라요가-로고-가로형-베이지.png" alt="사라요가 로고" style="height:30px;display:block;margin-bottom:10px"><div class="serif fname">Sara Yoga Studio</div><div class="fsub">원장 직강 · 소수정예 · 1:1 교정</div></div>
     <div class="flinks"><a href="blog/">Blog</a><a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a></div>
   </div>
   <div class="copy" style="max-width:1200px;margin:20px auto 0">© 2023–2026 Sara Yoga Studio</div>
