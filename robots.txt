@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://galincia-hub.github.io/sara/sitemap.xml
+Sitemap: https://www.sarayoga.co.kr/sitemap.xml
