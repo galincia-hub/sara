@@ -109,7 +109,7 @@ a{text-decoration:none}
 .about-text .hl{color:var(--gold);font-weight:400}
 .instructor-card{background:linear-gradient(145deg,#3D3228,#564939);border-radius:22px;padding:30px 26px;color:#FAF6F1;position:relative;overflow:hidden}
 .instructor-card .circle{position:absolute;top:-30%;right:-15%;width:180px;height:180px;border-radius:50%;background:rgba(139,115,85,.1)}
-.instructor-avatar{width:130px;height:130px;border-radius:50%;overflow:hidden;flex-shrink:0}.instructor-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
+.instructor-avatar{width:200px;height:200px;border-radius:50%;overflow:hidden;flex-shrink:0}.instructor-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}.instructor-layout{display:flex;flex-direction:row;align-items:flex-start;gap:28px}@media(max-width:600px){.instructor-layout{flex-direction:column;align-items:center;text-align:center}}
 
 /* ── Gallery ── */
 .gallery-section{padding-bottom:60px}
@@ -403,18 +403,18 @@ a{text-decoration:none}
     <div style="padding-left:24px">
       <div class="reveal"><div class="serif label">ABOUT</div><h3 style="font-size:27px;font-weight:500;line-height:1.55;margin-bottom:28px">좋은 사람들과<br>요가를 나누는 공간</h3></div>
       <div class="reveal" style="transition-delay:.15s">
-        <div class="about-text"><p>큰 스튜디오에서 뒤에 앉으면 선생님 얼굴도 안 보이잖아요. 저는 모든 분의 자세를 하나하나 봐드리고 싶었어요.<br><br><span class="hl">정원 6명, 원장 직강 100%.</span><br>잘하려고 애쓰지 않아도 괜찮은 곳.</p></div>
+        <div class="about-text"><p>큰 스튜디오에서 뒤에 앉으면 선생님 얼굴도 안 보이잖아요. 저는 모든 분의 자세를 하나하나 봐드리고 싶었어요.<br><br><span class="hl">소수정예, 원장 직강 100%.</span><br>잘하려고 애쓰지 않아도 괜찮은 곳.</p></div>
       </div>
       <div class="reveal" style="transition-delay:.25s">
         <div class="instructor-card">
           <div class="circle"></div>
           <div style="position:relative">
             <div class="serif label" style="color:rgba(176,156,128,.55);letter-spacing:6px">INSTRUCTOR</div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:20px;text-align:center">
+            <div class="instructor-layout" style="margin-bottom:8px">
               <div class="instructor-avatar"><img src="images/blog/pool/instructor-프로필포즈.jpg" alt="사라요가 Sara 원장"></div>
-              <div><div style="font-size:20px;font-weight:500">Sara 원장</div><div class="serif" style="font-size:12px;color:rgba(250,246,241,.5);letter-spacing:2px">Founder & Instructor</div></div>
+              <div style="flex:1;padding-top:8px"><div style="font-size:20px;font-weight:500">Sara 원장</div><div class="serif" style="font-size:12px;color:rgba(250,246,241,.5);letter-spacing:2px;margin-bottom:16px">Founder & Instructor</div>
+            <div style="font-size:12.5px;font-weight:300;line-height:2.1;color:rgba(250,246,241,.65)">인사이드플로우 정식 교육 수료 · 인사이드 얼라인먼트 전문 과정<br>플라잉요가 · 도구테라피 · 블랙롤 전문 · 빈야사 · 하타 · 서포트요가 지도</div></div>
             </div>
-            <div style="font-size:12.5px;font-weight:300;line-height:2.1;color:rgba(250,246,241,.65)">인사이드플로우 정식 교육 수료 · 인사이드 얼라인먼트 전문 과정<br>플라잉요가 · 도구테라피 · 블랙롤 전문 · 빈야사 · 하타 · 서포트요가 지도</div>
           </div>
         </div>
       </div>
@@ -465,7 +465,7 @@ a{text-decoration:none}
         </div>
 
         <div class="reveal" style="transition-delay:.2s;margin-top:20px;text-align:center">
-          <a href="https://www.hifive.fitness/" target="_blank" rel="noopener noreferrer" style="font-size:13.5px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(139,115,85,.3);padding-bottom:2px">하이파이브 앱에서 실시간 시간표 확인 →</a>
+          <a href="#" onclick="openHifive();return false;" style="font-size:13.5px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(139,115,85,.3);padding-bottom:2px">하이파이브 앱에서 실시간 시간표 확인 →</a>
         </div>
       </div>
     </div>
@@ -547,11 +547,11 @@ var IMG={hero:"https://picsum.photos/id/1057/1600/900",aboutLeft:"https://picsum
 
 var PROGRAMS=[
 {id:"flying",name:"플라잉요가",eng:"Flying Yoga",desc:"해먹 위에서 중력을 벗어나는 경험. 코어 강화와 스트레칭을 동시에, 초보자도 안전하게 시작할 수 있어요.",tags:["코어강화","스트레칭","초보환영"],level:"All Level",img:"images/blog/pool/flying-하이플라잉콜라주.jpg"},
-{id:"insideflow",name:"인사이드플로우",eng:"Inside Flow",desc:"음악과 호흡, 움직임이 하나로 흐르는 빈야사 기반 플로우. 몸과 마음이 함께 춤추는 시간이에요.",tags:["음악","플로우","감성"],level:"Basic+",img:"images/blog/pool/insideflow-옆스트레칭.jpg"},
+{id:"insideflow",name:"인사이드플로우",eng:"Inside Flow",desc:"음악과 호흡, 움직임이 하나로 흐르는 빈야사 기반 플로우. 몸과 마음이 함께 춤추는 시간이에요.",tags:["음악","플로우","감성"],level:"Basic+",img:"images/blog/pool/insideflow-선데이클래스.png"},
 {id:"vinyasa",name:"빈야사",eng:"Vinyasa",desc:"호흡과 움직임을 연결하는 역동적인 요가. 체력과 유연성을 함께 키울 수 있어요.",tags:["역동적","체력","유연성"],level:"All Level",img:"images/blog/pool/vinyasa-밸런스동작.jpg"},
 {id:"therapy",name:"도구테라피",eng:"Tool Therapy",desc:"폼롤러, 블랙롤, 근막이완 볼을 활용한 셀프 테라피. 뭉친 근막을 풀고 몸의 밸런스를 찾아줘요.",tags:["근막이완","블랙롤","셀프케어"],level:"All Level",img:"images/blog/pool/therapy-요가링스트레칭.jpg"},
 {id:"hatha",name:"하타플로우",eng:"Hatha Flow",desc:"기본 자세를 천천히 깊게 수련하는 요가. 호흡에 집중하며 내면의 고요함을 만나요.",tags:["기초","호흡","이완"],level:"Beginner",img:"images/blog/pool/hatha-코어운동.jpg"},
-{id:"support",name:"서포트요가",eng:"Support Yoga",desc:"보조 도구를 활용해 깊은 이완을 경험하는 리스토어티브 요가. 지친 몸과 마음을 회복시켜요.",tags:["이완","회복","도구활용"],level:"All Level",img:"images/blog/pool/support-블록이완.jpg"}
+{id:"support",name:"서포트요가",eng:"Support Yoga",desc:"보조 도구를 활용해 깊은 이완을 경험하는 리스토어티브 요가. 지친 몸과 마음을 회복시켜요.",tags:["이완","회복","도구활용"],level:"All Level",img:"images/blog/pool/group-이완자세.jpg"}
 ];
 
 // ── Class color chips ──
@@ -893,6 +893,17 @@ document.addEventListener('DOMContentLoaded',function(){
     if(newPer!==reviewsPerPage){reviewsPerPage=newPer;reviewPage=0;renderReviews();}
   });
 });
+
+function openHifive(){
+  var ua=navigator.userAgent||navigator.vendor||window.opera;
+  if(/iPad|iPhone|iPod/.test(ua)&&!window.MSStream){
+    window.open('https://apps.apple.com/kr/app/%ED%95%98%EC%9D%B4%ED%8C%8C%EC%9D%B4%EB%B8%8C/id1544465784','_blank','noopener,noreferrer');
+  }else if(/android/i.test(ua)){
+    window.open('https://play.google.com/store/apps/details?id=com.hifive.fitness','_blank','noopener,noreferrer');
+  }else{
+    window.open('https://www.hifive.fitness/','_blank','noopener,noreferrer');
+  }
+}
 </script>
 </body>
 </html>
