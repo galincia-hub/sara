@@ -624,16 +624,7 @@ var REVIEWS=[
 {name:"최*아",date:"2026.03.20",rating:5,type:"정규 수업",text:"플라잉요가 처음에 무서웠는데, 원장님이 옆에서 하나하나 잡아주시니까 안심이 됐어요. 이제는 거꾸로 매달리는 것도 재밌어요!",tags:["플라잉요가","어깨"]}
 ];
 
-var BLOG_POSTS=[
-{slug:"대전중구-도구테라피-완전가이드",title:"대전 중구 도구테라피 완전 가이드 — 뭉친 어깨, 이렇게 풀어요",cat:"정보",date:"2026.04.01",thumbnail:"images/blog/pool/therapy-요가링스트레칭.jpg"},
-{slug:"서대전-인사이드플로우-입문가이드",title:"서대전 인사이드플로우 입문 가이드 — 음악과 호흡이 만나는 요가",cat:"정보",date:"2026.04.03",thumbnail:"images/blog/pool/insideflow-팔동작앉기.jpg"},
-{slug:"대전중구-빈야사-초보가이드",title:"대전 중구 빈야사 초보 가이드 — 호흡 하나로 시작해요",cat:"정보",date:"2026.04.03",thumbnail:"images/blog/pool/vinyasa-전사자세.jpg"},
-{slug:"대전중구-블랙롤-근막이완-가이드",title:"대전 중구 블랙롤 근막이완 가이드 — 집에서도 할 수 있는 셀프케어",cat:"정보",date:"2026.04.05",thumbnail:"images/blog/pool/therapy-도구클로즈업.jpg"},
-{slug:"서대전-플라잉요가-초보가이드",title:"서대전 플라잉요가 초보 가이드 — 겁 많아도 괜찮아요",cat:"정보",date:"2026.04.08",thumbnail:"images/blog/pool/flying-해먹동작.jpg"},
-{slug:"대전중구-소그룹요가-비교",title:"대전 중구 소그룹 요가 vs 대형 — 뭐가 다를까?",cat:"정보",date:"2026.04.10",thumbnail:"images/blog/pool/group-소그룹수업.jpg"},
-{slug:"서대전-소그룹요가-비교",title:"서대전 소그룹 요가 vs 대형 요가원 — 뭐가 다를까?",cat:"정보",date:"2026.04.03",thumbnail:"images/blog/pool/group-소그룹수업.jpg"},
-{slug:"서대전-사라요가-가격-총정리",title:"서대전 사라요가 프로그램별 가격 총정리",cat:"가격",date:"2026.04.12",thumbnail:"images/blog/pool/studio-전경.jpg"}
-];
+// BLOG_POSTS는 blog/posts.json에서 동적 로드
 
 // ── STATE ──
 
@@ -859,15 +850,26 @@ function setReviewPage(p){
 }
 
 // ── BLOG ──
-function renderBlog(){
+function renderBlogPosts(posts){
   var desktop=document.getElementById('blog-grid-desktop');
   var mobile=document.getElementById('blog-scroll-mobile');
-  BLOG_POSTS.forEach(function(post,i){
-    var thumbHtml=post.thumbnail?imgOrFallback(post.thumbnail,post.title,post.cat,'img-cv'):'<div class="fallback"><span class="ph">📷</span><span class="pl">'+post.cat+'</span></div>';
-    var card='<a href="blog/'+post.slug+'.html" class="blog-card"><div class="blog-card-img">'+thumbHtml+'</div><div class="blog-card-body"><div class="blog-card-cat">'+post.cat+'</div><div class="blog-card-title">'+post.title+'</div><div class="blog-card-date">'+post.date+'</div></div></a>';
+  posts.forEach(function(post,i){
+    var thumb=(post.thumbnail||'').replace('../images/','images/');
+    var thumbHtml=thumb?imgOrFallback(thumb,post.title,post.category||post.cat||'블로그','img-cv'):'<div class="fallback"><span class="ph">📷</span><span class="pl">'+(post.category||post.cat||'블로그')+'</span></div>';
+    var card='<a href="blog/'+post.slug+'.html" class="blog-card"><div class="blog-card-img">'+thumbHtml+'</div><div class="blog-card-body"><div class="blog-card-cat">'+(post.category||post.cat||'블로그')+'</div><div class="blog-card-title">'+post.title+'</div><div class="blog-card-date">'+post.date+'</div></div></a>';
     desktop.innerHTML+='<div class="reveal" style="transition-delay:'+i*.06+'s">'+card+'</div>';
     mobile.innerHTML+='<div style="flex:0 0 80%">'+card+'</div>';
   });
+}
+function renderBlog(){
+  fetch('blog/posts.json')
+    .then(function(r){return r.json();})
+    .then(function(posts){
+      posts.sort(function(a,b){return b.date.localeCompare(a.date);});
+      renderBlogPosts(posts.slice(0,6));
+      initReveals();
+    })
+    .catch(function(){renderBlogPosts([]);});
 }
 
 // ── IMAGES ──
