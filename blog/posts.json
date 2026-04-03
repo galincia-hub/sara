@@ -11,7 +11,7 @@
       "요가원비교",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/group-소그룹수업.jpg"
+    "thumbnail": "../images/blog/pool/group-소그룹수업.jpg"
   },
   {
     "slug": "대전중구-빈야사-초보가이드",
@@ -25,7 +25,7 @@
       "빈야사초보",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/vinyasa-전사자세.jpg"
+    "thumbnail": "../images/blog/pool/vinyasa-전사자세.jpg"
   },
   {
     "slug": "서대전-사라요가-가격-총정리",
@@ -39,7 +39,7 @@
       "서대전요가",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/studio-전경.jpg"
+    "thumbnail": "../images/blog/pool/studio-전경.jpg"
   },
   {
     "slug": "대전중구-소그룹요가-비교",
@@ -53,7 +53,7 @@
       "서대전요가",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/group-소그룹수업.jpg"
+    "thumbnail": "../images/blog/pool/group-소그룹수업.jpg"
   },
   {
     "slug": "서대전-플라잉요가-초보가이드",
@@ -67,7 +67,7 @@
       "플라잉요가초보",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/flying-해먹동작.jpg"
+    "thumbnail": "../images/blog/pool/flying-해먹동작.jpg"
   },
   {
     "slug": "대전중구-블랙롤-근막이완-가이드",
@@ -81,7 +81,7 @@
       "대전중구요가",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/therapy-도구클로즈업.jpg"
+    "thumbnail": "../images/blog/pool/therapy-도구클로즈업.jpg"
   },
   {
     "slug": "서대전-인사이드플로우-입문가이드",
@@ -95,7 +95,7 @@
       "인사이드플로우입문",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/insideflow-팔동작앉기.jpg"
+    "thumbnail": "../images/blog/pool/insideflow-팔동작앉기.jpg"
   },
   {
     "slug": "대전중구-도구테라피-완전가이드",
@@ -109,6 +109,6 @@
       "블랙롤테라피",
       "사라요가"
     ],
-    "thumbnail": "/images/blog/pool/therapy-요가링스트레칭.jpg"
+    "thumbnail": "../images/blog/pool/therapy-요가링스트레칭.jpg"
   }
 ]
