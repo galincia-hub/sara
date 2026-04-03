@@ -448,9 +448,7 @@ a{text-decoration:none}
         <div class="reveal" style="transition-delay:.1s">
           <div class="cal-wrap">
             <div class="cal-nav">
-              <button class="cal-nav-btn" onclick="changeMonth(-1)" aria-label="이전 달">&#8249;</button>
               <div class="cal-month" id="cal-month-label"></div>
-              <button class="cal-nav-btn" onclick="changeMonth(1)" aria-label="다음 달">&#8250;</button>
             </div>
             <div class="cal-scroll">
               <table class="cal-table" id="cal-table"></table>
@@ -465,9 +463,6 @@ a{text-decoration:none}
           </div>
         </div>
 
-        <div class="reveal" style="transition-delay:.2s;margin-top:20px;text-align:center">
-          <a href="#" onclick="openHifive();return false;" style="font-size:13.5px;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(139,115,85,.3);padding-bottom:2px">하이파이브 앱에서 실시간 시간표 확인 →</a>
-        </div>
       </div>
     </div>
   </div>
@@ -734,12 +729,6 @@ function getColorForClass(name){
   return key?CLASS_COLORS[key]:{bg:"#F5F0E8",fg:"#8B7355"};
 }
 
-function changeMonth(delta){
-  calMonth+=delta;
-  if(calMonth>11){calMonth=0;calYear++;}
-  if(calMonth<0){calMonth=11;calYear--;}
-  renderSchedule();
-}
 
 function renderSchedule(){
   var DAYS=["월","화","수","목","금","토"];
@@ -895,16 +884,6 @@ document.addEventListener('DOMContentLoaded',function(){
   });
 });
 
-function openHifive(){
-  var ua=navigator.userAgent||navigator.vendor||window.opera;
-  if(/iPad|iPhone|iPod/.test(ua)&&!window.MSStream){
-    window.open('https://apps.apple.com/kr/app/%ED%95%98%EC%9D%B4%ED%8C%8C%EC%9D%B4%EB%B8%8C/id1544465784','_blank','noopener,noreferrer');
-  }else if(/android/i.test(ua)){
-    window.open('https://play.google.com/store/apps/details?id=com.hifive.fitness','_blank','noopener,noreferrer');
-  }else{
-    window.open('https://www.hifive.fitness/','_blank','noopener,noreferrer');
-  }
-}
 </script>
 </body>
 </html>
