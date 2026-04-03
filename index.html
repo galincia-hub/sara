@@ -61,7 +61,7 @@ a{text-decoration:none}
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .5s ease;padding:14px 20px}
 .nav.scrolled{background:rgba(250,246,241,.92);backdrop-filter:blur(28px);border-bottom:1px solid var(--border)}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-.nav-logo{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:2px;color:#fff;transition:color .5s;text-shadow:0 1px 12px rgba(0,0,0,.2)}
+.nav-logo{cursor:pointer;font-size:20px;font-weight:600;letter-spacing:2px;color:#fff;transition:color .5s;text-shadow:0 1px 12px rgba(0,0,0,.2);display:flex;align-items:center;gap:10px}
 .nav.scrolled .nav-logo{color:var(--gold);text-shadow:none}
 .nav-links{display:none;gap:32px;align-items:center}
 .nav-link{position:relative;padding:4px 0;font-size:13px;letter-spacing:1.5px;font-weight:400;color:rgba(255,255,255,.8);text-shadow:0 1px 8px rgba(0,0,0,.1);transition:color .3s}
@@ -105,11 +105,11 @@ a{text-decoration:none}
 .about-grid{display:block}
 .about-images{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
 .about-images>div{border-radius:16px;overflow:hidden;height:200px}
-.about-text{padding-left:24px}.about-text p{font-size:14.5px;font-weight:300;line-height:2.2;color:var(--gray);margin-bottom:36px}
+.about-text p{font-size:14.5px;font-weight:300;line-height:2.2;color:var(--gray);margin-bottom:36px}
 .about-text .hl{color:var(--gold);font-weight:400}
 .instructor-card{background:linear-gradient(145deg,#3D3228,#564939);border-radius:22px;padding:30px 26px;color:#FAF6F1;position:relative;overflow:hidden}
 .instructor-card .circle{position:absolute;top:-30%;right:-15%;width:180px;height:180px;border-radius:50%;background:rgba(139,115,85,.1)}
-.instructor-avatar{width:68px;height:68px;border-radius:50%;overflow:hidden;flex-shrink:0}.instructor-avatar img{width:100%;height:100%;object-fit:cover}
+.instructor-avatar{width:130px;height:130px;border-radius:50%;overflow:hidden;flex-shrink:0}.instructor-avatar img{width:100%;height:100%;object-fit:cover;object-position:top}
 
 /* ── Gallery ── */
 .gallery-section{padding-bottom:60px}
@@ -336,7 +336,7 @@ a{text-decoration:none}
 <!-- ═══ NAV ═══ -->
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <div class="nav-logo serif" onclick="window.scrollTo({top:0,behavior:'smooth'})">Sara Yoga</div>
+    <div class="nav-logo serif" onclick="window.scrollTo({top:0,behavior:'smooth'})"><img src="images/blog/pool/brand-logo.png" alt="사라요가 로고" style="height:36px;display:block">Sara Yoga</div>
     <div class="nav-links">
       <a class="nav-link" href="#about">소개</a>
       <a class="nav-link" href="#programs">프로그램</a>
@@ -400,7 +400,7 @@ a{text-decoration:none}
         <div><img src="images/blog/pool/group-소그룹수업.jpg" alt="사라요가 소그룹 수업 장면" style="width:100%;height:100%;object-fit:cover"></div>
       </div>
     </div>
-    <div>
+    <div style="padding-left:24px">
       <div class="reveal"><div class="serif label">ABOUT</div><h3 style="font-size:27px;font-weight:500;line-height:1.55;margin-bottom:28px">좋은 사람들과<br>요가를 나누는 공간</h3></div>
       <div class="reveal" style="transition-delay:.15s">
         <div class="about-text"><p>큰 스튜디오에서 뒤에 앉으면 선생님 얼굴도 안 보이잖아요. 저는 모든 분의 자세를 하나하나 봐드리고 싶었어요.<br><br><span class="hl">정원 6명, 원장 직강 100%.</span><br>잘하려고 애쓰지 않아도 괜찮은 곳.</p></div>
@@ -410,7 +410,7 @@ a{text-decoration:none}
           <div class="circle"></div>
           <div style="position:relative">
             <div class="serif label" style="color:rgba(176,156,128,.55);letter-spacing:6px">INSTRUCTOR</div>
-            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:20px;text-align:center">
               <div class="instructor-avatar"><img src="images/blog/pool/instructor-프로필포즈.jpg" alt="사라요가 Sara 원장"></div>
               <div><div style="font-size:20px;font-weight:500">Sara 원장</div><div class="serif" style="font-size:12px;color:rgba(250,246,241,.5);letter-spacing:2px">Founder & Instructor</div></div>
             </div>
@@ -527,7 +527,7 @@ a{text-decoration:none}
 <!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="footer-inner">
-    <div><div class="serif fname">Sara Yoga Studio</div><div class="fsub">원장 직강 · 소수정예 · 1:1 교정</div></div>
+    <div><img src="images/blog/pool/brand-logo.png" alt="사라요가 로고" style="height:30px;display:block;margin-bottom:10px"><div class="serif fname">Sara Yoga Studio</div><div class="fsub">원장 직강 · 소수정예 · 1:1 교정</div></div>
     <div class="flinks"><a href="blog/">Blog</a><a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a></div>
   </div>
   <div class="copy" style="max-width:1200px;margin:20px auto 0">© 2023–2026 Sara Yoga Studio</div>
@@ -543,15 +543,15 @@ a{text-decoration:none}
 <!-- ═══ JAVASCRIPT ═══ -->
 <script>
 // ── DATA ──
-var IMG={hero:"https://picsum.photos/id/1057/1600/900",aboutLeft:"https://picsum.photos/id/1021/600/800",aboutRight:"https://picsum.photos/id/1074/600/800",gallery:["images/blog/pool/flying-소그룹수업.jpg","images/blog/pool/group-사바아사나교정.jpg","images/blog/pool/insideflow-명상시작.jpg","images/blog/pool/therapy-도구클로즈업.jpg","images/blog/pool/vinyasa-전사자세.jpg"],contact:"https://picsum.photos/id/1036/1600/900"};
+var IMG={hero:"https://picsum.photos/id/1057/1600/900",aboutLeft:"https://picsum.photos/id/1021/600/800",aboutRight:"https://picsum.photos/id/1074/600/800",galleryPool:["images/blog/pool/flying-소그룹수업.jpg","images/blog/pool/flying-하이플라잉수업.jpg","images/blog/pool/flying-해먹동작.jpg","images/blog/pool/flying-해먹스트레칭.jpg","images/blog/pool/group-사바아사나교정.jpg","images/blog/pool/group-명상앉기.jpg","images/blog/pool/group-소그룹수업.jpg","images/blog/pool/group-이완자세.jpg","images/blog/pool/insideflow-명상시작.jpg","images/blog/pool/insideflow-팔동작앉기.jpg","images/blog/pool/therapy-도구클로즈업.jpg","images/blog/pool/therapy-요가링스트레칭.jpg","images/blog/pool/hatha-브릿지자세.jpg","images/blog/pool/hatha-서서팔올리기.jpg","images/blog/pool/vinyasa-전사자세.jpg","images/blog/pool/vinyasa-밸런스동작.jpg","images/blog/pool/studio-전경.jpg","images/blog/pool/studio-인테리어.jpg","images/blog/pool/instructor-수업지도.jpg","images/blog/pool/instructor-핸즈온교정.jpg"],contact:"https://picsum.photos/id/1036/1600/900"};
 
 var PROGRAMS=[
-{id:"flying",name:"플라잉요가",eng:"Flying Yoga",desc:"해먹 위에서 중력을 벗어나는 경험. 코어 강화와 스트레칭을 동시에, 초보자도 안전하게 시작할 수 있어요.",tags:["코어강화","스트레칭","초보환영"],level:"All Level",img:"https://picsum.photos/id/1057/800/600"},
-{id:"insideflow",name:"인사이드플로우",eng:"Inside Flow",desc:"음악과 호흡, 움직임이 하나로 흐르는 빈야사 기반 플로우. 몸과 마음이 함께 춤추는 시간이에요.",tags:["음악","플로우","감성"],level:"Basic+",img:"https://picsum.photos/id/1074/800/600"},
-{id:"vinyasa",name:"빈야사",eng:"Vinyasa",desc:"호흡과 움직임을 연결하는 역동적인 요가. 체력과 유연성을 함께 키울 수 있어요.",tags:["역동적","체력","유연성"],level:"All Level",img:"https://picsum.photos/id/1015/800/600"},
-{id:"therapy",name:"도구테라피",eng:"Tool Therapy",desc:"폼롤러, 블랙롤, 근막이완 볼을 활용한 셀프 테라피. 뭉친 근막을 풀고 몸의 밸런스를 찾아줘요.",tags:["근막이완","블랙롤","셀프케어"],level:"All Level",img:"https://picsum.photos/id/1029/800/600"},
-{id:"hatha",name:"하타플로우",eng:"Hatha Flow",desc:"기본 자세를 천천히 깊게 수련하는 요가. 호흡에 집중하며 내면의 고요함을 만나요.",tags:["기초","호흡","이완"],level:"Beginner",img:"https://picsum.photos/id/1039/800/600"},
-{id:"support",name:"서포트요가",eng:"Support Yoga",desc:"보조 도구를 활용해 깊은 이완을 경험하는 리스토어티브 요가. 지친 몸과 마음을 회복시켜요.",tags:["이완","회복","도구활용"],level:"All Level",img:"https://picsum.photos/id/1047/800/600"}
+{id:"flying",name:"플라잉요가",eng:"Flying Yoga",desc:"해먹 위에서 중력을 벗어나는 경험. 코어 강화와 스트레칭을 동시에, 초보자도 안전하게 시작할 수 있어요.",tags:["코어강화","스트레칭","초보환영"],level:"All Level",img:"images/blog/pool/flying-하이플라잉콜라주.jpg"},
+{id:"insideflow",name:"인사이드플로우",eng:"Inside Flow",desc:"음악과 호흡, 움직임이 하나로 흐르는 빈야사 기반 플로우. 몸과 마음이 함께 춤추는 시간이에요.",tags:["음악","플로우","감성"],level:"Basic+",img:"images/blog/pool/insideflow-옆스트레칭.jpg"},
+{id:"vinyasa",name:"빈야사",eng:"Vinyasa",desc:"호흡과 움직임을 연결하는 역동적인 요가. 체력과 유연성을 함께 키울 수 있어요.",tags:["역동적","체력","유연성"],level:"All Level",img:"images/blog/pool/vinyasa-밸런스동작.jpg"},
+{id:"therapy",name:"도구테라피",eng:"Tool Therapy",desc:"폼롤러, 블랙롤, 근막이완 볼을 활용한 셀프 테라피. 뭉친 근막을 풀고 몸의 밸런스를 찾아줘요.",tags:["근막이완","블랙롤","셀프케어"],level:"All Level",img:"images/blog/pool/therapy-요가링스트레칭.jpg"},
+{id:"hatha",name:"하타플로우",eng:"Hatha Flow",desc:"기본 자세를 천천히 깊게 수련하는 요가. 호흡에 집중하며 내면의 고요함을 만나요.",tags:["기초","호흡","이완"],level:"Beginner",img:"images/blog/pool/hatha-코어운동.jpg"},
+{id:"support",name:"서포트요가",eng:"Support Yoga",desc:"보조 도구를 활용해 깊은 이완을 경험하는 리스토어티브 요가. 지친 몸과 마음을 회복시켜요.",tags:["이완","회복","도구활용"],level:"All Level",img:"images/blog/pool/support-블록이완.jpg"}
 ];
 
 // ── Class color chips ──
@@ -673,19 +673,21 @@ function initCounters(){
 }
 
 // ── GALLERY ──
+function shuffleArr(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
 function renderGallery(){
+  var five=shuffleArr(IMG.galleryPool).slice(0,5);
   var row1=document.getElementById('gallery-grid-row1');
   var row2=document.getElementById('gallery-grid-row2');
   var scroll=document.getElementById('gallery-scroll');
   // Desktop grid
-  IMG.gallery.slice(0,3).forEach(function(src,i){
+  five.slice(0,3).forEach(function(src,i){
     row1.innerHTML+='<div class="gi reveal'+(i===1?' tall':'')+'">'+imgOrFallback(src,'갤러리 '+(i+1),'G-'+(i+1))+'</div>';
   });
-  IMG.gallery.slice(3,5).forEach(function(src,i){
+  five.slice(3,5).forEach(function(src,i){
     row2.innerHTML+='<div class="gi short reveal">'+imgOrFallback(src,'갤러리 '+(i+4),'G-'+(i+4))+'</div>';
   });
   // Mobile scroll
-  IMG.gallery.forEach(function(src,i){
+  five.forEach(function(src,i){
     scroll.innerHTML+='<div style="flex:0 0 75%"><div class="gallery-item">'+imgOrFallback(src,'갤러리 '+(i+1),'G-'+(i+1))+'</div></div>';
   });
 }
