@@ -3,132 +3,230 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>사라요가 Admin</title>
-<meta name="robots" content="noindex, nofollow">
+<title>사라요가 콘텐츠 관리자</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#F5F0EB;--surface:#fff;--brown:#3D3228;--gold:#8B7355;--beige:#EDE6DC;--gray:#6B5D4F;--lgray:#B09C80;--border:rgba(212,197,176,.25);--radius:14px;--danger:#C0392B;--success:#27AE60}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--brown);line-height:1.6;min-height:100vh}
-header{background:var(--brown);color:#FAF6F1;padding:18px 32px;display:flex;align-items:center;justify-content:space-between}
-header h1{font-size:18px;font-weight:600;letter-spacing:1px}
-header .sub{font-size:12px;color:rgba(250,246,241,.45);margin-top:2px}
-.badge{background:var(--gold);color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
-.container{max-width:960px;margin:32px auto;padding:0 24px}
-.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
-.stat-card{background:var(--surface);border-radius:var(--radius);padding:20px 22px;border:1px solid var(--border)}
-.stat-card .num{font-size:32px;font-weight:700;color:var(--brown)}
-.stat-card .label{font-size:12px;color:var(--lgray);margin-top:4px}
-.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
-.card-header{padding:14px 20px;background:var(--beige);display:flex;align-items:center;justify-content:space-between}
-.card-header h2{font-size:15px;font-weight:600;color:var(--brown)}
-table{width:100%;border-collapse:collapse}
-th{padding:12px 16px;text-align:left;font-size:11px;color:var(--lgray);font-weight:600;letter-spacing:.5px;border-bottom:1px solid var(--border);white-space:nowrap}
-td{padding:13px 16px;font-size:13.5px;color:var(--gray);border-bottom:1px solid var(--border);vertical-align:top}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(139,115,85,.03)}
-.cat{display:inline-block;font-size:10px;padding:2px 10px;border-radius:12px;background:rgba(139,115,85,.1);color:var(--gold);font-weight:600;white-space:nowrap}
-.title-link{color:var(--brown);text-decoration:none;font-weight:400}
-.title-link:hover{color:var(--gold)}
-.slug{font-size:11px;color:var(--lgray);margin-top:3px;font-family:monospace}
-.action-btn{display:inline-block;padding:4px 12px;border-radius:8px;font-size:11px;text-decoration:none;border:1px solid var(--border);color:var(--gray);transition:all .2s}
-.action-btn:hover{border-color:var(--gold);color:var(--gold)}
-.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(139,115,85,.06);color:var(--lgray);margin:1px}
-.err{padding:20px;color:var(--danger);font-size:14px;text-align:center}
-.loading{padding:40px;text-align:center;color:var(--lgray);font-size:14px}
-.index-note{font-size:12px;color:var(--lgray);padding:10px 20px 14px;background:rgba(139,115,85,.03);border-top:1px solid var(--border)}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#f8f7f4;--sf:#fff;--sf2:#f2f1ed;--tx:#1a1a18;--tx2:#6b6a65;--tx3:#9e9d98;--ac:#2d6b4f;--ac2:#1d9e75;--dng:#c44;--wrn:#b87a17;--inf:#2563a8;--pur:#534ab7;--cor:#d85a30;--pnk:#d4537e;--bd:#e5e4e0;--r:12px;--sh:0 1px 3px rgba(0,0,0,.06)}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
+a{text-decoration:none;color:var(--ac2)}
+.hd{background:linear-gradient(135deg,#2d6b4f,#1a5e3f);color:#fff;padding:1.5rem 2rem 1.2rem}
+.hd h1{font-size:1.3rem;font-weight:700}.hd p{font-size:.75rem;opacity:.7;margin-top:4px}
+.hd-links{display:flex;gap:8px;margin-top:10px}.hd-links a{font-size:.7rem;color:#fff;background:rgba(255,255,255,.15);padding:5px 14px;border-radius:20px}
+.ct{max-width:1200px;margin:0 auto;padding:1.2rem}
+.tabs{display:flex;gap:2px;background:var(--sf2);border-radius:10px;padding:3px;margin-bottom:1.2rem}
+.tab{flex:1;padding:10px;text-align:center;font-size:.75rem;font-weight:500;color:var(--tx3);cursor:pointer;border-radius:8px;border:none;font-family:inherit;background:none}
+.tab.on{background:var(--sf);color:var(--tx);box-shadow:var(--sh)}
+.tc{display:none}.tc.on{display:block}
+.sc{background:var(--sf);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;box-shadow:var(--sh);border:1px solid var(--bd)}
+.st{font-size:.9rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.ss{font-size:.75rem;color:var(--tx2);margin-bottom:1rem}
+.bg{font-size:.58rem;padding:2px 8px;border-radius:20px;font-weight:500;display:inline-block}
+.bg1{background:#e8f5e9;color:#2d6b4f}.bg2{background:#eeedfe;color:#534ab7}.bg3{background:#faece7;color:#d85a30}.bg4{background:#e6f1fb;color:#2563a8}.bg5{background:#fff8e1;color:#b87a17}
+.ms{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.2rem}
+.m{background:var(--sf);border-radius:var(--r);padding:.9rem;box-shadow:var(--sh);border:1px solid var(--bd);position:relative;overflow:hidden}
+.m .lb{font-size:.65rem;color:var(--tx2)}.m .vl{font-size:1.4rem;font-weight:700}.m .sb{font-size:.6rem;margin-top:2px}
+.m .sb.ok{color:var(--ac2)}.m .sb.no{color:var(--dng)}.m .sb.wn{color:var(--wrn)}
+.m .br{position:absolute;bottom:0;left:0;height:3px;border-radius:0 2px 0 0}
+.pl{display:flex;justify-content:space-between;font-size:.75rem;color:var(--tx2);margin-bottom:5px}
+.pb{background:var(--sf2);border-radius:20px;height:10px;overflow:hidden}
+.pf{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--ac2),var(--ac));transition:width .6s}
+.tb{display:flex;border-radius:8px;overflow:hidden;height:22px;margin-top:.5rem}
+.tb div{display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:500;color:#fff}
+.ic{background:var(--sf2);border-radius:8px;padding:.9rem;margin-bottom:8px;border-left:3px solid var(--pur)}
+.ic.g{border-left-color:var(--ac2)}.ic.c{border-left-color:var(--cor)}.ic.i{border-left-color:var(--inf)}
+.ic h5{font-size:.8rem;font-weight:700;margin-bottom:3px}.ic p{font-size:.72rem;color:var(--tx2);line-height:1.6}
+.cw{position:relative;height:200px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.pi{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);font-size:.78rem}.pi:last-child{border-bottom:none}
+.pn{width:22px;height:22px;border-radius:6px;background:var(--sf2);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:var(--ac);flex-shrink:0;margin-top:2px}
+.pif{flex:1;min-width:0}.pit{font-weight:500}.pim{font-size:.65rem;color:var(--tx3);margin-top:2px;display:flex;gap:6px;flex-wrap:wrap}
+.pis{font-size:.68rem;color:var(--tx2);margin-top:3px;line-height:1.5}
+.plk{font-size:.65rem;color:var(--ac2);flex-shrink:0;margin-top:2px}
+.ki{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(229,228,224,.5);font-size:.73rem}.ki:last-child{border-bottom:none}
+.kd{width:8px;height:8px;border-radius:4px;flex-shrink:0}.kd.y{background:var(--ac2)}.kd.h{background:var(--wrn)}.kd.n{background:#e5e0d8}
+.kn{flex:1}.kc{font-weight:600;color:var(--ac);min-width:20px;text-align:center}.kdr{font-size:.65rem;color:var(--tx3);max-width:180px;text-align:right}
+.sg{background:var(--sf);border-radius:var(--r);padding:1rem;margin-bottom:10px;border:1px solid var(--bd);position:relative;transition:.25s}
+.sg:hover{border-color:var(--ac2);box-shadow:0 4px 16px rgba(0,0,0,.06);transform:translateY(-2px)}
+.sgr{position:absolute;top:10px;right:12px;font-size:1.5rem;font-weight:700;color:rgba(0,0,0,.04)}
+.sgt{font-size:.85rem;font-weight:600;margin-bottom:6px;padding-right:30px}
+.sgb{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.sgp{font-size:.72rem;color:var(--tx2);line-height:1.6;margin-bottom:8px}
+.bc{font-size:.65rem;padding:4px 12px;background:var(--ac);color:#fff;border:none;border-radius:6px;cursor:pointer;font-family:inherit}.bc:hover{background:var(--ac2)}
+.hi{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:.78rem}.hi:last-child{border-bottom:none}
+.fr{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:.73rem}
+.fl{min-width:110px;color:var(--tx2)}.fb{flex:1;height:7px;border-radius:4px;background:var(--sf2);overflow:hidden}
+.ff{height:100%;border-radius:4px}.fv{min-width:28px;text-align:right;font-weight:500;color:var(--ac)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 24px;border-radius:8px;font-size:.8rem;z-index:999;display:none;animation:fu .3s}
+@keyframes fu{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@media(max-width:768px){.ms{grid-template-columns:repeat(2,1fr)}.g2,.g3{grid-template-columns:1fr}.kdr{display:none}.tabs{overflow-x:auto}}
 </style>
 </head>
 <body>
+<div class="hd"><h1>📊 사라요가 콘텐츠 관리자</h1><p>블로그 현황 · 키워드 커버리지 · 다음 글 추천 · 콘텐츠 건강도</p><div class="hd-links"><a href="https://www.sarayoga.co.kr" target="_blank">🌐 사이트</a><a href="https://www.sarayoga.co.kr/blog/" target="_blank">📝 블로그</a><a href="https://github.com/galincia-hub/sara" target="_blank">🔧 GitHub</a></div></div>
+<div class="ct">
+<div class="tabs" id="tabs"><button class="tab on" data-t="overview">📈 현황</button><button class="tab" data-t="posts">📝 글목록</button><button class="tab" data-t="keywords">🔑 키워드</button><button class="tab" data-t="suggest">💡 다음 글</button></div>
 
-<header>
-  <div>
-    <h1>Sara Yoga · Admin</h1>
-    <div class="sub">블로그 관리 패널 — 정적 뷰어 (수정은 VS Code에서)</div>
-  </div>
-  <span class="badge" id="total-badge">로딩 중…</span>
-</header>
-
-<div class="container">
-
-  <!-- 통계 -->
-  <div class="stat-row">
-    <div class="stat-card">
-      <div class="num" id="stat-total">—</div>
-      <div class="label">총 블로그 글</div>
-    </div>
-    <div class="stat-card">
-      <div class="num" id="stat-latest">—</div>
-      <div class="label">최근 발행일</div>
-    </div>
-    <div class="stat-card">
-      <div class="num" id="stat-cats">—</div>
-      <div class="label">카테고리 수</div>
-    </div>
-  </div>
-
-  <!-- 글 목록 -->
-  <div class="card">
-    <div class="card-header">
-      <h2>블로그 글 목록 <span style="font-weight:300;color:var(--lgray)">— posts.json 기반</span></h2>
-      <a href="blog/index.html" target="_blank" class="action-btn">블로그 목록 보기 →</a>
-    </div>
-    <div id="list-wrap">
-      <div class="loading">posts.json 로딩 중…</div>
-    </div>
-    <div class="index-note">
-      📁 posts.json 경로: <code>blog/posts.json</code> &nbsp;|&nbsp;
-      글 추가 후 posts.json + sitemap.xml 함께 업데이트하세요.
-    </div>
-  </div>
-
+<div class="tc on" id="t-overview">
+<div class="ms" id="metrics"></div>
+<div class="sc"><div class="st">발행 진행률 <span class="bg bg1" id="pace"></span></div><div class="pl"><span id="pt"></span><span id="pp"></span></div><div class="pb"><div class="pf" id="pfl"></div></div><div style="margin-top:.6rem"><div class="ss" style="margin-bottom:4px">유형별 배분</div><div class="tb" id="catbar"></div></div></div>
+<div class="g2"><div class="sc"><div class="st">Tier별 분포 <span class="bg bg2" id="tbg"></span></div><div class="cw"><canvas id="tierChart"></canvas></div></div><div id="tins"></div></div>
+<div class="g2"><div class="sc"><div class="st">프레임 사용 <span class="bg bg4">6종 로테이션</span></div><div id="frc"></div></div><div class="sc"><div class="st">지역 배분 <span class="bg bg3">50:50 목표</span></div><div id="rgc"></div></div></div>
+<div class="sc"><div class="st">⚠️ 콘텐츠 건강도</div><div id="hlth"></div></div>
+<div class="sc"><div class="st">🎯 기대 효과</div><div class="g3"><div class="ic g"><h5>검색유입 30%+</h5><p>정보형 글이 구글에 잡히면 구조적 상승</p></div><div class="ic i"><h5>서대전 키워드 선점</h5><p>구글이 사라요가를 서대전 대표로 인식</p></div><div class="ic c"><h5>AI 인용 기반</h5><p>FAQ+엔티티로 ChatGPT/Perplexity 대응</p></div></div></div>
 </div>
 
+<div class="tc" id="t-posts"><div class="sc"><div class="st">📝 발행된 글 <span class="bg bg1" id="pcnt"></span></div><div class="ss">요약으로 기존 내용 파악 → 중복 방지</div><div id="plist"></div></div></div>
+
+<div class="tc" id="t-keywords"><div class="sc"><div class="st">키워드 커버리지</div><div class="ss">🟢 2개+ · 🟡 1개 · ⚪ 미커버</div><div class="g3" id="kwsum"></div></div><div class="g2"><div class="sc"><div class="st">🏆 Tier 1 <span class="bg bg2">블루오션</span></div><div id="kt1"></div></div><div class="sc"><div class="st">📈 Tier 2 <span class="bg bg4">선점</span></div><div id="kt2"></div></div></div><div class="sc"><div class="st">🎯 Tier 3 <span class="bg bg5">롱테일</span></div><div id="kt3"></div></div></div>
+
+<div class="tc" id="t-suggest"><div class="sc" style="background:#fffde7;border-color:#fff9c4"><div class="st" style="color:var(--wrn)">💡 중복 방지 원칙</div><p style="font-size:.75rem;color:var(--tx2);line-height:1.7">① 같은 주제+프레임 금지 ② 직전 글과 프레임 중복 금지 ③ 서대전/중구 3회 연속 금지</p></div><div class="sc"><div class="st">🔥 추천 주제 — 우선순위순</div><div class="ss">"명령어 복사" → VS Code 붙여넣기 → 끝</div><div id="sugs"></div></div></div>
+</div>
+<div class="toast" id="toast"></div>
+
 <script>
-fetch('blog/posts.json')
-  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-  .then(posts => {
-    // 날짜 내림차순 정렬
-    posts.sort((a,b) => b.date.localeCompare(a.date));
+var POSTS=[
+{slug:"대전중구-도구테라피-완전가이드",title:"대전 중구 도구테라피 완전 가이드 — 뭉친 어깨, 이렇게 풀어요",cat:"정보/가이드",date:"2026.04.01",sum:"폼롤러, 블랙롤, 근막이완 볼 활용 셀프 테라피.",tags:["대전도구테라피","대전중구요가","블랙롤테라피"],fr:"문제→해결→체험",tier:"Tier1",rg:"대전 중구"},
+{slug:"서대전-인사이드플로우-입문가이드",title:"서대전 인사이드플로우 입문 가이드 — 음악과 호흡이 만나는 요가",cat:"정보/가이드",date:"2026.04.03",sum:"음악에 맞춰 움직이는 빈야사 기반 플로우.",tags:["대전인사이드플로우","서대전요가"],fr:"비교/선택 가이드",tier:"Tier1",rg:"서대전"},
+{slug:"대전중구-블랙롤-근막이완-가이드",title:"대전 중구 블랙롤 근막이완 가이드 — 집에서도 셀프케어",cat:"정보/가이드",date:"2026.04.05",sum:"블랙롤 부위별 사용법과 효과.",tags:["블랙롤","근막이완","대전중구요가"],fr:"리스트/큐레이션",tier:"Tier1",rg:"대전 중구"},
+{slug:"서대전-플라잉요가-초보가이드",title:"서대전 플라잉요가 초보 가이드 — 겁 많아도 괜찮아요",cat:"정보/가이드",date:"2026.04.08",sum:"해먹이 체중 80% 지지. 로우 vs 하이 차이.",tags:["대전플라잉요가","서대전요가"],fr:"비교/선택 가이드",tier:"Tier2",rg:"서대전"},
+{slug:"대전중구-소그룹요가-비교",title:"대전 중구 소그룹 요가 vs 대형 — 뭐가 다를까?",cat:"정보/가이드",date:"2026.04.10",sum:"정원, 1:1 교정, 가격 대비 가치 비교.",tags:["대전중구요가","소그룹요가"],fr:"비교/선택 가이드",tier:"Tier2",rg:"대전 중구"},
+{slug:"서대전-사라요가-가격-총정리",title:"서대전 사라요가 가격 총정리 — 2026년 최신",cat:"가격/안내",date:"2026.04.12",sum:"체험 무료, 4회 88,000원부터.",tags:["사라요가가격","서대전요가"],fr:"리스트/큐레이션",tier:"Tier3",rg:"서대전"},
+{slug:"대전중구-빈야사-초보가이드",title:"대전 중구 빈야사 초보 가이드 — 호흡부터 시작해요",cat:"정보/가이드",date:"2026.04.14",sum:"빈야사 기본 흐름과 초보자 가이드.",tags:["대전빈야사","대전중구요가"],fr:"문제→해결→체험",tier:"Tier3",rg:"대전 중구"}
+];
 
-    // 통계
-    const cats = new Set(posts.map(p => p.category));
-    document.getElementById('stat-total').textContent = posts.length;
-    document.getElementById('stat-latest').textContent = posts[0]?.date ?? '—';
-    document.getElementById('stat-cats').textContent = cats.size;
-    document.getElementById('total-badge').textContent = `글 ${posts.length}개`;
+var T1=[{k:"대전 도구테라피",d:"도구별 가이드"},{k:"블랙롤테라피 대전",d:"블랙롤 효과"},{k:"대전 인사이드플로우",d:"입문 가이드"},{k:"대전 근막이완 요가",d:"원리/효과"},{k:"대전 얼라인먼트 요가",d:"얼라인먼트란?"},{k:"요가 도구 테라피",d:"전국 가이드"}];
+var T2=[{k:"대전중구요가",d:"소그룹 추천"},{k:"대전 플라잉요가",d:"초보+후기"},{k:"서대전 요가",d:"서대전 추천"},{k:"서대전네거리역 요가",d:"도보권"},{k:"서대전 맛집",d:"요가 후 한 끼"},{k:"오류동 카페",d:"수업 전 커피"},{k:"대전 소그룹 요가",d:"소수정예"}];
+var T3=[{k:"대전 빈야사",d:"초보 입문"},{k:"대전 주말 요가",d:"원데이"},{k:"대전 요가 가격",d:"가격+가치"},{k:"대전오류동요가",d:"오류동"}];
+var FRS=["문제→해결→체험","하루 스케치","비교/선택 가이드","인터뷰/대화체","리스트/큐레이션","감성 에세이"];
+var FRC=["#2d6b4f","#d85a30","#534ab7","#d4537e","#2563a8","#b87a17"];
+var CCS={"정보/가이드":{t:5,c:"#2d6b4f"},"수업 후기":{t:2,c:"#534ab7"},"로컬 라이프":{t:2,c:"#d85a30"},"가격/안내":{t:1,c:"#2563a8"},"시즌/이벤트":{t:1,c:"#d4537e"},"전문지식/교육":{t:1,c:"#b87a17"}};
 
-    // 테이블
-    const rows = posts.map((p, i) => {
-      const tags = (p.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');
-      const viewUrl = `blog/${p.slug}.html`;
-      return `<tr>
-        <td style="color:var(--lgray);font-size:12px;width:28px">${i + 1}</td>
-        <td>
-          <a href="${viewUrl}" target="_blank" class="title-link">${p.title}</a>
-          <div class="slug">${p.slug}</div>
-        </td>
-        <td><span class="cat">${p.category}</span></td>
-        <td style="white-space:nowrap">${p.date}</td>
-        <td>${tags}</td>
-        <td>
-          <a href="${viewUrl}" target="_blank" class="action-btn">보기</a>
-        </td>
-      </tr>`;
-    }).join('');
+var SUGS=[
+{t:"서대전 얼라인먼트 요가 입문",tier:"Tier1",cat:"정보/가이드",fr:"문제→해결→체험",kw:["대전 얼라인먼트 요가"],rg:"서대전",why:"Tier1 유일 미커버. 경쟁 제로."},
+{t:"서대전 도구테라피 수업 후기",tier:"Tier1",cat:"수업 후기",fr:"인터뷰/대화체",kw:["대전 도구테라피"],rg:"서대전",why:"가이드O 후기X. 세트가 검색 극대화."},
+{t:"서대전네거리역 점심 맛집 5곳",tier:"Tier2",cat:"로컬 라이프",fr:"리스트/큐레이션",kw:["서대전 맛집"],rg:"서대전",why:"로컬 0개. 검색량 요가의 3~5배."},
+{t:"대전 중구 근막이완 요가 가이드",tier:"Tier1",cat:"정보/가이드",fr:"문제→해결→체험",kw:["대전 근막이완 요가"],rg:"대전 중구",why:"건강 검색 수요 높은 Tier1."},
+{t:"대전 중구 오류동 카페 추천",tier:"Tier2",cat:"로컬 라이프",fr:"하루 스케치",kw:["오류동 카페"],rg:"대전 중구",why:"동네 브랜딩. 로컬 비율 달성."},
+{t:"서대전 플라잉요가 3개월 후기",tier:"Tier2",cat:"수업 후기",fr:"인터뷰/대화체",kw:["대전 플라잉요가"],rg:"서대전",why:"후기 0개. 공감/전환에 강함."},
+{t:"요가 도구 테라피 완전 가이드",tier:"Tier1",cat:"전문지식/교육",fr:"리스트/큐레이션",kw:["요가 도구 테라피"],rg:"전국",why:"전국 검색 키워드. 장기 유입."},
+{t:"서대전 요가 추천 체크리스트",tier:"Tier2",cat:"정보/가이드",fr:"리스트/큐레이션",kw:["서대전 요가"],rg:"서대전",why:"서대전 요가 직접 선점."},
+{t:"대전 중구 직장인 퇴근 후 요가",tier:"Tier2",cat:"정보/가이드",fr:"리스트/큐레이션",kw:["대전중구요가"],rg:"대전 중구",why:"직장인 타겟. 저녁 시간표 연결."},
+{t:"대전 중구 주말 원데이클래스",tier:"Tier3",cat:"시즌/이벤트",fr:"감성 에세이",kw:["대전 주말 요가"],rg:"대전 중구",why:"시즌 0개. 주말 수요."},
+{t:"대전 중구 하타플로우 입문",tier:"Tier3",cat:"정보/가이드",fr:"하루 스케치",kw:["대전 빈야사"],rg:"대전 중구",why:"하타 미커버. 초보 유입."},
+{t:"서대전 서포트요가 깊은 이완",tier:"Tier3",cat:"정보/가이드",fr:"하루 스케치",kw:["서대전 요가"],rg:"서대전",why:"서포트 미커버. 이완 확장."}
+];
 
-    document.getElementById('list-wrap').innerHTML = `
-      <table>
-        <thead><tr>
-          <th>#</th><th>제목 / 슬러그</th><th>카테고리</th><th>발행일</th><th>태그</th><th>링크</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>`;
-  })
-  .catch(err => {
-    document.getElementById('list-wrap').innerHTML =
-      `<div class="err">posts.json 로드 실패 — 로컬 서버(live-server 등)에서 열어주세요.<br><small>${err}</small></div>`;
-    document.getElementById('total-badge').textContent = '오류';
-  });
+// Helpers
+function cnt(arr,key){var r={};arr.forEach(function(a){var v=a[key]||"기타";r[v]=(r[v]||0)+1});return r}
+function kwc(list){var cv=0,pt=0;list.forEach(function(kw){var c=0;POSTS.forEach(function(p){var tm=p.title.toLowerCase().indexOf(kw.k.replace("대전 ","").replace("서대전 ","").toLowerCase())>-1;var tg=(p.tags||[]).some(function(t){return t.replace(/ /g,"").toLowerCase().indexOf(kw.k.replace(/ /g,"").toLowerCase())>-1});if(tm||tg)c++});if(c>=2)cv++;else if(c===1)pt++});return{y:cv,h:pt,n:list.length-cv-pt}}
+function toast(m){var el=document.getElementById("toast");el.textContent=m;el.style.display="block";setTimeout(function(){el.style.display="none"},2000)}
+function doCopy(btn){navigator.clipboard.writeText(btn.dataset.cmd);toast("✅ 복사 완료!")}
+
+// Tab switching
+document.getElementById("tabs").addEventListener("click",function(e){
+  if(e.target.tagName!=="BUTTON")return;
+  document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("on")});
+  document.querySelectorAll(".tc").forEach(function(t){t.classList.remove("on")});
+  e.target.classList.add("on");
+  document.getElementById("t-"+e.target.dataset.t).classList.add("on");
+});
+
+// Main render
+function render(){
+  var P=POSTS, n=P.length;
+  var cats=cnt(P,"cat"), tiers=cnt(P,"tier"), regs=cnt(P,"rg"), frs=cnt(P,"fr");
+  var t1=tiers.Tier1||0, t2=tiers.Tier2||0, t3=n-t1-t2;
+  var loc=cats["로컬 라이프"]||0, rev=cats["수업 후기"]||0;
+
+  // Metrics
+  document.getElementById("metrics").innerHTML=
+    '<div class="m"><div class="lb">총 발행</div><div class="vl">'+n+'개</div><div class="sb '+(n>=15?"ok":"wn")+'">목표 20개 중 '+Math.round(n/20*100)+'%</div><div class="br" style="width:'+Math.round(n/20*100)+'%;background:var(--ac2)"></div></div>'+
+    '<div class="m"><div class="lb">Tier 1 블루오션</div><div class="vl" style="color:var(--pur)">'+t1+'개</div><div class="sb" style="color:var(--pur)">독점 키워드</div><div class="br" style="width:'+Math.round(t1/n*100)+'%;background:var(--pur)"></div></div>'+
+    '<div class="m"><div class="lb">로컬 라이프</div><div class="vl" style="color:var(--cor)">'+loc+'개</div><div class="sb '+(loc>=2?"ok":"no")+'">목표 2개'+(loc===0?" ⚠️":"")+'</div><div class="br" style="width:'+(loc>=2?100:loc*50)+'%;background:var(--cor)"></div></div>'+
+    '<div class="m"><div class="lb">수업 후기</div><div class="vl" style="color:var(--inf)">'+rev+'개</div><div class="sb '+(rev>=2?"ok":"no")+'">목표 2개'+(rev===0?" ⚠️":"")+'</div><div class="br" style="width:'+(rev>=2?100:rev*50)+'%;background:var(--inf)"></div></div>';
+
+  // Progress
+  var pct=Math.round(n/20*100);
+  document.getElementById("pt").textContent=n+" / 20 발행";
+  document.getElementById("pp").textContent=pct+"%";
+  document.getElementById("pfl").style.width=pct+"%";
+  document.getElementById("pace").textContent=n>=15?"목표 근접":"발행 필요";
+  var cb="";Object.keys(CCS).forEach(function(c){var v=cats[c]||0;if(!v)return;cb+='<div style="width:'+Math.round(v/n*100)+'%;background:'+CCS[c].c+'">'+c.split("/")[0]+" "+v+"</div>"});
+  document.getElementById("catbar").innerHTML=cb;
+
+  // Tier chart
+  document.getElementById("tbg").textContent=n+"개";
+  new Chart(document.getElementById("tierChart"),{type:"doughnut",data:{labels:["Tier1 "+Math.round(t1/n*100)+"%","Tier2 "+Math.round(t2/n*100)+"%","Tier3+ "+Math.round(t3/n*100)+"%"],datasets:[{data:[t1,t2,t3],backgroundColor:["#534ab7","#378add","#b4b2a9"],borderColor:"#fff",borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:"bottom",labels:{font:{size:11,family:"Noto Sans KR"},color:"#6b6a65",padding:8,usePointStyle:true}}}}});
+  document.getElementById("tins").innerHTML=
+    '<div class="ic g"><h5>Tier 1 — '+t1+'개 ('+Math.round(t1/n*100)+'%)</h5><p>도구테라피, 인사이드플로우, 블랙롤. 경쟁 없는 독점.</p></div>'+
+    '<div class="ic i"><h5>Tier 2 — '+t2+'개 ('+Math.round(t2/n*100)+'%)</h5><p>서대전, 플라잉, 로컬. 서대전=사라요가.</p></div>'+
+    '<div class="ic c"><h5>Tier 3+ — '+t3+'개 ('+Math.round(t3/n*100)+'%)</h5><p>빈야사, 가격, 시즌. 롱테일 니치.</p></div>';
+
+  // Frame
+  var mx=Math.max.apply(null,FRS.map(function(f){return frs[f]||0}))||1;
+  document.getElementById("frc").innerHTML=FRS.map(function(f,i){var c=frs[f]||0;return '<div class="fr"><div class="fl">'+f+'</div><div class="fb"><div class="ff" style="width:'+Math.round(c/mx*100)+'%;background:'+FRC[i]+'"></div></div><div class="fv">'+c+'</div></div>'}).join("");
+
+  // Region
+  var sd=regs["서대전"]||0, jg=regs["대전 중구"]||0;
+  document.getElementById("rgc").innerHTML=
+    '<div class="fr"><div class="fl">서대전</div><div class="fb"><div class="ff" style="width:'+Math.round(sd/n*100)+'%;background:var(--cor)"></div></div><div class="fv">'+sd+" ("+Math.round(sd/n*100)+"%)</div></div>"+
+    '<div class="fr"><div class="fl">대전 중구</div><div class="fb"><div class="ff" style="width:'+Math.round(jg/n*100)+'%;background:var(--inf)"></div></div><div class="fv">'+jg+" ("+Math.round(jg/n*100)+"%)</div></div>";
+
+  // Health
+  var hc=[];
+  hc.push({ok:loc>=2,m:loc>=2?"로컬 콘텐츠 목표 달성 ("+loc+"/2)":"⚠️ 로컬 콘텐츠 없음. 맛집/카페 추가. 검색량이 요가의 3~5배."});
+  hc.push({ok:rev>=2,m:rev>=2?"수업 후기 목표 달성":"⚠️ 수업 후기 없음. 전환율 가장 높은 유형."});
+  if(n>=2){var fd=P[0].fr===P[1].fr;hc.push({ok:!fd,m:fd?"⚠️ 최근 2글 프레임 중복 ("+P[0].fr+")":"프레임 로테이션 정상"});}
+  var bal=Math.abs(sd-jg)<=Math.ceil(n*.3);
+  hc.push({ok:bal,m:bal?"지역 배분 균형 (서대전 "+sd+" · 중구 "+jg+")":"⚠️ 지역 불균형. "+(sd>jg?"대전 중구":"서대전")+" 추가."});
+  hc.push({ok:n>=15,m:n>=15?"토피컬 오소리티 충족 (15+)":"⚠️ 토피컬 오소리티에 최소 15~20개 필요. 현재 "+n+"개."});
+  var k1=kwc(T1);hc.push({ok:k1.n===0,m:k1.n===0?"Tier1 키워드 전부 커버":"⚠️ Tier1 미커버 "+k1.n+"개. 블루오션 최우선."});
+  document.getElementById("hlth").innerHTML=hc.map(function(h){return '<div class="hi"><span style="font-size:1rem">'+(h.ok?"✅":"⚠️")+"</span><span style='color:"+(h.ok?"var(--ac)":"var(--cor)")+"'>"+h.m+"</span></div>"}).join("");
+
+  // Post list
+  document.getElementById("pcnt").textContent=n+"개";
+  document.getElementById("plist").innerHTML=P.map(function(p,i){
+    var tb=p.tier==="Tier1"?"bg2":p.tier==="Tier2"?"bg4":"bg5";
+    return '<div class="pi"><div class="pn">'+(i+1)+'</div><div class="pif"><div class="pit">'+p.title+'</div><div class="pim"><span class="bg bg1" style="font-size:.55rem">'+p.cat+'</span> <span class="bg '+tb+'" style="font-size:.55rem">'+(p.tier||"")+'</span> <span style="font-size:.6rem;color:var(--tx3)">'+(p.fr||"")+" · "+(p.rg||"")+" · "+p.date+'</span></div><div class="pis">'+p.sum+"</div></div>"+'<a class="plk" href="blog/'+p.slug+'.html" target="_blank">열기→</a></div>'
+  }).join("");
+
+  // Keywords
+  var s1=kwc(T1),s2=kwc(T2),s3=kwc(T3);
+  document.getElementById("kwsum").innerHTML=
+    '<div class="ic" style="border-left-color:var(--pur)"><h5>Tier 1: '+s1.y+"/"+T1.length+' 커버</h5><p>🟢'+s1.y+" 🟡"+s1.h+" ⚪"+s1.n+"</p></div>"+
+    '<div class="ic i"><h5>Tier 2: '+s2.y+"/"+T2.length+' 커버</h5><p>🟢'+s2.y+" 🟡"+s2.h+" ⚪"+s2.n+"</p></div>"+
+    '<div class="ic c"><h5>Tier 3: '+s3.y+"/"+T3.length+' 커버</h5><p>🟢'+s3.y+" 🟡"+s3.h+" ⚪"+s3.n+"</p></div>";
+
+  function rkw(list,id){
+    document.getElementById(id).innerHTML=list.map(function(kw){
+      var c=0;P.forEach(function(p){
+        var tm=p.title.toLowerCase().indexOf(kw.k.replace("대전 ","").replace("서대전 ","").toLowerCase())>-1;
+        var tg=(p.tags||[]).some(function(t){return t.replace(/ /g,"").toLowerCase().indexOf(kw.k.replace(/ /g,"").toLowerCase())>-1});
+        if(tm||tg)c++;
+      });
+      var s=c>=2?"y":c===1?"h":"n";
+      return '<div class="ki"><div class="kd '+s+'"></div><div class="kn">'+kw.k+'</div><div class="kc">'+c+'</div><div class="kdr">'+kw.d+"</div></div>";
+    }).join("");
+  }
+  rkw(T1,"kt1");rkw(T2,"kt2");rkw(T3,"kt3");
+
+  // Suggestions
+  document.getElementById("sugs").innerHTML=SUGS.map(function(s,i){
+    var tb=s.tier==="Tier1"?"bg2":s.tier==="Tier2"?"bg4":"bg5";
+    var cmd="BLOG_GUIDE.md 따라서 블로그 글 써줘. 주제: "+s.t+". 카테고리: "+s.cat+". 프레임: "+s.fr+". 지역: "+s.rg+". 키워드: "+s.kw.join(", ")+". Python으로 처리하고 git push.";
+    return '<div class="sg"><div class="sgr">#'+(i+1)+"</div>"+
+      '<div class="sgt">'+s.t+"</div>"+
+      '<div class="sgb"><span class="bg '+tb+'">'+s.tier+'</span><span class="bg bg1">'+s.cat+'</span><span class="bg bg4">'+s.fr+'</span><span class="bg" style="background:#f2f1ed;color:var(--tx3)">'+s.rg+"</span></div>"+
+      '<div class="sgp">'+s.why+"</div>"+
+      '<button class="bc" data-cmd="'+cmd.replace(/"/g,"&quot;")+'" onclick="doCopy(this)">📋 명령어 복사</button></div>';
+  }).join("");
+}
+
+// Init
+render();
 </script>
 </body>
 </html>
