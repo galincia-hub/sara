@@ -58,7 +58,7 @@ a{text-decoration:none}
 .mobile-menu a{font-size:22px;font-weight:300;color:var(--brown);letter-spacing:5px;animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both}
 
 /* ── Hero ── */
-.hero{height:64vh;min-height:360px;position:relative;overflow:hidden}
+.hero{height:45vh;min-height:252px;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 40%;animation:heroZoom 12s ease-out forwards}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,22,15,.35) 0%,rgba(30,22,15,.55) 60%,rgba(250,246,241,1) 100%)}
 .hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:0 28px 52px;max-width:900px;margin:0 auto}
@@ -143,6 +143,34 @@ a{text-decoration:none}
   .list-section{padding:36px 48px 0;max-width:1200px}
   .cta-section{max-width:1200px;padding:56px 48px 100px}
 }
+
+.contact-section{position:relative;overflow:hidden}
+.contact-section .cs-bg{position:absolute;inset:0;background-image:url('../images/blog/pool/studio-전경2.jpg');background-size:cover;background-position:center}
+.contact-section .cs-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(61,50,40,.72),rgba(61,50,40,.9))}
+.contact-section .cs-inner{position:relative;z-index:2;padding:56px 24px 44px;max-width:900px;margin:0 auto;text-align:center}
+.cs-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:7px;color:rgba(212,197,176,.5);margin-bottom:12px}
+.cs-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#FAF6F1;line-height:1.5;margin-bottom:8px}
+.cs-sub{font-size:13px;font-weight:300;color:rgba(250,246,241,.5);margin-bottom:20px}
+.cs-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.cs-btns a{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;padding:15px;font-size:14px;letter-spacing:1.5px;color:#FAF6F1;text-decoration:none}
+.cs-phone{background:var(--gold)}
+.cs-insta{background:rgba(250,246,241,.08);backdrop-filter:blur(12px);border:1px solid rgba(250,246,241,.12)}
+.cs-info{background:rgba(250,246,241,.06);backdrop-filter:blur(20px);border-radius:18px;padding:22px;border:1px solid rgba(250,246,241,.08)}
+.cs-info .ci-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:#FAF6F1;letter-spacing:3px;margin-bottom:12px}
+.cs-info .ci-addr{font-size:13px;font-weight:300;line-height:1.9;color:rgba(250,246,241,.6)}
+.cs-info .ci-dist{margin-top:10px;font-size:13px;color:#D4C5B0}
+.cs-info .ci-hours{margin-top:10px;font-size:11px;color:rgba(250,246,241,.3)}
+.site-footer{background:var(--brown);padding:36px 24px 48px;text-align:center}
+.ft-logo{height:36px;display:block;margin:0 auto 10px}
+.ft-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(139,115,85,.6);letter-spacing:4px;margin-bottom:6px}
+.ft-sub{font-size:11px;color:rgba(176,156,128,.35);line-height:1.8}
+.ft-links{margin-top:16px;display:flex;justify-content:center;gap:24px}
+.ft-links a{color:rgba(176,156,128,.45);text-decoration:none;font-size:12px}
+.ft-copy{margin-top:16px;font-size:10px;color:rgba(176,156,128,.2)}
+@media(min-width:768px){
+  .contact-section .cs-inner{padding:72px 48px 56px}
+  .cs-btns{flex-direction:row;justify-content:center}
+}
 </style>
 </head>
 <body>
@@ -214,15 +242,34 @@ a{text-decoration:none}
 </div>
 
 <!-- ═══ FOOTER ═══ -->
-<footer class="footer">
-  <div class="fname">Sara Yoga Studio</div>
-  <div class="fsub">원장 직강 · 소수정예 · 1:1 교정<br>서대전네거리역 4번출구 도보 2분</div>
-  <div class="flinks">
-    <a href="../">홈</a>
-    <a href="../blog/">블로그</a>
+<section class="contact-section">
+  <div class="cs-bg"></div>
+  <div class="cs-overlay"></div>
+  <div class="cs-inner">
+    <div class="cs-label">CONTACT</div>
+    <div class="cs-title">사라요가에서<br>만나요</div>
+    <div class="cs-sub">첫 체험수업은 무료예요. 편하게 연락 주세요.</div>
+    <div class="cs-btns">
+      <a href="tel:010-9773-4256" class="cs-phone">전화 문의</a>
+      <a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener noreferrer" class="cs-insta">인스타그램 DM</a>
+    </div>
+    <div class="cs-info">
+      <div class="ci-name">Sara Yoga Studio</div>
+      <div class="ci-addr">대전 중구 계룡로 874번길 18, 3층<br>(오류동, 한양고깃집 건물)</div>
+      <div class="ci-dist">서대전네거리역 4번출구 도보 2분</div>
+      <div class="ci-hours">스케줄에 따라 운영 · 일요일 휴무</div>
+    </div>
+  </div>
+</section>
+<footer class="site-footer">
+  <img src="../images/logo/사라요가-로고-가로형-흰색.png" alt="사라요가 로고" class="ft-logo">
+  <div class="ft-name">Sara Yoga Studio</div>
+  <div class="ft-sub">원장의 세심한 케어 · 소수정예 · 1:1 교정</div>
+  <div class="ft-links">
+    <a href="../blog/">Blog</a>
     <a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a>
   </div>
-  <div class="copy">© 2023–2026 Sara Yoga Studio</div>
+  <div class="ft-copy">2023-2026 Sara Yoga Studio</div>
 </footer>
 
 <script>
