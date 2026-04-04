@@ -17,170 +17,366 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"사라요가 블로그","description":"대전 서대전 소그룹 요가 스튜디오 사라요가의 블로그.","url":"https://sarayoga.kr/blog","isPartOf":{"@type":"WebSite","name":"사라요가","url":"https://sarayoga.kr"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"사라요가","item":"https://sarayoga.kr"},{"@type":"ListItem","position":2,"name":"블로그"}]}}
 </script>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#FAF6F1;--surface:#fff;--brown:#3D3228;--gold:#8B7355;--beige:#EDE6DC;--gray:#6B5D4F;--lgray:#B09C80;--cgray:#C8BBAA;--border:rgba(212,197,176,.15);--radius:18px}
 html{scroll-behavior:smooth}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brown);line-height:1.6;-webkit-font-smoothing:antialiased}
-.nav{position:sticky;top:0;z-index:50;background:rgba(250,246,241,.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:14px 24px}
-.nav-inner{max-width:900px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
-.nav a{text-decoration:none;color:var(--gold);font-size:13px;letter-spacing:1px;transition:color .3s}
-.nav a:hover{color:var(--brown)}
-.nav .logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;letter-spacing:2px}
-.nav .links{display:flex;gap:24px;align-items:center}
-.header{max-width:900px;margin:0 auto;padding:56px 24px 0;text-align:center}
-.header .label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:7px;color:var(--lgray);margin-bottom:14px}
-.header h1{font-size:32px;font-weight:700;color:var(--brown);margin-bottom:12px}
-.header p{font-size:14px;font-weight:300;color:var(--gray);line-height:1.8;max-width:480px;margin:0 auto}
-.filter{max-width:900px;margin:0 auto;padding:32px 24px 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brown);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(139,115,85,.2);border-radius:3px}
+a{text-decoration:none}
+.serif{font-family:'Cormorant Garamond',serif}
+
+/* ── Animations ── */
+@keyframes heroZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .5s ease;padding:14px 20px}
+.nav.scrolled{background:rgba(250,246,241,.92);backdrop-filter:blur(28px);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-dark{display:none}
+.nav.scrolled .nav-logo-white{display:none!important}
+.nav.scrolled .nav-logo-dark{display:block!important}
+.nav-links{display:none;gap:32px;align-items:center}
+.nav-link{position:relative;padding:4px 0;font-size:13px;letter-spacing:1.5px;font-weight:400;color:rgba(255,255,255,.8);text-shadow:0 1px 8px rgba(0,0,0,.1);transition:color .3s}
+.nav-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.nav-link:hover::after,.nav-link.active::after{width:100%}
+.nav.scrolled .nav-link{color:var(--gray);text-shadow:none}
+.nav-link.active{color:var(--gold)!important}
+.nav-cta{padding:10px 24px;border-radius:24px;font-size:13px;letter-spacing:1.5px;color:#FAF6F1;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(8px);transition:all .35s ease}
+.nav.scrolled .nav-cta{background:var(--brown);border:none}
+.hamburger{background:none;border:none;cursor:pointer;padding:8px;z-index:101}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;margin-bottom:5px;transition:all .3s}
+.hamburger span:last-child{margin-bottom:0;width:14px}
+.nav.scrolled .hamburger span,.menu-open .hamburger span{background:var(--brown)}
+
+/* ── Mobile Menu ── */
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:rgba(250,246,241,.97);backdrop-filter:blur(40px);flex-direction:column;justify-content:center;align-items:center;gap:28px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:22px;font-weight:300;color:var(--brown);letter-spacing:5px;animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both}
+
+/* ── Hero ── */
+.hero{height:64vh;min-height:360px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 40%;animation:heroZoom 12s ease-out forwards}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,22,15,.35) 0%,rgba(30,22,15,.55) 60%,rgba(250,246,241,1) 100%)}
+.hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:0 28px 52px;max-width:900px;margin:0 auto}
+.hero-label{font-size:11px;letter-spacing:7px;color:rgba(255,255,255,.6);margin-bottom:14px;font-family:'Cormorant Garamond',serif}
+.hero h1{font-size:36px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:16px;text-shadow:0 2px 20px rgba(0,0,0,.2)}
+.hero-desc{font-size:14px;font-weight:300;line-height:1.95;color:rgba(255,255,255,.82);max-width:480px;text-shadow:0 1px 8px rgba(0,0,0,.15)}
+
+/* ── Filter ── */
+.filter{max-width:900px;margin:0 auto;padding:36px 24px 0;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .filter button{background:none;border:1px solid var(--border);border-radius:24px;padding:8px 20px;font-size:13px;color:var(--lgray);cursor:pointer;font-family:inherit;transition:all .3s}
 .filter button:hover{border-color:var(--gold);color:var(--gold)}
 .filter button.active{background:var(--brown);color:var(--bg);border-color:var(--brown)}
-.grid{max-width:900px;margin:0 auto;padding:36px 24px 80px;display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.card{background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);text-decoration:none;display:block;transition:all .4s cubic-bezier(.25,.46,.45,.94);opacity:0;transform:translateY(20px);animation:fadeUp .5s ease forwards}
+
+/* ── Card Grid ── */
+.grid{max-width:900px;margin:0 auto;padding:32px 24px 0;display:grid;grid-template-columns:1fr;gap:16px}
+.card{background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);display:block;transition:all .4s cubic-bezier(.25,.46,.45,.94);opacity:0;transform:translateY(20px);animation:fadeUp .5s ease forwards;position:relative}
 .card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(61,50,40,.08)}
 .card-img{height:180px;background:var(--beige);overflow:hidden;position:relative}
 .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
 .card:hover .card-img img{transform:scale(1.06)}
 .card-img .fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
-.card-img .fallback .ph{font-size:28px;opacity:.35}
-.card-img .fallback .pl{font-size:11px;color:var(--gold);opacity:.5}
 .card-body{padding:20px 22px 24px}
-.card-meta{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.card-meta{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
 .card-cat{font-size:10px;color:var(--gold);background:rgba(139,115,85,.08);padding:4px 12px;border-radius:16px;font-weight:500}
 .card-date{font-size:11px;color:var(--cgray)}
 .card-title{font-size:15px;font-weight:500;color:var(--brown);line-height:1.55;margin-bottom:10px;word-break:keep-all}
 .card-summary{font-size:13px;font-weight:300;color:var(--gray);line-height:1.75;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
 .card-tags span{font-size:10px;color:var(--lgray);background:rgba(176,156,128,.08);padding:3px 10px;border-radius:12px}
-.empty{text-align:center;padding:60px 24px;color:var(--lgray);font-size:14px}
-.cta-section{max-width:900px;margin:0 auto;padding:0 24px 80px;text-align:center}
+.pinned-badge{position:absolute;top:14px;left:14px;z-index:2;background:var(--brown);color:#FAF6F1;font-size:10px;letter-spacing:2px;padding:4px 12px;border-radius:20px;font-weight:500}
+
+/* ── List Section ── */
+.list-section{max-width:900px;margin:0 auto;padding:32px 24px 0}
+.list-section-title{font-size:12px;letter-spacing:4px;color:var(--lgray);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.list-item{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);text-decoration:none;transition:background .2s}
+.list-item:hover .list-title{color:var(--gold)}
+.list-thumb{width:56px;height:56px;border-radius:10px;overflow:hidden;flex-shrink:0;background:var(--beige)}
+.list-thumb img{width:100%;height:100%;object-fit:cover}
+.list-body{flex:1;min-width:0}
+.list-title{font-size:14px;font-weight:400;color:var(--brown);line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .3s}
+.list-meta{display:flex;gap:10px;align-items:center;margin-top:4px}
+.list-cat{font-size:10px;color:var(--gold);background:rgba(139,115,85,.08);padding:3px 10px;border-radius:12px}
+.list-date{font-size:11px;color:var(--cgray)}
+.more-btn{display:block;margin:24px auto 0;background:none;border:1px solid var(--border);border-radius:24px;padding:12px 36px;font-size:13px;color:var(--lgray);cursor:pointer;font-family:inherit;transition:all .3s}
+.more-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── Empty ── */
+.empty{text-align:center;padding:60px 24px;color:var(--lgray);font-size:14px;display:none}
+
+/* ── CTA ── */
+.cta-section{max-width:900px;margin:0 auto;padding:48px 24px 80px;text-align:center}
 .cta-section p{font-size:14px;color:var(--gray);font-weight:300;margin-bottom:16px}
 .cta-btn{display:inline-block;background:var(--gold);color:var(--bg);text-decoration:none;padding:15px 40px;border-radius:32px;font-size:14px;letter-spacing:1.5px;transition:all .3s}
 .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(139,115,85,.3)}
+
+/* ── Footer ── */
 .footer{background:var(--brown);padding:36px 24px 48px;text-align:center}
 .footer .fname{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(139,115,85,.6);letter-spacing:4px;margin-bottom:8px}
 .footer .fsub{font-size:11px;color:rgba(176,156,128,.35);line-height:1.8}
 .footer .flinks{margin-top:16px;display:flex;justify-content:center;gap:24px}
-.footer .flinks a{color:rgba(176,156,128,.45);text-decoration:none;font-size:12px}
+.footer .flinks a{color:rgba(176,156,128,.45);font-size:12px}
 .footer .copy{margin-top:16px;font-size:10px;color:rgba(176,156,128,.2)}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-@media(max-width:600px){.header h1{font-size:26px}.grid{grid-template-columns:1fr;gap:14px}.card-img{height:160px}.nav .links .desk{display:none}}
-@media(min-width:768px){.nav{padding:16px 48px}.header{padding:72px 48px 0}.header h1{font-size:36px}.grid{grid-template-columns:repeat(3,1fr);padding:40px 48px 100px}.card-img{height:200px}}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .hero h1{font-size:28px}
+  .hero-desc{font-size:13px}
+}
+@media(min-width:600px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:18px}
+  .card-img{height:190px}
+}
+@media(min-width:768px){
+  .nav{padding:16px 48px}
+  .nav-links{display:flex}
+  .hamburger{display:none}
+  .hero-content{padding:0 48px 64px}
+  .hero h1{font-size:44px}
+  .filter{padding:48px 48px 0}
+  .grid{grid-template-columns:repeat(3,1fr);padding:36px 48px 0;gap:20px;max-width:1200px}
+  .card-img{height:200px}
+  .list-section{padding:36px 48px 0;max-width:1200px}
+  .cta-section{max-width:1200px;padding:56px 48px 100px}
+}
 </style>
 </head>
 <body>
 
-<nav class="nav">
+<!-- ═══ NAV ═══ -->
+<nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="../" class="logo"><img src="../images/logo/사라요가-로고-가로형-다크그레이.png" alt="사라요가 로고" style="height:32px;display:block"></a>
-    <div class="links">
-      <a href="../" class="desk">홈</a>
-      <a href="../blog/">블로그</a>
-      <a href="../#contact">문의</a>
+    <a href="../" class="nav-logo">
+      <img src="../images/logo/사라요가-로고-가로형-흰색.png" alt="사라요가 로고" class="nav-logo-white" style="height:44px;display:block">
+      <img src="../images/logo/사라요가-로고-가로형-다크그레이.png" alt="사라요가 로고" class="nav-logo-dark" style="height:44px;display:none">
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="../#about">소개</a>
+      <a class="nav-link" href="../#programs">프로그램</a>
+      <a class="nav-link" href="../#schedule">시간표</a>
+      <a class="nav-link" href="../#reviews">후기</a>
+      <a class="nav-link active" href="../blog/">블로그</a>
+      <a class="nav-link" href="../#contact">문의</a>
+      <a class="cta-btn nav-cta" href="https://m.booking.naver.com/booking/12/bizes/1019144?area=bmp&lang=ko" target="_blank" rel="noopener noreferrer">체험 신청</a>
     </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<header class="header">
-  <div class="label">BLOG</div>
-  <h1>사라요가 이야기</h1>
-  <p>요가 정보, 프로그램 가이드, 수업 후기, 서대전 동네 이야기까지.<br>사라요가의 모든 콘텐츠를 만나보세요.</p>
-</header>
+<!-- ═══ MOBILE MENU ═══ -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="../#about" onclick="closeMenu()">소개</a>
+  <a href="../#programs" onclick="closeMenu()">프로그램</a>
+  <a href="../#schedule" onclick="closeMenu()">시간표</a>
+  <a href="../#reviews" onclick="closeMenu()">후기</a>
+  <a href="../blog/" onclick="closeMenu()">블로그</a>
+  <a href="../#contact" onclick="closeMenu()">문의</a>
+</div>
 
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg" style="background-image:url('../images/blog/pool/group-소그룹수업.jpg')"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-label">BLOG</div>
+    <h1>사라요가 이야기</h1>
+    <p class="hero-desc">요가를 통해 몸이 달라지고, 마음이 가벼워지는 경험 —<br>
+    그 작은 변화들을 이곳에 기록하고 싶었어요.<br>
+    수업 이야기, 자세 이야기, 요가와 함께하는 일상 이야기.<br>
+    여기서 나누는 모든 글이 여러분의 하루에 작은 쉼이 되길 바랍니다.</p>
+  </div>
+</section>
+
+<!-- ═══ FILTER ═══ -->
 <div class="filter" id="filter"></div>
 
-<!-- posts.json에서 자동 렌더링 -->
+<!-- ═══ CARD GRID (9개) ═══ -->
 <div class="grid" id="blog-grid"></div>
-<div class="empty" id="empty-msg" style="display:none">해당 카테고리의 글이 아직 없어요.</div>
+<div class="empty" id="empty-msg">해당 카테고리의 글이 아직 없어요.</div>
 
+<!-- ═══ LIST SECTION ═══ -->
+<div class="list-section" id="list-section" style="display:none">
+  <div class="list-section-title">MORE POSTS</div>
+  <div id="blog-list"></div>
+  <button class="more-btn" id="more-btn" onclick="loadMore()" style="display:none">더보기</button>
+</div>
+
+<!-- ═══ CTA ═══ -->
 <div class="cta-section">
   <p>글을 읽고 궁금한 점이 있으신가요?</p>
   <a href="https://m.booking.naver.com/booking/12/bizes/1019144?area=bmp&lang=ko" class="cta-btn" target="_blank" rel="noopener noreferrer">체험수업 무료 신청</a>
 </div>
 
+<!-- ═══ FOOTER ═══ -->
 <footer class="footer">
   <div class="fname">Sara Yoga Studio</div>
-  <div class="fsub">원장 직강 · 소수정예 6명 · 1:1 교정<br>서대전네거리역 4번출구 도보 2분</div>
-  <div class="flinks"><a href="../">홈</a><a href="../blog/">블로그</a><a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a></div>
+  <div class="fsub">원장 직강 · 소수정예 · 1:1 교정<br>서대전네거리역 4번출구 도보 2분</div>
+  <div class="flinks">
+    <a href="../">홈</a>
+    <a href="../blog/">블로그</a>
+    <a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a>
+  </div>
   <div class="copy">© 2023–2026 Sara Yoga Studio</div>
 </footer>
 
 <script>
-(function() {
-  var posts = [];
-  var activeFilter = 'all';
+(function () {
+  var CATEGORIES = ['전체', '수업소개', '요가입문', '중급수련', '안내', '기타'];
+  var CARD_LIMIT = 9;
+  var LIST_PAGE_SIZE = 5;
 
-  // posts.json 로드
-  fetch('posts.json')
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      posts = data;
-      renderFilters();
-      renderPosts();
-    })
-    .catch(function() {
-      // fetch 실패 시 (로컬 파일 등) 하드코딩 데이터 사용
-      posts = [
-        {slug:"서대전-사라요가-가격-총정리",title:"서대전 사라요가 프로그램별 가격 총정리 — 2026년 최신",category:"가격/안내",date:"2026.04.12",summary:"체험수업 무료, 4회 88,000원부터. 6명 소그룹, 원장 직강 100%.",tags:["사라요가가격","대전요가가격","서대전요가","사라요가"],thumbnail:"/images/blog/pool/studio-전경.jpg"},
-        {slug:"대전중구-소그룹요가-비교",title:"대전 중구 소그룹 요가 vs 대형 요가원 — 뭐가 다를까?",category:"정보/가이드",date:"2026.04.10",summary:"정원 수, 1:1 교정, 가격 대비 가치까지 솔직 비교.",tags:["대전중구요가","소그룹요가","서대전요가","사라요가"],thumbnail:"/images/blog/pool/group-소그룹수업.jpg"},
-        {slug:"서대전-플라잉요가-초보가이드",title:"서대전 플라잉요가 초보 가이드 — 겁 많아도 괜찮아요",category:"정보/가이드",date:"2026.04.08",summary:"해먹이 체중의 80%를 지지해주니까 팔 힘 없어도 OK.",tags:["대전플라잉요가","서대전요가","플라잉요가초보","사라요가"],thumbnail:"/images/blog/pool/flying-해먹전경.jpg"},
-        {slug:"대전중구-블랙롤-근막이완-가이드",title:"대전 중구 블랙롤 근막이완 가이드 — 집에서도 할 수 있는 셀프케어",category:"정보/가이드",date:"2026.04.05",summary:"블랙롤 부위별 사용법과 효과.",tags:["블랙롤","근막이완","대전중구요가","사라요가"],thumbnail:"/images/blog/pool/therapy-블랙롤.jpg"},
-        {slug:"서대전-인사이드플로우-입문가이드",title:"서대전 인사이드플로우 입문 가이드 — 음악과 호흡이 만나는 요가",category:"정보/가이드",date:"2026.04.03",summary:"음악에 맞춰 움직이는 빈야사 기반 플로우 요가.",tags:["대전인사이드플로우","서대전요가","인사이드플로우입문","사라요가"],thumbnail:"/images/blog/pool/insideflow-플로우.jpg"},
-        {slug:"대전중구-도구테라피-완전가이드",title:"대전 중구 도구테라피 완전 가이드 — 뭉친 어깨, 이렇게 풀어요",category:"정보/가이드",date:"2026.04.01",summary:"폼롤러, 블랙롤, 근막이완 볼 활용 셀프 테라피.",tags:["대전도구테라피","대전중구요가","블랙롤테라피","사라요가"],thumbnail:"/images/blog/pool/therapy-폼롤러.jpg"}
-      ];
-      renderFilters();
-      renderPosts();
-    });
+  var allPosts = [];
+  var activeFilter = '전체';
+  var listShown = 0;
 
-  function renderFilters() {
-    var cats = ['all'];
-    posts.forEach(function(p) { if (cats.indexOf(p.category) === -1) cats.push(p.category); });
-    var labels = { 'all': '전체' };
-    var html = cats.map(function(c) {
-      return '<button data-cat="' + c + '" class="' + (c === activeFilter ? 'active' : '') + '">' + (labels[c] || c) + '</button>';
-    }).join('');
-    document.getElementById('filter').innerHTML = html;
+  /* ── Nav scroll behavior ── */
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 60) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
 
-    document.getElementById('filter').addEventListener('click', function(e) {
-      if (e.target.tagName !== 'BUTTON') return;
-      activeFilter = e.target.dataset.cat;
-      document.querySelectorAll('.filter button').forEach(function(b) { b.classList.remove('active'); });
-      e.target.classList.add('active');
-      renderPosts();
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+    document.body.classList.toggle('menu-open');
+  }
+  function closeMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.body.classList.remove('menu-open');
+  }
+  window.toggleMenu = toggleMenu;
+  window.closeMenu = closeMenu;
+
+  /* ── Sort: pinned first, then newest ── */
+  function sortPosts(posts) {
+    return posts.slice().sort(function (a, b) {
+      if (a.pinned && !b.pinned) return -1;
+      if (!a.pinned && b.pinned) return 1;
+      return b.date.localeCompare(a.date);
     });
   }
 
-  function renderPosts() {
-    var filtered = activeFilter === 'all' ? posts : posts.filter(function(p) { return p.category === activeFilter; });
+  /* ── Filter ── */
+  function filtered() {
+    if (activeFilter === '전체') return sortPosts(allPosts);
+    return sortPosts(allPosts.filter(function (p) { return p.category === activeFilter; }));
+  }
+
+  /* ── Render filter buttons ── */
+  function renderFilters() {
+    var el = document.getElementById('filter');
+    el.innerHTML = CATEGORIES.map(function (c) {
+      return '<button data-cat="' + c + '" class="' + (c === activeFilter ? 'active' : '') + '">' + c + '</button>';
+    }).join('');
+    el.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'BUTTON') return;
+      activeFilter = e.target.dataset.cat;
+      document.querySelectorAll('.filter button').forEach(function (b) { b.classList.remove('active'); });
+      e.target.classList.add('active');
+      listShown = 0;
+      render();
+    });
+  }
+
+  /* ── Card HTML ── */
+  function cardHTML(post, idx) {
+    var img = post.thumbnail
+      ? '<img src="' + post.thumbnail + '" alt="' + post.title + '" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=fallback><span style=font-size:28px;opacity:.35>📷</span></div>\'">'
+      : '<div class="fallback"><span style="font-size:28px;opacity:.35">📷</span></div>';
+    var tags = (post.tags || []).slice(0, 3).map(function (t) { return '<span>#' + t + '</span>'; }).join('');
+    var pinned = post.pinned ? '<div class="pinned-badge">고정</div>' : '';
+    return '<a href="../blog/' + post.slug + '.html" class="card" style="animation-delay:' + (idx * 0.06) + 's">'
+      + pinned
+      + '<div class="card-img">' + img + '</div>'
+      + '<div class="card-body">'
+      + '<div class="card-meta"><span class="card-cat">' + post.category + '</span><span class="card-date">' + post.date + '</span></div>'
+      + '<div class="card-title">' + post.title + '</div>'
+      + '<div class="card-summary">' + post.summary + '</div>'
+      + '<div class="card-tags">' + tags + '</div>'
+      + '</div></a>';
+  }
+
+  /* ── List item HTML ── */
+  function listItemHTML(post) {
+    var thumb = post.thumbnail
+      ? '<img src="' + post.thumbnail + '" alt="' + post.title + '" loading="lazy" onerror="this.style.display=\'none\'">'
+      : '';
+    return '<a href="../blog/' + post.slug + '.html" class="list-item">'
+      + '<div class="list-thumb">' + thumb + '</div>'
+      + '<div class="list-body">'
+      + '<div class="list-title">' + post.title + '</div>'
+      + '<div class="list-meta"><span class="list-cat">' + post.category + '</span><span class="list-date">' + post.date + '</span></div>'
+      + '</div></a>';
+  }
+
+  /* ── Main render ── */
+  function render() {
+    var posts = filtered();
     var grid = document.getElementById('blog-grid');
     var empty = document.getElementById('empty-msg');
+    var listSection = document.getElementById('list-section');
+    var listEl = document.getElementById('blog-list');
+    var moreBtn = document.getElementById('more-btn');
 
-    if (filtered.length === 0) {
+    if (posts.length === 0) {
       grid.innerHTML = '';
       empty.style.display = 'block';
+      listSection.style.display = 'none';
       return;
     }
     empty.style.display = 'none';
 
-    grid.innerHTML = filtered.map(function(post, i) {
-      var imgHtml = post.thumbnail
-        ? '<img src="' + post.thumbnail + '" alt="' + post.title + '" onerror="this.parentElement.innerHTML=\'<div class=fallback><span class=ph>📷</span><span class=pl>' + post.category + '</span></div>\'">'
-        : '<div class="fallback"><span class="ph">📷</span><span class="pl">' + post.category + '</span></div>';
+    var cards = posts.slice(0, CARD_LIMIT);
+    var rest = posts.slice(CARD_LIMIT);
 
-      var tagsHtml = (post.tags || []).slice(0, 3).map(function(t) { return '<span>#' + t + '</span>'; }).join('');
+    grid.innerHTML = cards.map(cardHTML).join('');
 
-      return '<a href="../blog/' + post.slug + '.html" class="card" style="animation-delay:' + (i * 0.06) + 's" data-cat="' + post.category + '">'
-        + '<div class="card-img">' + imgHtml + '</div>'
-        + '<div class="card-body">'
-        + '<div class="card-meta"><span class="card-cat">' + post.category + '</span><span class="card-date">' + post.date + '</span></div>'
-        + '<div class="card-title">' + post.title + '</div>'
-        + '<div class="card-summary">' + post.summary + '</div>'
-        + '<div class="card-tags">' + tagsHtml + '</div>'
-        + '</div></a>';
-    }).join('');
+    if (rest.length === 0) {
+      listSection.style.display = 'none';
+      return;
+    }
+
+    listSection.style.display = 'block';
+    listShown = Math.min(listShown || LIST_PAGE_SIZE, rest.length);
+    listEl.innerHTML = rest.slice(0, listShown).map(listItemHTML).join('');
+
+    if (listShown < rest.length) {
+      moreBtn.style.display = 'block';
+    } else {
+      moreBtn.style.display = 'none';
+    }
   }
+
+  /* ── Load more ── */
+  function loadMore() {
+    var posts = filtered();
+    var rest = posts.slice(CARD_LIMIT);
+    listShown = Math.min(listShown + LIST_PAGE_SIZE, rest.length);
+    var listEl = document.getElementById('blog-list');
+    var moreBtn = document.getElementById('more-btn');
+    listEl.innerHTML = rest.slice(0, listShown).map(listItemHTML).join('');
+    if (listShown >= rest.length) moreBtn.style.display = 'none';
+  }
+  window.loadMore = loadMore;
+
+  /* ── Load posts.json ── */
+  fetch('posts.json')
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      allPosts = data;
+      renderFilters();
+      render();
+    })
+    .catch(function () {
+      document.getElementById('empty-msg').style.display = 'block';
+      document.getElementById('empty-msg').textContent = '글을 불러오는 중 문제가 생겼어요. 잠시 후 다시 시도해주세요.';
+    });
 })();
 </script>
 
