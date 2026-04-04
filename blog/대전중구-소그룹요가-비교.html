@@ -239,31 +239,38 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brow
 .related-card .rc-date{font-size:10px;color:var(--cgray);margin-top:4px}
 .related-all-link{display:block;text-align:center;margin-top:16px;color:var(--gold);font-size:13px;text-decoration:none;letter-spacing:1px;transition:color .3s}
 .related-all-link:hover{color:var(--brown)}
-.contact-section{position:relative;overflow:hidden}
-.contact-section .cs-bg{position:absolute;inset:0;background-image:url('../images/blog/pool/studio-전경2.jpg');background-size:cover;background-position:center}
-.contact-section .cs-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(61,50,40,.72),rgba(61,50,40,.9))}
-.contact-section .cs-inner{position:relative;z-index:2;padding:56px 24px 44px;max-width:720px;margin:0 auto;text-align:center}
-.cs-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:7px;color:rgba(212,197,176,.5);margin-bottom:12px}
-.cs-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:#FAF6F1;line-height:1.5;margin-bottom:8px}
-.cs-sub{font-size:13px;font-weight:300;color:rgba(250,246,241,.5);margin-bottom:20px}
-.cs-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.cs-btns a{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:14px;padding:15px;font-size:14px;letter-spacing:1.5px;color:#FAF6F1;text-decoration:none}
-.cs-phone{background:var(--gold)}
-.cs-insta{background:rgba(250,246,241,.08);backdrop-filter:blur(12px);border:1px solid rgba(250,246,241,.12)}
-.cs-info{background:rgba(250,246,241,.06);backdrop-filter:blur(20px);border-radius:18px;padding:22px;border:1px solid rgba(250,246,241,.08)}
-.cs-info .ci-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:#FAF6F1;letter-spacing:3px;margin-bottom:12px}
-.cs-info .ci-addr{font-size:13px;font-weight:300;line-height:1.9;color:rgba(250,246,241,.6)}
-.cs-info .ci-dist{margin-top:10px;font-size:13px;color:#D4C5B0}
-.cs-info .ci-hours{margin-top:10px;font-size:11px;color:rgba(250,246,241,.3)}
-.site-footer{background:var(--brown);padding:36px 24px 48px;text-align:center}
-.ft-logo{height:36px;display:block;margin:0 auto 10px}
-.ft-name{font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(139,115,85,.6);letter-spacing:4px;margin-bottom:6px}
-.ft-sub{font-size:11px;color:rgba(176,156,128,.35);line-height:1.8}
-.ft-links{margin-top:16px;display:flex;justify-content:center;gap:24px}
-.ft-links a{color:rgba(176,156,128,.45);text-decoration:none;font-size:12px}
-.ft-copy{margin-top:16px;font-size:10px;color:rgba(176,156,128,.2)}
+.serif{font-family:'Cormorant Garamond',serif}
+.label{font-size:11px;letter-spacing:7px;color:var(--lgray);margin-bottom:14px}
+.cta-btn{transition:all .35s ease;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.wrap{padding:0 24px;max-width:900px;margin:0 auto}
+.contact{position:relative;overflow:hidden;scroll-margin-top:70px}
+.contact-bg{position:absolute;inset:0;background:linear-gradient(135deg,#5A4B3B,#3D3228);background-size:cover;background-position:center}
+.contact-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(61,50,40,.72),rgba(61,50,40,.88))}
+.contact-inner{position:relative;z-index:2;padding:80px 0 44px;max-width:1200px;margin:0 auto}
+.contact-grid{display:block}
+.contact-left{text-align:center;margin-bottom:36px}
+.contact-btns{display:flex;flex-direction:column;gap:12px;margin-top:28px}
+.contact-btns a{display:flex;align-items:center;justify-content:center;gap:10px;border-radius:16px;padding:18px;font-size:15px;letter-spacing:1.5px;color:#FAF6F1;text-decoration:none}
+.contact-btns .phone{background:var(--gold)}
+.contact-btns .insta{background:rgba(250,246,241,.08);backdrop-filter:blur(12px);border:1px solid rgba(250,246,241,.12)}
+.contact-info{background:rgba(250,246,241,.06);backdrop-filter:blur(20px);border-radius:24px;padding:26px;border:1px solid rgba(250,246,241,.08);text-align:center}
+.footer{background:var(--brown);padding:36px 24px 56px;text-align:center}
+.footer .fname{font-size:18px;font-family:'Cormorant Garamond',serif;color:rgba(139,115,85,.6);letter-spacing:4px;margin-bottom:6px}
+.footer .fsub{font-size:11px;font-weight:300;color:rgba(176,156,128,.35);line-height:1.8}
+.footer .flinks{margin-top:16px;display:flex;justify-content:center;gap:24px;font-size:12px}
+.footer .flinks a{color:rgba(176,156,128,.45);text-decoration:none}
+.footer .copy{margin-top:20px;font-size:10px;color:rgba(176,156,128,.2)}
 @media(min-width:768px){
-  .nav{padding:16px 48px}
+  .contact-inner{padding:100px 0 60px}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .contact-left{text-align:left;margin-bottom:0}
+  .contact-btns{flex-direction:row}
+  .contact-btns a{padding:16px 32px}
+  .contact-info{padding:36px}
+  .footer{padding:44px 48px}
+  .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;text-align:left}
+  .footer .flinks{justify-content:flex-end;margin-top:0}
+}
   .nav-links{display:flex}
   .hamburger{display:none}
   .post-hero{height:35vh;min-height:196px}
@@ -271,8 +278,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--brow
   .post-hero h1{font-size:25px}
   .related-grid{grid-template-columns:repeat(2,1fr)}
   .rc-thumb{height:90px}
-  .contact-section .cs-inner{padding:72px 48px 56px}
-  .cs-btns{flex-direction:row;justify-content:center}
   .blog-related{padding-left:48px;padding-right:48px}
 }
 </style>
@@ -422,35 +427,39 @@ PT 한 회에 5~8만원인데<br>
   </div>
   <a href="../blog/" class="related-all-link">블로그 전체 보기 →</a>
 </section>
-<section class="contact-section">
-  <div class="cs-bg"></div>
-  <div class="cs-overlay"></div>
-  <div class="cs-inner">
-    <div class="cs-label">CONTACT</div>
-    <div class="cs-title">사라요가에서<br>만나요</div>
-    <div class="cs-sub">첫 체험수업은 무료예요. 편하게 연락 주세요.</div>
-    <div class="cs-btns">
-      <a href="tel:010-9773-4256" class="cs-phone">전화 문의</a>
-      <a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener noreferrer" class="cs-insta">인스타그램 DM</a>
-    </div>
-    <div class="cs-info">
-      <div class="ci-name">Sara Yoga Studio</div>
-      <div class="ci-addr">대전 중구 계룡로 874번길 18, 3층<br>(오류동, 한양고깃집 건물)</div>
-      <div class="ci-dist">서대전네거리역 4번출구 도보 2분</div>
-      <div class="ci-hours">스케줄에 따라 운영 · 일요일 휴무</div>
+<section class="contact" id="contact">
+  <div class="contact-bg" style="background-image:url('../images/blog/pool/studio-전경2.jpg')"></div>
+  <div class="contact-overlay"></div>
+  <div class="contact-inner">
+    <div class="wrap contact-grid">
+      <div class="contact-left">
+        <div class="serif label" style="color:rgba(212,197,176,.5)">CONTACT</div>
+        <h3 class="serif" style="font-size:30px;font-weight:300;color:#FAF6F1;line-height:1.5">사라요가에서<br>만나요</h3>
+        <p style="font-size:13.5px;font-weight:300;color:rgba(250,246,241,.55);line-height:1.8;margin-top:14px">첫 체험수업은 무료예요. 편하게 연락 주세요.</p>
+        <div class="contact-btns">
+          <a href="tel:010-9773-4256" class="phone cta-btn">📞 전화 문의</a>
+          <a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener noreferrer" class="insta">📷 인스타그램 DM</a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-info">
+          <div class="serif" style="font-size:22px;color:#FAF6F1;letter-spacing:3px;margin-bottom:18px">Sara Yoga Studio</div>
+          <div style="font-size:13.5px;font-weight:300;line-height:2.1;color:rgba(250,246,241,.6)">대전 중구 계룡로 874번길 18, 3층<br>(오류동, 한양고깃집 건물)</div>
+          <div style="margin-top:16px;font-size:14px;color:#D4C5B0">서대전네거리역 4번출구 도보 2분</div>
+          <div style="margin-top:16px;width:100%;height:1px;background:rgba(250,246,241,.08)"></div>
+          <div style="margin-top:16px;font-size:12px;color:rgba(250,246,241,.35)">스케줄에 따라 운영 · 일요일 휴무</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-<footer class="site-footer">
-  <img src="../images/logo/사라요가-로고-가로형-흰색.png" alt="사라요가 로고" class="ft-logo">
-  <div class="ft-name">Sara Yoga Studio</div>
-  <div class="ft-sub">원장의 세심한 케어 · 소수정예 · 1:1 교정</div>
-  <div class="ft-links">
-    <a href="../blog/">Blog</a>
-    <a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a>
+<footer class="footer">
+  <div class="footer-inner">
+    <div><img src="../images/logo/사라요가-로고-가로형-흰색.png" alt="사라요가 로고" style="height:40px;display:block;margin-bottom:10px"><div class="serif fname">Sara Yoga Studio</div><div class="fsub">원장의 세심한 케어 · 소수정예 · 1:1 교정</div></div>
+    <div class="flinks"><a href="../blog/">Blog</a><a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a></div>
   </div>
-  <a href="../admin.html" style="font-size:10px;color:var(--brown);text-decoration:none;display:block;margin-top:4px">sarayoga_gogossing</a>
-  <div class="ft-copy">2023-2026 Sara Yoga Studio</div>
+  <a href="../admin.html" style="font-size:10px;color:var(--brown);text-decoration:none;display:block;max-width:1200px;margin:20px auto 0">sarayoga_gogossing</a>
+  <div class="copy" style="max-width:1200px;margin:4px auto 0">© 2023–2026 Sara Yoga Studio</div>
 </footer>
 <script>
 (function(){
