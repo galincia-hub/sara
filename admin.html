@@ -65,7 +65,7 @@ a{text-decoration:none;color:var(--ac2)}
 </style>
 </head>
 <body>
-<div class="hd"><h1>📊 사라요가 콘텐츠 관리자</h1><p>블로그 현황 · 키워드 커버리지 · 다음 글 추천 · 콘텐츠 건강도</p><div class="hd-links"><a href="https://www.sarayoga.co.kr" target="_blank">🌐 사이트</a><a href="https://www.sarayoga.co.kr/blog/" target="_blank">📝 블로그</a><a href="https://github.com/galincia-hub/sara" target="_blank">🔧 GitHub</a></div></div>
+<div class="hd"><h1>📊 사라요가 콘텐츠 관리자</h1><p>블로그 현황 · 키워드 커버리지 · 다음 글 추천 · 콘텐츠 건강도</p><div class="hd-links"><a href="https://www.sarayoga.co.kr" target="_blank">🌐 사이트</a><a href="https://www.sarayoga.co.kr/blog/" target="_blank">📝 블로그</a><a href="https://github.com/galincia-hub/sara" target="_blank">🔧 GitHub</a><a href="https://analytics.google.com" target="_blank">📊 Analytics</a></div></div>
 <div class="ct">
 <div class="tabs" id="tabs"><button class="tab on" data-t="overview">📈 현황</button><button class="tab" data-t="posts">📝 글목록</button><button class="tab" data-t="keywords">🔑 키워드</button><button class="tab" data-t="suggest">💡 다음 글</button></div>
 
@@ -87,6 +87,7 @@ a{text-decoration:none;color:var(--ac2)}
 <div class="toast" id="toast"></div>
 
 <script>
+(function(){var s=sessionStorage.getItem('sara_pw');if(s!=='sara2026'){var p=prompt('🔐 관리자 비밀번호');if(p!=='sara2026'){location.href='index.html';}else{sessionStorage.setItem('sara_pw','sara2026');}}})();
 var POSTS=[];
 
 var T1=[{k:"대전 도구테라피",d:"도구별 가이드"},{k:"블랙롤테라피 대전",d:"블랙롤 효과"},{k:"대전 인사이드플로우",d:"입문 가이드"},{k:"대전 근막이완 요가",d:"원리/효과"},{k:"대전 얼라인먼트 요가",d:"얼라인먼트란?"},{k:"요가 도구 테라피",d:"전국 가이드"}];
@@ -94,7 +95,7 @@ var T2=[{k:"대전중구요가",d:"소그룹 추천"},{k:"대전 플라잉요가
 var T3=[{k:"대전 빈야사",d:"초보 입문"},{k:"대전 주말 요가",d:"원데이"},{k:"대전 요가 가격",d:"가격+가치"},{k:"대전오류동요가",d:"오류동"}];
 var FRS=["문제→해결→체험","하루 스케치","비교/선택 가이드","인터뷰/대화체","리스트/큐레이션","감성 에세이"];
 var FRC=["#2d6b4f","#d85a30","#534ab7","#d4537e","#2563a8","#b87a17"];
-var CCS={"정보/가이드":{t:5,c:"#2d6b4f"},"수업 후기":{t:2,c:"#534ab7"},"로컬 라이프":{t:2,c:"#d85a30"},"가격/안내":{t:1,c:"#2563a8"},"시즌/이벤트":{t:1,c:"#d4537e"},"전문지식/교육":{t:1,c:"#b87a17"}};
+var CCS={"수업소개":{t:5,c:"#2d6b4f"},"요가입문":{t:3,c:"#534ab7"},"중급수련":{t:2,c:"#d85a30"},"안내":{t:1,c:"#2563a8"},"기타":{t:1,c:"#b87a17"}};
 
 var SUGS=[
 {t:"서대전 얼라인먼트 요가 입문",tier:"Tier1",cat:"정보/가이드",fr:"문제→해결→체험",kw:["대전 얼라인먼트 요가"],rg:"서대전",why:"Tier1 유일 미커버. 경쟁 제로."},
@@ -112,7 +113,7 @@ var SUGS=[
 ];
 
 // Helpers
-function cnt(arr,key){var r={};arr.forEach(function(a){var v=a[key]||"기타";r[v]=(r[v]||0)+1});return r}
+function cnt(arr,key){var r={};arr.forEach(function(a){var v=a[key];if(!v||v.length===0){v="기타";}if(Array.isArray(v)){v.forEach(function(c){r[c]=(r[c]||0)+1});}else{r[v]=(r[v]||0)+1;}});return r}
 function kwc(list){var cv=0,pt=0;list.forEach(function(kw){var c=0;POSTS.forEach(function(p){var tm=p.title.toLowerCase().indexOf(kw.k.replace("대전 ","").replace("서대전 ","").toLowerCase())>-1;var tg=(p.tags||[]).some(function(t){return t.replace(/ /g,"").toLowerCase().indexOf(kw.k.replace(/ /g,"").toLowerCase())>-1});if(tm||tg)c++});if(c>=2)cv++;else if(c===1)pt++});return{y:cv,h:pt,n:list.length-cv-pt}}
 function toast(m){var el=document.getElementById("toast");el.textContent=m;el.style.display="block";setTimeout(function(){el.style.display="none"},2000)}
 function doCopy(btn){navigator.clipboard.writeText(btn.dataset.cmd);toast("✅ 복사 완료!")}
@@ -131,14 +132,14 @@ function render(){
   var P=POSTS, n=P.length;
   var cats=cnt(P,"cat"), tiers=cnt(P,"tier"), regs=cnt(P,"rg"), frs=cnt(P,"fr");
   var t1=tiers.Tier1||0, t2=tiers.Tier2||0, t3=n-t1-t2;
-  var loc=cats["로컬 라이프"]||0, rev=cats["수업 후기"]||0;
+  var sc=cats["수업소개"]||0, yi=cats["요가입문"]||0, jk=cats["중급수련"]||0, an=cats["안내"]||0;
 
   // Metrics
   document.getElementById("metrics").innerHTML=
     '<div class="m"><div class="lb">총 발행</div><div class="vl">'+n+'개</div><div class="sb '+(n>=15?"ok":"wn")+'">목표 20개 중 '+Math.round(n/20*100)+'%</div><div class="br" style="width:'+Math.round(n/20*100)+'%;background:var(--ac2)"></div></div>'+
-    '<div class="m"><div class="lb">Tier 1 블루오션</div><div class="vl" style="color:var(--pur)">'+t1+'개</div><div class="sb" style="color:var(--pur)">독점 키워드</div><div class="br" style="width:'+Math.round(t1/n*100)+'%;background:var(--pur)"></div></div>'+
-    '<div class="m"><div class="lb">로컬 라이프</div><div class="vl" style="color:var(--cor)">'+loc+'개</div><div class="sb '+(loc>=2?"ok":"no")+'">목표 2개'+(loc===0?" ⚠️":"")+'</div><div class="br" style="width:'+(loc>=2?100:loc*50)+'%;background:var(--cor)"></div></div>'+
-    '<div class="m"><div class="lb">수업 후기</div><div class="vl" style="color:var(--inf)">'+rev+'개</div><div class="sb '+(rev>=2?"ok":"no")+'">목표 2개'+(rev===0?" ⚠️":"")+'</div><div class="br" style="width:'+(rev>=2?100:rev*50)+'%;background:var(--inf)"></div></div>';
+    '<div class="m"><div class="lb">수업소개</div><div class="vl" style="color:var(--ac)">'+sc+'개</div><div class="sb ok">프로그램 소개</div><div class="br" style="width:'+Math.round(sc/Math.max(n,1)*100)+'%;background:var(--ac)"></div></div>'+
+    '<div class="m"><div class="lb">요가입문</div><div class="vl" style="color:var(--pur)">'+yi+'개</div><div class="sb">입문 가이드</div><div class="br" style="width:'+Math.round(yi/Math.max(n,1)*100)+'%;background:var(--pur)"></div></div>'+
+    '<div class="m"><div class="lb">중급수련</div><div class="vl" style="color:var(--cor)">'+jk+'개</div><div class="sb">심화 콘텐츠</div><div class="br" style="width:'+Math.round(jk/Math.max(n,1)*100)+'%;background:var(--cor)"></div></div>';
 
   // Progress
   var pct=Math.round(n/20*100);
@@ -169,8 +170,8 @@ function render(){
 
   // Health
   var hc=[];
-  hc.push({ok:loc>=2,m:loc>=2?"로컬 콘텐츠 목표 달성 ("+loc+"/2)":"⚠️ 로컬 콘텐츠 없음. 맛집/카페 추가. 검색량이 요가의 3~5배."});
-  hc.push({ok:rev>=2,m:rev>=2?"수업 후기 목표 달성":"⚠️ 수업 후기 없음. 전환율 가장 높은 유형."});
+  hc.push({ok:sc>=3,m:sc>=3?"수업소개 충분 ("+sc+"개)":"⚠️ 수업소개 부족 ("+sc+"/3). 프로그램별 가이드 추가."});
+  hc.push({ok:yi>=2,m:yi>=2?"요가입문 충분 ("+yi+"개)":"⚠️ 요가입문 부족 ("+yi+"/2). 초보자 유입 콘텐츠 추가."});
   if(n>=2){var fd=P[0].fr===P[1].fr;hc.push({ok:!fd,m:fd?"⚠️ 최근 2글 프레임 중복 ("+P[0].fr+")":"프레임 로테이션 정상"});}
   var bal=Math.abs(sd-jg)<=Math.ceil(n*.3);
   hc.push({ok:bal,m:bal?"지역 배분 균형 (서대전 "+sd+" · 중구 "+jg+")":"⚠️ 지역 불균형. "+(sd>jg?"대전 중구":"서대전")+" 추가."});
@@ -181,8 +182,10 @@ function render(){
   // Post list
   document.getElementById("pcnt").textContent=n+"개";
   document.getElementById("plist").innerHTML=P.map(function(p,i){
-    var tb=p.tier==="Tier1"?"bg2":p.tier==="Tier2"?"bg4":"bg5";
-    return '<div class="pi"><div class="pn">'+(i+1)+'</div><div class="pif"><div class="pit">'+p.title+'</div><div class="pim"><span class="bg bg1" style="font-size:.55rem">'+p.cat+'</span> <span class="bg '+tb+'" style="font-size:.55rem">'+(p.tier||"")+'</span> <span style="font-size:.6rem;color:var(--tx3)">'+(p.fr||"")+" · "+(p.rg||"")+" · "+p.date+'</span></div><div class="pis">'+p.sum+"</div></div>"+'<a class="plk" href="blog/'+p.slug+'.html" target="_blank">열기→</a></div>'
+    var cats=Array.isArray(p.cat)?p.cat:(p.cat?[p.cat]:[]);
+    var catHtml=cats.map(function(c){return '<span class="bg bg1" style="font-size:.55rem">'+c+'</span>';}).join(" ");
+    var pinnedHtml=p.pinned?'<span class="bg" style="font-size:.55rem;background:#fff8e1;color:#b87a17;margin-left:2px">📌 고정</span>':"";
+    return '<div class="pi"><div class="pn">'+(i+1)+'</div><div class="pif"><div class="pit">'+p.title+'</div><div class="pim">'+catHtml+pinnedHtml+' <span style="font-size:.6rem;color:var(--tx3)">'+p.date+'</span></div><div class="pis">'+p.sum+"</div></div>"+'<a class="plk" href="blog/'+p.slug+'.html" target="_blank">열기→</a></div>'
   }).join("");
 
   // Keywords
@@ -227,13 +230,14 @@ fetch('blog/posts.json')
       return {
         slug:s,
         title:p.title||"",
-        cat:p.category||"",
+        cat:p.category||[],
         date:p.date||"",
         sum:p.summary||"",
         tags:p.tags||[],
         fr:p.fr||"",
         tier:p.tier||"",
-        rg:p.rg||rg
+        rg:p.rg||rg,
+        pinned:p.pinned||false
       };
     });
     render();

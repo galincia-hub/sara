@@ -269,6 +269,7 @@ a{text-decoration:none}
     <a href="../blog/">Blog</a>
     <a href="https://www.instagram.com/sara_yoga_studio" target="_blank" rel="noopener">Instagram</a>
   </div>
+  <a href="../admin.html" style="font-size:10px;color:rgba(61,50,40,.15);text-decoration:none;display:block;margin-top:4px">sarayoga_gogossing</a>
   <div class="ft-copy">2023-2026 Sara Yoga Studio</div>
 </footer>
 
@@ -312,7 +313,10 @@ a{text-decoration:none}
   /* ── Filter ── */
   function filtered() {
     if (activeFilter === '전체') return sortPosts(allPosts);
-    return sortPosts(allPosts.filter(function (p) { return p.category === activeFilter; }));
+    return sortPosts(allPosts.filter(function (p) {
+      var cats = Array.isArray(p.category) ? p.category : [p.category];
+      return cats.indexOf(activeFilter) !== -1;
+    }));
   }
 
   /* ── Render filter buttons ── */
@@ -342,7 +346,7 @@ a{text-decoration:none}
       + pinned
       + '<div class="card-img">' + img + '</div>'
       + '<div class="card-body">'
-      + '<div class="card-meta"><span class="card-cat">' + post.category + '</span><span class="card-date">' + post.date + '</span></div>'
+      + '<div class="card-meta">' + (Array.isArray(post.category) ? post.category : [post.category]).map(function(c){return '<span class="card-cat">'+c+'</span>';}).join('') + '<span class="card-date">' + post.date + '</span></div>'
       + '<div class="card-title">' + post.title + '</div>'
       + '<div class="card-summary">' + post.summary + '</div>'
       + '<div class="card-tags">' + tags + '</div>'
@@ -358,7 +362,7 @@ a{text-decoration:none}
       + '<div class="list-thumb">' + thumb + '</div>'
       + '<div class="list-body">'
       + '<div class="list-title">' + post.title + '</div>'
-      + '<div class="list-meta"><span class="list-cat">' + post.category + '</span><span class="list-date">' + post.date + '</span></div>'
+      + '<div class="list-meta">' + (Array.isArray(post.category) ? post.category : [post.category]).map(function(c){return '<span class="list-cat">'+c+'</span>';}).join('') + '<span class="list-date">' + post.date + '</span></div>'
       + '</div></a>';
   }
 
