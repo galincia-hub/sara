@@ -82,7 +82,7 @@ a{text-decoration:none;color:var(--ac2)}
 
 <div class="tc" id="t-keywords"><div class="sc"><div class="st">키워드 커버리지</div><div class="ss">🟢 2개+ · 🟡 1개 · ⚪ 미커버</div><div class="g3" id="kwsum"></div></div><div class="g2"><div class="sc"><div class="st">🏆 Tier 1 <span class="bg bg2">블루오션</span></div><div id="kt1"></div></div><div class="sc"><div class="st">📈 Tier 2 <span class="bg bg4">선점</span></div><div id="kt2"></div></div></div><div class="sc"><div class="st">🎯 Tier 3 <span class="bg bg5">롱테일</span></div><div id="kt3"></div></div></div>
 
-<div class="tc" id="t-suggest"><div class="sc" style="background:#fffde7;border-color:#fff9c4"><div class="st" style="color:var(--wrn)">💡 중복 방지 원칙</div><p style="font-size:.75rem;color:var(--tx2);line-height:1.7">① 같은 주제+프레임 금지 ② 직전 글과 프레임 중복 금지 ③ 서대전/중구 3회 연속 금지</p></div><div class="sc"><div class="st">🔥 추천 주제 — 우선순위순</div><div class="ss">"명령어 복사" → VS Code 붙여넣기 → 끝</div><div id="sugs"></div></div></div>
+<div class="tc" id="t-suggest"><div class="sc" style="background:#fffde7;border-color:#fff9c4"><div class="st" style="color:var(--wrn)">💡 중복 방지 원칙</div><p style="font-size:.75rem;color:var(--tx2);line-height:1.7">① 같은 주제+프레임 금지 ② 직전 글과 프레임 중복 금지 ③ 서대전/중구 3회 연속 금지<br><span style="color:var(--tx3)">단, 같은 주제라도 계절이 다르거나 6개월 이상 경과한 경우 정보 보강 차원에서 재작성 가능</span></p></div><div class="sc"><div class="st">🔥 추천 주제 — 우선순위순</div><div class="ss">"명령어 복사" → VS Code 붙여넣기 → 끝</div><div id="sugs"></div></div></div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -98,25 +98,27 @@ var FRC=["#2d6b4f","#d85a30","#534ab7","#d4537e","#2563a8","#b87a17"];
 var CCS={"수업소개":{t:5,c:"#2d6b4f"},"요가입문":{t:3,c:"#534ab7"},"중급수련":{t:2,c:"#d85a30"},"안내":{t:1,c:"#2563a8"},"기타":{t:1,c:"#b87a17"}};
 
 var SUGS=[
-{t:"서대전 얼라인먼트 요가 입문",tier:"Tier1",cat:"정보/가이드",fr:"문제→해결→체험",kw:["대전 얼라인먼트 요가"],rg:"서대전",why:"Tier1 유일 미커버. 경쟁 제로."},
-{t:"서대전 도구테라피 수업 후기",tier:"Tier1",cat:"수업 후기",fr:"인터뷰/대화체",kw:["대전 도구테라피"],rg:"서대전",why:"가이드O 후기X. 세트가 검색 극대화."},
-{t:"서대전네거리역 점심 맛집 5곳",tier:"Tier2",cat:"로컬 라이프",fr:"리스트/큐레이션",kw:["서대전 맛집"],rg:"서대전",why:"로컬 0개. 검색량 요가의 3~5배."},
-{t:"대전 중구 근막이완 요가 가이드",tier:"Tier1",cat:"정보/가이드",fr:"문제→해결→체험",kw:["대전 근막이완 요가"],rg:"대전 중구",why:"건강 검색 수요 높은 Tier1."},
-{t:"대전 중구 오류동 카페 추천",tier:"Tier2",cat:"로컬 라이프",fr:"하루 스케치",kw:["오류동 카페"],rg:"대전 중구",why:"동네 브랜딩. 로컬 비율 달성."},
-{t:"서대전 플라잉요가 3개월 후기",tier:"Tier2",cat:"수업 후기",fr:"인터뷰/대화체",kw:["대전 플라잉요가"],rg:"서대전",why:"후기 0개. 공감/전환에 강함."},
-{t:"요가 도구 테라피 완전 가이드",tier:"Tier1",cat:"전문지식/교육",fr:"리스트/큐레이션",kw:["요가 도구 테라피"],rg:"전국",why:"전국 검색 키워드. 장기 유입."},
-{t:"서대전 요가 추천 체크리스트",tier:"Tier2",cat:"정보/가이드",fr:"리스트/큐레이션",kw:["서대전 요가"],rg:"서대전",why:"서대전 요가 직접 선점."},
-{t:"대전 중구 직장인 퇴근 후 요가",tier:"Tier2",cat:"정보/가이드",fr:"리스트/큐레이션",kw:["대전중구요가"],rg:"대전 중구",why:"직장인 타겟. 저녁 시간표 연결."},
-{t:"대전 중구 주말 원데이클래스",tier:"Tier3",cat:"시즌/이벤트",fr:"감성 에세이",kw:["대전 주말 요가"],rg:"대전 중구",why:"시즌 0개. 주말 수요."},
-{t:"대전 중구 하타플로우 입문",tier:"Tier3",cat:"정보/가이드",fr:"하루 스케치",kw:["대전 빈야사"],rg:"대전 중구",why:"하타 미커버. 초보 유입."},
-{t:"서대전 서포트요가 깊은 이완",tier:"Tier3",cat:"정보/가이드",fr:"하루 스케치",kw:["서대전 요가"],rg:"서대전",why:"서포트 미커버. 이완 확장."}
+{t:"서대전 얼라인먼트 요가 입문",tier:"Tier1",cat:"요가입문",fr:"문제→해결→체험",kw:["대전 얼라인먼트 요가"],rg:"서대전",why:"Tier1 유일 미커버. 경쟁 제로."},
+{t:"서대전 도구테라피 수업 후기",tier:"Tier1",cat:"수업소개",fr:"인터뷰/대화체",kw:["대전 도구테라피"],rg:"서대전",why:"가이드O 후기X. 세트가 검색 극대화."},
+{t:"서대전네거리역 점심 맛집 5곳",tier:"Tier2",cat:"기타",fr:"리스트/큐레이션",kw:["서대전 맛집"],rg:"서대전",why:"로컬 0개. 검색량 요가의 3~5배."},
+{t:"대전 중구 근막이완 요가 가이드",tier:"Tier1",cat:"요가입문",fr:"문제→해결→체험",kw:["대전 근막이완 요가"],rg:"대전 중구",why:"건강 검색 수요 높은 Tier1."},
+{t:"대전 중구 오류동 카페 추천",tier:"Tier2",cat:"기타",fr:"하루 스케치",kw:["오류동 카페"],rg:"대전 중구",why:"동네 브랜딩. 로컬 비율 달성."},
+{t:"서대전 플라잉요가 3개월 후기",tier:"Tier2",cat:"수업소개",fr:"인터뷰/대화체",kw:["대전 플라잉요가"],rg:"서대전",why:"후기 0개. 공감/전환에 강함."},
+{t:"요가 도구 테라피 완전 가이드",tier:"Tier1",cat:"중급수련",fr:"리스트/큐레이션",kw:["요가 도구 테라피"],rg:"전국",why:"전국 검색 키워드. 장기 유입."},
+{t:"서대전 요가 추천 체크리스트",tier:"Tier2",cat:"수업소개",fr:"리스트/큐레이션",kw:["서대전 요가"],rg:"서대전",why:"서대전 요가 직접 선점."},
+{t:"대전 중구 직장인 퇴근 후 요가",tier:"Tier2",cat:"요가입문",fr:"리스트/큐레이션",kw:["대전중구요가"],rg:"대전 중구",why:"직장인 타겟. 저녁 시간표 연결."},
+{t:"대전 중구 주말 원데이클래스",tier:"Tier3",cat:"안내",fr:"감성 에세이",kw:["대전 주말 요가"],rg:"대전 중구",why:"시즌 0개. 주말 수요."},
+{t:"대전 중구 하타플로우 입문",tier:"Tier3",cat:"요가입문",fr:"하루 스케치",kw:["대전 빈야사"],rg:"대전 중구",why:"하타 미커버. 초보 유입."},
+{t:"서대전 서포트요가 깊은 이완",tier:"Tier3",cat:"중급수련",fr:"하루 스케치",kw:["서대전 요가"],rg:"서대전",why:"서포트 미커버. 이완 확장."}
 ];
 
 // Helpers
+function autoTier(title){var t1=["도구테라피","인사이드플로우","블랙롤","근막이완","얼라인먼트"];var t2=["플라잉","소그룹","서대전","대전중구","오류동","맛집","카페"];for(var i=0;i<t1.length;i++){if(title.indexOf(t1[i])>-1)return"Tier1";}for(var i=0;i<t2.length;i++){if(title.indexOf(t2[i])>-1)return"Tier2";}return"Tier3";}
 function cnt(arr,key){var r={};arr.forEach(function(a){var v=a[key];if(!v||v.length===0){v="기타";}if(Array.isArray(v)){v.forEach(function(c){r[c]=(r[c]||0)+1});}else{r[v]=(r[v]||0)+1;}});return r}
 function kwc(list){var cv=0,pt=0;list.forEach(function(kw){var c=0;POSTS.forEach(function(p){var tm=p.title.toLowerCase().indexOf(kw.k.replace("대전 ","").replace("서대전 ","").toLowerCase())>-1;var tg=(p.tags||[]).some(function(t){return t.replace(/ /g,"").toLowerCase().indexOf(kw.k.replace(/ /g,"").toLowerCase())>-1});if(tm||tg)c++});if(c>=2)cv++;else if(c===1)pt++});return{y:cv,h:pt,n:list.length-cv-pt}}
 function toast(m){var el=document.getElementById("toast");el.textContent=m;el.style.display="block";setTimeout(function(){el.style.display="none"},2000)}
 function doCopy(btn){navigator.clipboard.writeText(btn.dataset.cmd);toast("✅ 복사 완료!")}
+function toggleDone(i){var done=JSON.parse(localStorage.getItem('sara_done')||'{}');done[i]=!done[i];localStorage.setItem('sara_done',JSON.stringify(done));render();}
 
 // Tab switching
 document.getElementById("tabs").addEventListener("click",function(e){
@@ -170,13 +172,18 @@ function render(){
 
   // Health
   var hc=[];
-  hc.push({ok:sc>=3,m:sc>=3?"수업소개 충분 ("+sc+"개)":"⚠️ 수업소개 부족 ("+sc+"/3). 프로그램별 가이드 추가."});
-  hc.push({ok:yi>=2,m:yi>=2?"요가입문 충분 ("+yi+"개)":"⚠️ 요가입문 부족 ("+yi+"/2). 초보자 유입 콘텐츠 추가."});
+  var an=cats["안내"]||0;
+  hc.push({ok:sc>=5,m:sc>=5?"수업소개 충분 ("+sc+"개)":"⚠️ 수업소개 부족 ("+sc+"/5). 프로그램별 가이드 추가."});
+  hc.push({ok:yi>=3,m:yi>=3?"요가입문 충분 ("+yi+"개)":"⚠️ 요가입문 부족 ("+yi+"/3). 초보자 유입 콘텐츠 추가."});
+  hc.push({ok:jk>=2,m:jk>=2?"중급수련 충분 ("+jk+"개)":"⚠️ 중급수련 부족 ("+jk+"/2). 심화 콘텐츠 추가."});
+  hc.push({ok:an>=2,m:an>=2?"안내 충분 ("+an+"개)":"⚠️ 안내 부족 ("+an+"/2). 공지/안내 추가."});
   if(n>=2){var fd=P[0].fr===P[1].fr;hc.push({ok:!fd,m:fd?"⚠️ 최근 2글 프레임 중복 ("+P[0].fr+")":"프레임 로테이션 정상"});}
   var bal=Math.abs(sd-jg)<=Math.ceil(n*.3);
   hc.push({ok:bal,m:bal?"지역 배분 균형 (서대전 "+sd+" · 중구 "+jg+")":"⚠️ 지역 불균형. "+(sd>jg?"대전 중구":"서대전")+" 추가."});
   hc.push({ok:n>=15,m:n>=15?"토피컬 오소리티 충족 (15+)":"⚠️ 토피컬 오소리티에 최소 15~20개 필요. 현재 "+n+"개."});
   var k1=kwc(T1);hc.push({ok:k1.n===0,m:k1.n===0?"Tier1 키워드 전부 커버":"⚠️ Tier1 미커버 "+k1.n+"개. 블루오션 최우선."});
+  hc.push({ok:t1>=3,m:t1>=3?"Tier1 글 충분 ("+t1+"개)":"⚠️ Tier1 글 부족 ("+t1+"/3). 블루오션 키워드 확보."});
+  hc.push({ok:t2>=5,m:t2>=5?"Tier2 글 충분 ("+t2+"개)":"⚠️ Tier2 글 부족 ("+t2+"/5). 로컬/서대전 키워드."});
   document.getElementById("hlth").innerHTML=hc.map(function(h){return '<div class="hi"><span style="font-size:1rem">'+(h.ok?"✅":"⚠️")+"</span><span style='color:"+(h.ok?"var(--ac)":"var(--cor)")+"'>"+h.m+"</span></div>"}).join("");
 
   // Post list
@@ -209,14 +216,19 @@ function render(){
   rkw(T1,"kt1");rkw(T2,"kt2");rkw(T3,"kt3");
 
   // Suggestions
+  var done=JSON.parse(localStorage.getItem('sara_done')||'{}');
   document.getElementById("sugs").innerHTML=SUGS.map(function(s,i){
+    var isDone=!!done[i];
     var tb=s.tier==="Tier1"?"bg2":s.tier==="Tier2"?"bg4":"bg5";
     var cmd="BLOG_GUIDE.md 따라서 블로그 글 써줘. 주제: "+s.t+". 카테고리: "+s.cat+". 프레임: "+s.fr+". 지역: "+s.rg+". 키워드: "+s.kw.join(", ")+". Python으로 처리하고 git push.";
-    return '<div class="sg"><div class="sgr">#'+(i+1)+"</div>"+
-      '<div class="sgt">'+s.t+"</div>"+
+    return '<div class="sg" style="'+(isDone?"opacity:.45;background:#f8fff8":"")+'"><div class="sgr">'+(isDone?"✅":"#"+(i+1))+"</div>"+
+      '<div class="sgt">'+s.t+(isDone?' <span style="color:var(--ac2);font-size:.7rem">완료</span>':"")+"</div>"+
       '<div class="sgb"><span class="bg '+tb+'">'+s.tier+'</span><span class="bg bg1">'+s.cat+'</span><span class="bg bg4">'+s.fr+'</span><span class="bg" style="background:#f2f1ed;color:var(--tx3)">'+s.rg+"</span></div>"+
       '<div class="sgp">'+s.why+"</div>"+
-      '<button class="bc" data-cmd="'+cmd.replace(/"/g,"&quot;")+'" onclick="doCopy(this)">📋 명령어 복사</button></div>';
+      '<div style="display:flex;gap:6px">'+
+      '<button class="bc" data-cmd="'+cmd.replace(/"/g,"&quot;")+'" onclick="doCopy(this)">📋 명령어 복사</button>'+
+      '<button class="bc" style="background:'+(isDone?"var(--tx3)":"var(--ac2)")+'" onclick="toggleDone('+i+')">'+(isDone?"↩️ 되돌리기":"✅ 작성완료")+"</button>"+
+      "</div></div>";
   }).join("");
 }
 
@@ -235,7 +247,7 @@ fetch('blog/posts.json')
         sum:p.summary||"",
         tags:p.tags||[],
         fr:p.fr||"",
-        tier:p.tier||"",
+        tier:p.tier||autoTier(p.title||""),
         rg:p.rg||rg,
         pinned:p.pinned||false
       };
