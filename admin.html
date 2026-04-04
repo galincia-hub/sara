@@ -67,7 +67,7 @@ a{text-decoration:none;color:var(--ac2)}
 <body>
 <div class="hd"><h1>📊 사라요가 콘텐츠 관리자</h1><p>블로그 현황 · 키워드 커버리지 · 다음 글 추천 · 콘텐츠 건강도</p><div class="hd-links"><a href="https://www.sarayoga.co.kr" target="_blank">🌐 사이트</a><a href="https://www.sarayoga.co.kr/blog/" target="_blank">📝 블로그</a><a href="https://github.com/galincia-hub/sara" target="_blank">🔧 GitHub</a><a href="https://analytics.google.com" target="_blank">📊 Analytics</a></div></div>
 <div class="ct">
-<div class="tabs" id="tabs"><button class="tab on" data-t="overview">📈 현황</button><button class="tab" data-t="posts">📝 글목록</button><button class="tab" data-t="keywords">🔑 키워드</button><button class="tab" data-t="suggest">💡 다음 글</button></div>
+<div class="tabs" id="tabs"><button class="tab on" data-t="overview">📈 현황</button><button class="tab" data-t="posts">📝 글목록</button><button class="tab" data-t="keywords">🔑 키워드</button><button class="tab" data-t="suggest">✍️ 블로그작성</button></div>
 
 <div class="tc on" id="t-overview">
 <div class="ms" id="metrics"></div>
@@ -82,7 +82,7 @@ a{text-decoration:none;color:var(--ac2)}
 
 <div class="tc" id="t-keywords"><div class="sc"><div class="st">키워드 커버리지</div><div class="ss">🟢 2개+ · 🟡 1개 · ⚪ 미커버</div><div class="g3" id="kwsum"></div></div><div class="g2"><div class="sc"><div class="st">🏆 Tier 1 <span class="bg bg2">블루오션</span></div><div id="kt1"></div></div><div class="sc"><div class="st">📈 Tier 2 <span class="bg bg4">선점</span></div><div id="kt2"></div></div></div><div class="sc"><div class="st">🎯 Tier 3 <span class="bg bg5">롱테일</span></div><div id="kt3"></div></div></div>
 
-<div class="tc" id="t-suggest"><div class="sc" style="background:#fffde7;border-color:#fff9c4"><div class="st" style="color:var(--wrn)">💡 중복 방지 원칙</div><p style="font-size:.75rem;color:var(--tx2);line-height:1.7">① 같은 주제+프레임 금지 ② 직전 글과 프레임 중복 금지 ③ 서대전/중구 3회 연속 금지<br><span style="color:var(--tx3)">단, 같은 주제라도 계절이 다르거나 6개월 이상 경과한 경우 정보 보강 차원에서 재작성 가능</span></p></div><div class="sc"><div class="st">🔥 추천 주제 — 우선순위순</div><div class="ss">"명령어 복사" → VS Code 붙여넣기 → 끝</div><div id="sugs"></div></div></div>
+<div class="tc" id="t-suggest"><div class="sc" style="padding:.8rem 1rem"><div id="hlth-summary" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"></div></div><div class="sc" style="background:#fffde7;border-color:#fff9c4"><div class="st" style="color:var(--wrn)">💡 중복 방지 원칙</div><p style="font-size:.75rem;color:var(--tx2);line-height:1.7">① 같은 주제+프레임 금지 ② 직전 글과 프레임 중복 금지 ③ 서대전/중구 3회 연속 금지<br><span style="color:var(--tx3)">단, 같은 주제라도 계절이 다르거나 6개월 이상 경과한 경우 정보 보강 차원에서 재작성 가능</span></p></div><div class="sc"><div class="st">🔥 추천 주제 — 우선순위순</div><div class="ss">"명령어 복사" → VS Code 붙여넣기 → 끝</div><div id="sugs"></div></div></div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -185,6 +185,19 @@ function render(){
   hc.push({ok:t1>=3,m:t1>=3?"Tier1 글 충분 ("+t1+"개)":"⚠️ Tier1 글 부족 ("+t1+"/3). 블루오션 키워드 확보."});
   hc.push({ok:t2>=5,m:t2>=5?"Tier2 글 충분 ("+t2+"개)":"⚠️ Tier2 글 부족 ("+t2+"/5). 로컬/서대전 키워드."});
   document.getElementById("hlth").innerHTML=hc.map(function(h){return '<div class="hi"><span style="font-size:1rem">'+(h.ok?"✅":"⚠️")+"</span><span style='color:"+(h.ok?"var(--ac)":"var(--cor)")+"'>"+h.m+"</span></div>"}).join("");
+
+  // Health summary badges for 블로그작성 tab
+  var SUM_ITEMS=[
+    {ok:sc>=5,label:sc>=5?"🟢 수업소개 "+sc+" 충분":"🔴 수업소개 "+sc+"/5 부족"},
+    {ok:yi>=3,label:yi>=3?"🟢 요가입문 "+yi+" 충분":"🔴 요가입문 "+yi+"/3 부족"},
+    {ok:jk>=2,label:jk>=2?"🟢 중급수련 "+jk+" 충분":"🔴 중급수련 "+jk+"/2 부족"},
+    {ok:an>=2,label:an>=2?"🟢 안내 "+an+" 충분":"🔴 안내 "+an+"/2 부족"},
+    {ok:t1>=3,label:t1>=3?"🟢 Tier1 "+t1+" 충분":"🔴 Tier1 "+t1+"/3 부족"},
+    {ok:t2>=5,label:t2>=5?"🟢 Tier2 "+t2+" 충분":"🔴 Tier2 "+t2+"/5 부족"}
+  ];
+  document.getElementById("hlth-summary").innerHTML=SUM_ITEMS.map(function(s){
+    return '<span style="font-size:.72rem;padding:4px 10px;border-radius:20px;font-weight:500;background:'+(s.ok?"#e8f5e9":"#fdecea")+';color:'+(s.ok?"#2d6b4f":"#c44")+'">'+(s.label)+"</span>";
+  }).join("");
 
   // Post list
   document.getElementById("pcnt").textContent=n+"개";
