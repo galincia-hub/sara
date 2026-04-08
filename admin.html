@@ -6,6 +6,7 @@
 <title>사라요가 콘텐츠 관리자</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#f8f7f4;--sf:#fff;--sf2:#f2f1ed;--tx:#1a1a18;--tx2:#6b6a65;--tx3:#9e9d98;--ac:#2d6b4f;--ac2:#1d9e75;--dng:#c44;--wrn:#b87a17;--inf:#2563a8;--pur:#534ab7;--cor:#d85a30;--pnk:#d4537e;--bd:#e5e4e0;--r:12px;--sh:0 1px 3px rgba(0,0,0,.06)}
@@ -62,12 +63,75 @@ a{text-decoration:none;color:var(--ac2)}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 24px;border-radius:8px;font-size:.8rem;z-index:999;display:none;animation:fu .3s}
 @keyframes fu{from{opacity:0;transform:translateX(-50%) translateY(10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 @media(max-width:768px){.ms{grid-template-columns:repeat(2,1fr)}.g2,.g3{grid-template-columns:1fr}.kdr{display:none}.tabs{overflow-x:auto}}
+/* ── 회원관리 탭 (mb- 접두어로 기존 스타일과 분리) ── */
+.mb-vtabs{display:flex;gap:4px;margin-bottom:1rem}
+.mb-vtab{padding:8px 18px;font-size:.75rem;font-weight:500;border:1px solid var(--bd);border-radius:20px;cursor:pointer;background:var(--sf);color:var(--tx2);font-family:inherit;transition:.15s}
+.mb-vtab.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.mb-srch{width:100%;padding:9px 14px;border:1px solid var(--bd);border-radius:8px;font-family:inherit;font-size:.8rem;background:var(--sf2);color:var(--tx);margin-bottom:.8rem}
+.mb-srch:focus{outline:none;border-color:var(--ac2);background:var(--sf)}
+.mb-stabs{display:flex;gap:5px;margin-bottom:.8rem}
+.mb-stab{padding:7px 16px;font-size:.75rem;font-weight:500;border-radius:20px;cursor:pointer;font-family:inherit;border:1px solid var(--bd);background:var(--sf);color:var(--tx3);transition:.15s}
+.mb-stab.s-active.on{background:#e8f5e9;color:var(--ac);border-color:var(--ac);font-weight:700}
+.mb-stab.s-inactive.on{background:#fff8e1;color:var(--wrn);border-color:var(--wrn);font-weight:700}
+.mb-stab.s-churned.on{background:#fdecea;color:var(--dng);border-color:var(--dng);font-weight:700}
+.mb-card{background:var(--sf);border-radius:var(--r);padding:1rem;margin-bottom:7px;border:1px solid var(--bd);cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:space-between}
+.mb-card:hover{border-color:var(--ac2);box-shadow:0 3px 10px rgba(0,0,0,.07)}
+.mb-card.expiring{border-left:3px solid var(--dng)}
+.mb-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;margin-right:12px;flex-shrink:0}
+.mb-ci{flex:1;min-width:0}
+.mb-cname{font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:6px}
+.mb-csub{font-size:.7rem;color:var(--tx3);margin-top:2px}
+.mb-cmeta{font-size:.67rem;color:var(--tx2);margin-top:2px}
+.mb-ebadge{font-size:.6rem;padding:2px 7px;border-radius:10px;background:#fdecea;color:var(--dng);font-weight:700;white-space:nowrap}
+.mb-back{background:none;border:none;color:var(--ac2);font-size:.8rem;cursor:pointer;font-family:inherit;font-weight:500;margin-bottom:1rem;padding:0}
+.mb-profile{background:var(--sf);border-radius:var(--r);padding:1.25rem;border:1px solid var(--bd);margin-bottom:.8rem}
+.mb-phead{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.mb-pav{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;color:#fff;flex-shrink:0}
+.mb-pname{font-size:1rem;font-weight:700}
+.mb-psub{font-size:.72rem;color:var(--tx3);margin-top:2px}
+.mb-sbadge{font-size:.68rem;padding:3px 10px;border-radius:20px;font-weight:600;flex-shrink:0}
+.mb-igrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.mb-ii{background:var(--sf2);border-radius:8px;padding:8px 12px}
+.mb-ii .il{font-size:.62rem;color:var(--tx3);margin-bottom:2px}
+.mb-ii .iv{font-size:.78rem;font-weight:600}
+.mb-sec{background:var(--sf);border-radius:var(--r);padding:1.25rem;border:1px solid var(--bd);margin-bottom:.8rem}
+.mb-sec h3{font-size:.82rem;font-weight:700;margin-bottom:.8rem}
+.mb-csec{border-left:3px solid var(--pur)}
+.mb-cgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;font-size:.75rem;margin-bottom:4px}
+.mb-cgrid span{color:var(--tx3)}
+.mb-cnote{background:var(--sf2);padding:8px 10px;border-radius:6px;font-size:.72rem;color:var(--tx2);margin-top:6px}
+.mb-hrow{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:8px;font-size:.75rem}
+.mb-hrow:nth-child(even){background:var(--sf2)}
+.mb-hdate{min-width:62px;font-size:.68rem;font-weight:600;color:var(--ac);flex-shrink:0;margin-top:2px}
+.mb-hcont{flex:1}
+.mb-hprog{font-weight:500;font-size:.78rem;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.mb-hnote{font-size:.68rem;color:var(--tx2);margin-top:2px}
+.mb-abadge{font-size:.6rem;padding:2px 7px;border-radius:10px}
+.mb-lbl{font-size:.72rem;color:var(--tx2);margin-bottom:4px;font-weight:500;display:block;margin-top:4px}
+.mb-sel{width:100%;padding:9px 12px;border:1px solid var(--bd);border-radius:8px;font-family:inherit;font-size:.8rem;background:var(--sf2);color:var(--tx);margin-bottom:10px}
+.mb-sel:focus{outline:none;border-color:var(--ac2)}
+.mb-ta{width:100%;padding:9px 12px;border:1px solid var(--bd);border-radius:8px;font-family:inherit;font-size:.8rem;background:var(--sf2);color:var(--tx);resize:vertical;margin-bottom:10px}
+.mb-ta:focus{outline:none;border-color:var(--ac2)}
+.mb-att-grp{display:flex;gap:6px;margin-bottom:10px}
+.mb-att-btn{flex:1;padding:9px 6px;border-radius:8px;font-size:.75rem;cursor:pointer;font-family:inherit;border:1px solid var(--bd);background:var(--sf);color:var(--tx2)}
+.mb-att-btn.sel-attended{border:2px solid var(--ac);background:#e8f5e9;color:var(--ac);font-weight:700}
+.mb-att-btn.sel-noshow{border:2px solid var(--dng);background:#fdecea;color:var(--dng);font-weight:700}
+.mb-att-btn.sel-cancelled{border:2px solid var(--wrn);background:#fff8e1;color:var(--wrn);font-weight:700}
+.mb-cond-grp{display:flex;gap:6px;margin-bottom:10px}
+.mb-cond-btn{width:44px;height:44px;border-radius:10px;border:1px solid var(--bd);background:var(--sf);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mb-cond-btn.on{border:2px solid var(--ac2);background:#e8f5e9}
+.mb-submit{width:100%;padding:11px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:none;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit}
+.mb-submit:hover{opacity:.9}
+.mb-submit:disabled{background:var(--tx3);cursor:not-allowed}
+.mb-empty{text-align:center;padding:2rem 1rem;color:var(--tx3);font-size:.8rem}
+.mb-loading{text-align:center;padding:2rem;color:var(--tx3);font-size:.8rem}
+@media(max-width:600px){.mb-igrid{grid-template-columns:1fr 1fr}.mb-cgrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="hd"><h1>📊 사라요가 콘텐츠 관리자</h1><p>블로그 현황 · 키워드 커버리지 · 다음 글 추천 · 콘텐츠 건강도</p><div class="hd-links"><a href="https://www.sarayoga.co.kr" target="_blank">🌐 사이트</a><a href="https://www.sarayoga.co.kr/blog/" target="_blank">📝 블로그</a><a href="https://github.com/galincia-hub/sara" target="_blank">🔧 GitHub</a><a href="https://analytics.google.com" target="_blank">📊 Analytics</a></div></div>
 <div class="ct">
-<div class="tabs" id="tabs"><button class="tab on" data-t="overview">📈 현황</button><button class="tab" data-t="posts">📝 글목록</button><button class="tab" data-t="keywords">🔑 키워드</button><button class="tab" data-t="suggest">✍️ 블로그작성</button></div>
+<div class="tabs" id="tabs"><button class="tab on" data-t="overview">📈 현황</button><button class="tab" data-t="posts">📝 글목록</button><button class="tab" data-t="keywords">🔑 키워드</button><button class="tab" data-t="suggest">✍️ 블로그작성</button><button class="tab" data-t="members">👥 회원관리</button></div>
 
 <div class="tc on" id="t-overview">
 <div class="ms" id="metrics"></div>
@@ -83,7 +147,84 @@ a{text-decoration:none;color:var(--ac2)}
 <div class="tc" id="t-keywords"><div class="sc"><div class="st">키워드 커버리지</div><div class="ss">🟢 2개+ · 🟡 1개 · ⚪ 미커버</div><div class="g3" id="kwsum"></div></div><div class="g2"><div class="sc"><div class="st">🏆 Tier 1 <span class="bg bg2">블루오션</span></div><div id="kt1"></div></div><div class="sc"><div class="st">📈 Tier 2 <span class="bg bg4">선점</span></div><div id="kt2"></div></div></div><div class="sc"><div class="st">🎯 Tier 3 <span class="bg bg5">롱테일</span></div><div id="kt3"></div></div></div>
 
 <div class="tc" id="t-suggest"><div class="sc" style="padding:.8rem 1rem"><div id="hlth-summary" style="display:flex;flex-wrap:wrap;gap:6px;align-items:center"></div></div><div class="sc" style="background:#fffde7;border-color:#fff9c4"><div class="st" style="color:var(--wrn)">💡 중복 방지 원칙</div><p style="font-size:.75rem;color:var(--tx2);line-height:1.7">① 같은 주제+프레임 금지 ② 직전 글과 프레임 중복 금지 ③ 서대전/중구 3회 연속 금지<br><span style="color:var(--tx3)">단, 같은 주제라도 계절이 다르거나 6개월 이상 경과한 경우 정보 보강 차원에서 재작성 가능</span></p></div><div class="sc"><div class="st">🔥 추천 주제 — 우선순위순</div><div class="ss">"명령어 복사" → VS Code 붙여넣기 → 끝</div><div id="sugs"></div></div></div>
+
+<div class="tc" id="t-members">
+  <!-- 상단 통계 -->
+  <div class="ms" id="mb-stats">
+    <div class="m"><div class="lb">전체 회원</div><div class="vl" id="mb-st-total">-</div><div class="sb">등록 합계</div><div class="br" style="width:100%;background:var(--tx3)"></div></div>
+    <div class="m"><div class="lb">활성</div><div class="vl" style="color:var(--ac)" id="mb-st-active">-</div><div class="sb ok">수강중</div><div class="br" style="width:100%;background:var(--ac2)"></div></div>
+    <div class="m"><div class="lb">비활성</div><div class="vl" style="color:var(--wrn)" id="mb-st-inactive">-</div><div class="sb wn">만료</div><div class="br" style="width:100%;background:var(--wrn)"></div></div>
+    <div class="m"><div class="lb">이탈</div><div class="vl" style="color:var(--dng)" id="mb-st-churned">-</div><div class="sb no">3개월+</div><div class="br" style="width:100%;background:var(--dng)"></div></div>
+  </div>
+
+  <!-- 뷰 전환 탭 -->
+  <div class="mb-vtabs">
+    <button class="mb-vtab on" id="mb-vtab-list" onclick="mbSwitchView('list')">👥 회원 목록</button>
+    <button class="mb-vtab" id="mb-vtab-record" onclick="mbSwitchView('record')">📝 수업 기록</button>
+  </div>
+
+  <!-- 뷰: 회원 목록 -->
+  <div id="mb-view-list">
+    <div class="sc">
+      <div class="mb-stabs">
+        <button id="mb-stab-active"   class="mb-stab s-active on"   onclick="mbStatusTab('active')">활성 <span id="mb-cnt-active">0</span></button>
+        <button id="mb-stab-inactive" class="mb-stab s-inactive"    onclick="mbStatusTab('inactive')">비활성 <span id="mb-cnt-inactive">0</span></button>
+        <button id="mb-stab-churned"  class="mb-stab s-churned"     onclick="mbStatusTab('churned')">이탈 <span id="mb-cnt-churned">0</span></button>
+      </div>
+      <input class="mb-srch" id="mb-search" placeholder="이름 또는 전화번호 검색..." oninput="mbFilter(this.value)">
+      <div id="mb-list"><div class="mb-loading">회원관리 탭을 클릭하면 데이터를 불러옵니다.</div></div>
+    </div>
+  </div>
+
+  <!-- 뷰: 회원 상세 -->
+  <div id="mb-view-detail" style="display:none">
+    <button class="mb-back" onclick="mbBackToList()">← 목록으로</button>
+    <div id="mb-detail-content"></div>
+  </div>
+
+  <!-- 뷰: 수업 기록 입력 -->
+  <div id="mb-view-record" style="display:none">
+    <div class="sc">
+      <div class="st">📝 수업 기록 입력</div>
+      <div class="ss">오늘 수업 내용을 기록하세요</div>
+
+      <label class="mb-lbl">회원 선택 *</label>
+      <select class="mb-sel" id="rec-member"><option value="">회원을 선택하세요</option></select>
+
+      <label class="mb-lbl">프로그램 *</label>
+      <select class="mb-sel" id="rec-program"><option value="">프로그램을 선택하세요</option></select>
+
+      <label class="mb-lbl">출석 상태</label>
+      <div class="mb-att-grp">
+        <button class="mb-att-btn sel-attended" id="mb-att-attended" onclick="mbSetAtt('attended')">출석</button>
+        <button class="mb-att-btn" id="mb-att-noshow"    onclick="mbSetAtt('noshow')">노쇼</button>
+        <button class="mb-att-btn" id="mb-att-cancelled" onclick="mbSetAtt('cancelled')">취소</button>
+      </div>
+
+      <label class="mb-lbl">컨디션</label>
+      <div class="mb-cond-grp">
+        <button class="mb-cond-btn" onclick="mbSetCond(1)">😣</button>
+        <button class="mb-cond-btn" onclick="mbSetCond(2)">😟</button>
+        <button class="mb-cond-btn on" onclick="mbSetCond(3)">😐</button>
+        <button class="mb-cond-btn" onclick="mbSetCond(4)">🙂</button>
+        <button class="mb-cond-btn" onclick="mbSetCond(5)">😊</button>
+      </div>
+
+      <label class="mb-lbl">🩺 신체 메모</label>
+      <textarea class="mb-ta" id="rec-body" rows="2" placeholder="허리 왼쪽 불편, 어깨 가동범위 개선 등"></textarea>
+
+      <label class="mb-lbl">😊 정서 메모</label>
+      <textarea class="mb-ta" id="rec-mood" rows="1" placeholder="활기, 피곤, 스트레스 등"></textarea>
+
+      <label class="mb-lbl">💬 원장 코멘트</label>
+      <textarea class="mb-ta" id="rec-notes" rows="2" placeholder="교정 포인트, 다음 수업 참고사항 등"></textarea>
+
+      <button class="mb-submit" id="rec-submit" onclick="mbSaveRecord()">수업 기록 저장</button>
+    </div>
+  </div>
 </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -121,12 +262,14 @@ function doCopy(btn){navigator.clipboard.writeText(btn.dataset.cmd);toast("✅ �
 function toggleDone(i){var done=JSON.parse(localStorage.getItem('sara_done')||'{}');done[i]=!done[i];localStorage.setItem('sara_done',JSON.stringify(done));render();}
 
 // Tab switching
+var MB_INITED = false;
 document.getElementById("tabs").addEventListener("click",function(e){
   if(e.target.tagName!=="BUTTON")return;
   document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("on")});
   document.querySelectorAll(".tc").forEach(function(t){t.classList.remove("on")});
   e.target.classList.add("on");
   document.getElementById("t-"+e.target.dataset.t).classList.add("on");
+  if(e.target.dataset.t==="members"&&!MB_INITED){MB_INITED=true;mbInit();}
 });
 
 // Main render
@@ -243,6 +386,251 @@ function render(){
       '<button class="bc" style="background:'+(isDone?"var(--tx3)":"var(--ac2)")+'" onclick="toggleDone('+i+')">'+(isDone?"↩️ 되돌리기":"✅ 작성완료")+"</button>"+
       "</div></div>";
   }).join("");
+}
+
+// ===== 회원관리 (CRM 통합) =====
+const SB_URL='https://hwanjvhnegwlbshmahzo.supabase.co';
+const SB_KEY='sb_publishable_5-x2lV68j6N2L0Hx3tkUKQ_iJaNEZMk';
+let _sbClient=null;
+function getSB(){if(!_sbClient)_sbClient=supabase.createClient(SB_URL,SB_KEY);return _sbClient;}
+
+let mbAllMembers=[], mbAllPrograms=[], mbCurStatus='active', mbCurAtt='attended', mbCurCond=3;
+
+async function mbInit(){
+  document.getElementById('mb-list').innerHTML='<div class="mb-loading">데이터 불러오는 중...</div>';
+  const [mr,pr]=await Promise.all([
+    getSB().from('members').select('*'),
+    getSB().from('programs').select('*').eq('is_active',true)
+  ]);
+  mbAllMembers=mr.data||[];
+  mbAllPrograms=pr.data||[];
+  mbUpdateStats();
+  mbStatusTab('active');
+  mbFillSelects();
+}
+
+// ── 통계 업데이트 ──
+function mbUpdateStats(){
+  const act=mbAllMembers.filter(m=>m.status==='active').length;
+  const ina=mbAllMembers.filter(m=>m.status==='inactive').length;
+  const chu=mbAllMembers.filter(m=>m.status==='churned').length;
+  document.getElementById('mb-st-total').textContent=mbAllMembers.length;
+  document.getElementById('mb-st-active').textContent=act;
+  document.getElementById('mb-st-inactive').textContent=ina;
+  document.getElementById('mb-st-churned').textContent=chu;
+  document.getElementById('mb-cnt-active').textContent=act;
+  document.getElementById('mb-cnt-inactive').textContent=ina;
+  document.getElementById('mb-cnt-churned').textContent=chu;
+}
+
+// ── 뷰 전환 ──
+function mbSwitchView(v){
+  document.getElementById('mb-view-list').style.display=v==='list'?'block':'none';
+  document.getElementById('mb-view-detail').style.display='none';
+  document.getElementById('mb-view-record').style.display=v==='record'?'block':'none';
+  document.getElementById('mb-vtab-list').className='mb-vtab'+(v==='list'?' on':'');
+  document.getElementById('mb-vtab-record').className='mb-vtab'+(v==='record'?' on':'');
+}
+
+// ── 상태 서브탭 ──
+function mbStatusTab(s){
+  mbCurStatus=s;
+  ['active','inactive','churned'].forEach(t=>{
+    document.getElementById('mb-stab-'+t).className='mb-stab s-'+t+(t===s?' on':'');
+  });
+  document.getElementById('mb-search').style.display=s==='active'?'block':'none';
+  document.getElementById('mb-search').value='';
+  mbRenderList(mbGetList(s));
+}
+
+// ── 목록 필터/정렬 ──
+function mbGetList(status){
+  let list=mbAllMembers.filter(m=>m.status===status);
+  if(status==='active'){
+    list=list.slice().sort((a,b)=>{
+      if(!a.membership_end&&!b.membership_end)return 0;
+      if(!a.membership_end)return 1;
+      if(!b.membership_end)return -1;
+      return a.membership_end.localeCompare(b.membership_end);
+    });
+  } else {
+    list=list.slice().sort((a,b)=>(a.name||'').localeCompare(b.name||'','ko'));
+  }
+  return list;
+}
+
+function mbFilter(q){
+  if(mbCurStatus!=='active')return;
+  const base=mbGetList('active');
+  mbRenderList(q?base.filter(m=>(m.name||'').includes(q)||(m.phone||'').includes(q)):base);
+}
+
+// ── 헬퍼 ──
+function mbDaysUntil(d){
+  if(!d)return null;
+  const today=new Date();today.setHours(0,0,0,0);
+  return Math.ceil((new Date(d)-today)/86400000);
+}
+function mbSc(s){return s==='active'?'#1d9e75':s==='inactive'?'#b87a17':'#c44';}
+function mbSl(s){return s==='active'?'활성':s==='inactive'?'비활성':'이탈';}
+function mbCe(v){return v===5?'😊':v===4?'🙂':v===3?'😐':v===2?'😟':'😣';}
+function mbAl(a){return a==='attended'?'출석':a==='noshow'?'노쇼':'취소';}
+
+// ── 목록 렌더 ──
+function mbRenderList(list){
+  const el=document.getElementById('mb-list');
+  if(!list||!list.length){el.innerHTML='<div class="mb-empty">해당 회원이 없습니다</div>';return;}
+  el.innerHTML=list.map(m=>{
+    const days=m.status==='active'?mbDaysUntil(m.membership_end):null;
+    const urgent=days!==null&&days<=30;
+    const badge=urgent?`<span class="mb-ebadge">${days<=0?'만료됨':days+'일 후 만료'}</span>`:'';
+    const endDisp=m.membership_end?m.membership_end.replace(/-/g,'.'):'';
+    const sc=mbSc(m.status);
+    return `<div class="mb-card${urgent?' expiring':''}" onclick="mbShowDetail(${m.id})">
+      <div style="display:flex;align-items:center;flex:1;min-width:0">
+        <div class="mb-av" style="background:linear-gradient(135deg,${sc}22,${sc}44);color:${sc}">${(m.name||'?')[0]}</div>
+        <div class="mb-ci">
+          <div class="mb-cname">${m.name} ${badge}</div>
+          <div class="mb-csub">${m.phone||''} · ${m.primary_program||'프로그램 미지정'}</div>
+          <div class="mb-cmeta">${m.membership_type||'이용권 없음'}${endDisp?' · 만료 '+endDisp:''} · 출석 ${m.total_classes||0}회</div>
+        </div>
+      </div>
+      <span style="color:#ccc;font-size:18px;flex-shrink:0;margin-left:8px">›</span>
+    </div>`;
+  }).join('');
+}
+
+// ── 회원 상세 ──
+async function mbShowDetail(id){
+  const m=mbAllMembers.find(x=>x.id===id);
+  if(!m)return;
+  document.getElementById('mb-detail-content').innerHTML='<div class="mb-loading">로딩중...</div>';
+  document.getElementById('mb-view-list').style.display='none';
+  document.getElementById('mb-view-detail').style.display='block';
+  const [histRes,conRes]=await Promise.all([
+    getSB().from('class_records').select('*').eq('member_id',id).order('class_date',{ascending:false}).limit(20),
+    getSB().from('consultations').select('*').eq('member_id',id).limit(1)
+  ]);
+  const history=histRes.data||[];
+  const c=(conRes.data||[])[0];
+  const sc=mbSc(m.status);
+  let html=`
+  <div class="mb-profile">
+    <div class="mb-phead">
+      <div class="mb-pav" style="background:linear-gradient(135deg,${sc},${sc}88)">${(m.name||'?')[0]}</div>
+      <div style="flex:1">
+        <div class="mb-pname">${m.name}</div>
+        <div class="mb-psub">${m.phone||''} · 등록일: ${m.registered_date||'-'}</div>
+      </div>
+      <span class="mb-sbadge" style="background:${sc}18;color:${sc}">${mbSl(m.status)}</span>
+    </div>
+    <div class="mb-igrid">
+      <div class="mb-ii"><div class="il">주 프로그램</div><div class="iv">${m.primary_program||'-'}</div></div>
+      <div class="mb-ii"><div class="il">이용권</div><div class="iv">${m.membership_type||'-'}</div></div>
+      <div class="mb-ii"><div class="il">만료일</div><div class="iv">${m.membership_end||'-'}</div></div>
+    </div>
+  </div>`;
+  if(c){
+    const pa=Array.isArray(c.pain_areas)?c.pain_areas.join(', '):(c.pain_areas||'-');
+    html+=`
+  <div class="mb-sec mb-csec">
+    <h3 style="color:var(--pur)">📋 초기 상담일지</h3>
+    <div class="mb-cgrid">
+      <div><span style="color:var(--tx3)">운동 목표:</span> <strong>${c.goal||'-'}</strong></div>
+      <div><span style="color:var(--tx3)">통증 부위:</span> <strong>${pa}</strong></div>
+      <div><span style="color:var(--tx3)">통증 강도:</span> <strong>${c.pain_level||'-'}/10</strong></div>
+      <div><span style="color:var(--tx3)">생활습관:</span> <strong>${c.lifestyle||'-'}</strong></div>
+    </div>
+    ${c.special_notes?`<div class="mb-cnote">💡 ${c.special_notes}</div>`:''}
+  </div>`;
+  }
+  html+=`<div class="mb-sec"><h3>📚 수업 기록 <span class="bg bg2" style="font-size:.6rem">${history.length}건</span></h3>`;
+  if(!history.length){
+    html+='<div class="mb-empty">수업 기록이 없습니다</div>';
+  } else {
+    history.forEach(r=>{
+      const ac=r.attendance==='attended'?'#e8f5e9':r.attendance==='noshow'?'#fdecea':'#fff8e1';
+      const at=r.attendance==='attended'?'var(--ac)':r.attendance==='noshow'?'var(--dng)':'var(--wrn)';
+      html+=`<div class="mb-hrow">
+        <div class="mb-hdate">${r.class_date}</div>
+        <div class="mb-hcont">
+          <div class="mb-hprog">${r.program_name||'-'} ${r.condition_score?mbCe(r.condition_score):''}
+            <span class="mb-abadge" style="background:${ac};color:${at}">${mbAl(r.attendance)}</span>
+          </div>
+          ${r.body_notes?`<div class="mb-hnote">🩺 ${r.body_notes}</div>`:''}
+          ${r.instructor_notes?`<div class="mb-hnote" style="color:var(--pur)">💬 ${r.instructor_notes}</div>`:''}
+        </div>
+      </div>`;
+    });
+  }
+  html+='</div>';
+  document.getElementById('mb-detail-content').innerHTML=html;
+}
+
+function mbBackToList(){
+  document.getElementById('mb-view-detail').style.display='none';
+  document.getElementById('mb-view-list').style.display='block';
+}
+
+// ── 셀렉트 채우기 ──
+function mbFillSelects(){
+  const ms=document.getElementById('rec-member');
+  const ps=document.getElementById('rec-program');
+  ms.innerHTML='<option value="">회원을 선택하세요</option>';
+  mbAllMembers.filter(m=>m.status==='active').forEach(m=>{
+    ms.innerHTML+=`<option value="${m.id}">${m.name} (${m.phone})</option>`;
+  });
+  ps.innerHTML='<option value="">프로그램을 선택하세요</option>';
+  if(mbAllPrograms.length){
+    mbAllPrograms.forEach(p=>{ps.innerHTML+=`<option value="${p.name}">${p.name}</option>`;});
+  } else {
+    ['하타플로우','인사이드플로우','근막이완','도구테라피','플라잉요가','서포트요가','원데이클래스'].forEach(n=>{
+      ps.innerHTML+=`<option value="${n}">${n}</option>`;
+    });
+  }
+}
+
+// ── 출석/컨디션 선택 ──
+function mbSetAtt(val){
+  mbCurAtt=val;
+  ['attended','noshow','cancelled'].forEach(v=>{
+    document.getElementById('mb-att-'+v).className='mb-att-btn'+(v===val?' sel-'+v:'');
+  });
+}
+function mbSetCond(val){
+  mbCurCond=val;
+  document.querySelectorAll('.mb-cond-btn').forEach((btn,i)=>{
+    btn.className='mb-cond-btn'+((i+1)===val?' on':'');
+  });
+}
+
+// ── 수업 기록 저장 ──
+async function mbSaveRecord(){
+  const memberId=document.getElementById('rec-member').value;
+  const program=document.getElementById('rec-program').value;
+  if(!memberId||!program){toast('⚠️ 회원과 프로그램을 선택해주세요');return;}
+  const btn=document.getElementById('rec-submit');
+  btn.disabled=true;btn.textContent='저장 중...';
+  try{
+    const {error}=await getSB().from('class_records').insert({
+      member_id:parseInt(memberId),
+      class_date:new Date().toISOString().split('T')[0],
+      program_name:program,
+      attendance:mbCurAtt,
+      condition_score:mbCurCond,
+      body_notes:document.getElementById('rec-body').value||null,
+      mood_notes:document.getElementById('rec-mood').value||null,
+      instructor_notes:document.getElementById('rec-notes').value||null
+    });
+    if(error)throw new Error(error.message);
+    toast('✅ 수업 기록 저장 완료');
+    document.getElementById('rec-member').value='';
+    document.getElementById('rec-program').value='';
+    ['rec-body','rec-mood','rec-notes'].forEach(id=>{document.getElementById(id).value='';});
+    mbSetAtt('attended');mbSetCond(3);
+    await mbInit();
+  }catch(e){toast('⚠️ 저장 실패: '+e.message);}
+  btn.disabled=false;btn.textContent='수업 기록 저장';
 }
 
 // Init — posts.json fetch
